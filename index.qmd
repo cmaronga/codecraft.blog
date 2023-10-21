@@ -1,5 +1,5 @@
 ---
-title: "codecraft.blog"
+title: "The Mastery work: R & Python"
 listing:
   contents: posts
   sort: "date desc"

@@ -3,14 +3,14 @@ project:
   output-dir: docs
 
 website:
-  title: "codecraft.blog"
+  title: "Maronga's blog"
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
+        href: https://github.com/cmaronga/codecraft.blog
       - icon: twitter
-        href: https://twitter.com
+        href: https://twitter.com/krissianyo
 format:
   html:
     theme: cosmo

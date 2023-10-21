@@ -1,13 +1,15 @@
 ---
-title: "Post With Code"
-author: "Harlow Malloc"
-date: "2023-10-21"
-categories: [news, code, analysis]
+title: "Automating Clinical Data Management"
+author: "Christopher Maronga"
+date: "2018-12-16"
+categories: [Data Management, code, analysis]
 image: "image.jpg"
 ---
 
-This is a post with executable code.
+Using REDCap, MySQL, RShiny-server
 
-```{r}
-1 + 1
-```
+Data management in multi-centre cohort studies presents unique challenges, particularly when these study sites are widely dispersed geographically and possess varying levels of technical and human resources. It is crucial to maintain data quality, promptly address data inconsistencies, and generate timely progress reports. This is especially true for initiatives like the Childhood Acute Illness and Nutrition Network (CHAIN), which involved recruiting participants from nine hospitals located in Africa and Asia. The CHAIN study collected highly detailed data spanning various biological and social domains.
+
+To streamline data management processes, the CHAIN cohort employed Research Electronic Data Capture (REDCap), a web-based, open-source database driven by metadata. In this article, I describe our effective utilization of REDCap in combination with the open-source R software to automate the data management workflow for the CHAIN study. I aim to document, step by step, the various decisions and implementations that were instrumental in this process. I plan to make this information available on my webpage for others to read and implement, although this will require a few days to compile and potentially create informative infographics.
+
+Additionally, I had the opportunity to present this work at the Why R conference in 2021, and you can watch the presentation on [YouTube](https://www.youtube.com/live/PbD_e5sz4P8?si=99HGccEfNv56qmWH). The presentation slides are also accessible [here](https://github.com/cmaronga/cmaronga.github.io/blob/main/my_files/automating_research_data_management.pdf) for download

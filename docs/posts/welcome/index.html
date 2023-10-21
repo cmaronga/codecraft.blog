@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Tristan O’Malley">
-<meta name="dcterms.date" content="2023-10-18">
+<meta name="dcterms.date" content="2021-06-12">
 
-<title>codecraft.blog - Welcome To My Blog</title>
+<title>Maronga’s blog - Working with Databases in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -74,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">codecraft.blog</span>
+    <span class="navbar-title">Maronga’s blog</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -88,12 +88,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/cmaronga/codecraft.blog" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/krissianyo" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -108,9 +108,11 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Welcome To My Blog</h1>
+      <h1 class="title">Working with Databases in R</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">news</div>
+                <div class="quarto-category">Data Management</div>
+                <div class="quarto-category">code</div>
               </div>
                   </div>
   </div>
@@ -128,7 +130,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 18, 2023</p>
+        <p class="date">June 12, 2021</p>
       </div>
     </div>
     
@@ -146,9 +148,17 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>This is the first post in a Quarto blog. Welcome!</p>
-<p><img src="thumbnail.jpg" class="img-fluid"></p>
-<p>Since this post doesn’t specify an explicit <code>image</code>, the first image in the post will be used in the listing page of posts.</p>
+<p>MySQL, SQLite, R</p>
+<p>This blog post comes as a follow-up to a successful online training session jointly organized by NairobiR and RLadies on June 12, 2021. If you missed the session, you can view the recording on this <a href="https://youtu.be/txMmjDQoQqE?si=3SJ2pm_gQADa_DHY">YouTube</a> link.</p>
+<p>In both the video and this accompanying blog, I delve into the fundamental principles of establishing dynamic connections and extracting data from databases using Application Programming Interfaces (APIs). Regardless of how and where data is stored, the initial step in any data management process involves loading it into your preferred working tool.</p>
+<p>Relational databases, such as RMySQL, and web-based databases, like REDCap, have gained popularity for efficiently and cost-effectively managing small to medium-sized datasets. In this blog, I’ll guide you through the essential steps to access and utilize data stored in these platforms using the R statistical language. I will provide practical examples to demonstrate:</p>
+<ol type="1">
+<li><p>Establishing an efficient connection between R and Relational Database Management Systems (RDBMS).</p></li>
+<li><p>Querying data housed in any RDBMS directly from within R/RStudio.</p></li>
+<li><p>Connecting to and querying data from a Research Electronic Data Capture (REDCap) database.</p></li>
+<li><p>Best practices for securing your API while collaborating on projects.</p></li>
+</ol>
+<p>Please note that this blog is a work in progress. In the meantime, you can access the workshop slides for reference <a href="https://github.com/cmaronga/cmaronga.github.io/blob/main/my_files/working_with_databases_in_R.pdf">here.</a></p>
 
 
 

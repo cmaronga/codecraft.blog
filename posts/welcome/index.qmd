@@ -1,12 +1,26 @@
 ---
-title: "Welcome To My Blog"
+title: "Working with Databases in R"
 author: "Tristan O'Malley"
-date: "2023-10-18"
-categories: [news]
+date: "2021-06-12"
+categories: [news, Data Management, code]
+image: "thumbnail.jpg"
 ---
 
-This is the first post in a Quarto blog. Welcome!
+MySQL, SQLite, R
 
-![](thumbnail.jpg)
+This blog post comes as a follow-up to a successful online training session jointly organized by NairobiR and RLadies on June 12, 2021. If you missed the session, you can view the recording on this [YouTube](https://youtu.be/txMmjDQoQqE?si=3SJ2pm_gQADa_DHY) link.
 
-Since this post doesn't specify an explicit `image`, the first image in the post will be used in the listing page of posts.
+In both the video and this accompanying blog, I delve into the fundamental principles of establishing dynamic connections and extracting data from databases using Application Programming Interfaces (APIs). Regardless of how and where data is stored, the initial step in any data management process involves loading it into your preferred working tool.
+
+Relational databases, such as RMySQL, and web-based databases, like REDCap, have gained popularity for efficiently and cost-effectively managing small to medium-sized datasets. In this blog, I'll guide you through the essential steps to access and utilize data stored in these platforms using the R statistical language. I will provide practical examples to demonstrate:
+
+1. Establishing an efficient connection between R and Relational Database Management Systems (RDBMS).
+
+2. Querying data housed in any RDBMS directly from within R/RStudio.
+
+3. Connecting to and querying data from a Research Electronic Data Capture (REDCap) database.
+
+4. Best practices for securing your API while collaborating on projects.
+
+
+Please note that this blog is a work in progress. In the meantime, you can access the workshop slides for reference [here.](https://github.com/cmaronga/cmaronga.github.io/blob/main/my_files/working_with_databases_in_R.pdf)
