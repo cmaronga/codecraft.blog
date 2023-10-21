@@ -1,6 +1,6 @@
 ---
 title: "Working with Databases in R"
-author: "Tristan O'Malley"
+author: "Christopher Maronga"
 date: "2021-06-12"
 categories: [news, Data Management, code]
 image: "thumbnail.jpg"
@@ -24,3 +24,4 @@ Relational databases, such as RMySQL, and web-based databases, like REDCap, have
 
 
 Please note that this blog is a work in progress. In the meantime, you can access the workshop slides for reference [here.](https://github.com/cmaronga/cmaronga.github.io/blob/main/my_files/working_with_databases_in_R.pdf)
+

@@ -1,7 +1,7 @@
 [
   {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
+    "objectID": "posts/working-with-databases/index.html",
+    "href": "posts/working-with-databases/index.html",
     "title": "Working with Databases in R",
     "section": "",
     "text": "MySQL, SQLite, R\nThis blog post comes as a follow-up to a successful online training session jointly organized by NairobiR and RLadies on June 12, 2021. If you missed the session, you can view the recording on this YouTube link.\nIn both the video and this accompanying blog, I delve into the fundamental principles of establishing dynamic connections and extracting data from databases using Application Programming Interfaces (APIs). Regardless of how and where data is stored, the initial step in any data management process involves loading it into your preferred working tool.\nRelational databases, such as RMySQL, and web-based databases, like REDCap, have gained popularity for efficiently and cost-effectively managing small to medium-sized datasets. In this blog, I’ll guide you through the essential steps to access and utilize data stored in these platforms using the R statistical language. I will provide practical examples to demonstrate:\n\nEstablishing an efficient connection between R and Relational Database Management Systems (RDBMS).\nQuerying data housed in any RDBMS directly from within R/RStudio.\nConnecting to and querying data from a Research Electronic Data Capture (REDCap) database.\nBest practices for securing your API while collaborating on projects.\n\nPlease note that this blog is a work in progress. In the meantime, you can access the workshop slides for reference here."
@@ -9,9 +9,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "The Mastery work: R & Python",
+    "title": "CMaronga",
     "section": "",
-    "text": "Working with Databases in R\n\n\n\n\n\n\n\nnews\n\n\nData Management\n\n\ncode\n\n\n\n\n\n\n\n\n\n\n\nJun 12, 2021\n\n\nTristan O’Malley\n\n\n\n\n\n\n  \n\n\n\n\nAutomating Clinical Data Management\n\n\n\n\n\n\n\nData Management\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nDec 16, 2018\n\n\nChristopher Maronga\n\n\n\n\n\n\nNo matching items"
+    "text": "Working with Databases in R\n\n\n\n\n\n\n\nnews\n\n\nData Management\n\n\ncode\n\n\n\n\n\n\n\n\n\n\n\nJun 12, 2021\n\n\nChristopher Maronga\n\n\n\n\n\n\n  \n\n\n\n\nAutomating Clinical Data Management\n\n\n\n\n\n\n\nData Management\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nDec 16, 2018\n\n\nChristopher Maronga\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -21,8 +21,8 @@
     "text": "Christopher Maronga\nHello, I’m Christopher Maronga, hailing from the beautiful landscapes of Kenya, East Africa. My academic journey led me to a Bachelor’s degree in Mathematics (JKUAT) and a Master’s in Statistical Sciences (Strathmore University), shaping my career in Health Research.\nI have a wealth of experience managing and analysing healthcare data for decision-making, as well as teaching introductory and advanced training courses in R.\nI currently work at Oxford University as a Senior Data Manager for the Oxford-GSK Institute of Molecular and Computational Medicine, facilitating data access and championing FAIRsharing for researchers from both GSK and Oxford University.\nWith over a decade of R Programming experience, I’m passionate about reproducible research, automating data products, statistical computing, and data visualization."
   },
   {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
+    "objectID": "posts/automating-data-management/index.html",
+    "href": "posts/automating-data-management/index.html",
     "title": "Automating Clinical Data Management",
     "section": "",
     "text": "Using REDCap, MySQL, RShiny-server\nData management in multi-centre cohort studies presents unique challenges, particularly when these study sites are widely dispersed geographically and possess varying levels of technical and human resources. It is crucial to maintain data quality, promptly address data inconsistencies, and generate timely progress reports. This is especially true for initiatives like the Childhood Acute Illness and Nutrition Network (CHAIN), which involved recruiting participants from nine hospitals located in Africa and Asia. The CHAIN study collected highly detailed data spanning various biological and social domains.\nTo streamline data management processes, the CHAIN cohort employed Research Electronic Data Capture (REDCap), a web-based, open-source database driven by metadata. In this article, I describe our effective utilization of REDCap in combination with the open-source R software to automate the data management workflow for the CHAIN study. I aim to document, step by step, the various decisions and implementations that were instrumental in this process. I plan to make this information available on my webpage for others to read and implement, although this will require a few days to compile and potentially create informative infographics.\nAdditionally, I had the opportunity to present this work at the Why R conference in 2021, and you can watch the presentation on YouTube. The presentation slides are also accessible here for download"

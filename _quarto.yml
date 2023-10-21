@@ -3,7 +3,9 @@ project:
   output-dir: docs
 
 website:
-  title: "Maronga's blog"
+  title: "CMaronga"
+  site-url: https://cmaronga.github.io/codecraft.blog/
+  description: "Christopher Maronga blog"
   navbar:
     right:
       - about.qmd
@@ -11,9 +13,11 @@ website:
         href: https://github.com/cmaronga/codecraft.blog
       - icon: twitter
         href: https://twitter.com/krissianyo
+      - icon: rss
+        href: index.xml
 format:
   html:
-    theme: cosmo
+    theme: litera
     css: styles.css
 
 

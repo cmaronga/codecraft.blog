@@ -1,0 +1,16 @@
+{
+  "hash": "b2b8f842de1a1c83c792ea554b683b8e",
+  "result": {
+    "markdown": "---\ntitle: \"Working with Databases in R\"\nauthor: \"Tristan O'Malley\"\ndate: \"2021-06-12\"\ncategories: [news, Data Management, code]\nimage: \"thumbnail.jpg\"\n---\n\n\nMySQL, SQLite, R\n\nThis blog post comes as a follow-up to a successful online training session jointly organized by NairobiR and RLadies on June 12, 2021. If you missed the session, you can view the recording on this [YouTube](https://youtu.be/txMmjDQoQqE?si=3SJ2pm_gQADa_DHY) link.\n\nIn both the video and this accompanying blog, I delve into the fundamental principles of establishing dynamic connections and extracting data from databases using Application Programming Interfaces (APIs). Regardless of how and where data is stored, the initial step in any data management process involves loading it into your preferred working tool.\n\nRelational databases, such as RMySQL, and web-based databases, like REDCap, have gained popularity for efficiently and cost-effectively managing small to medium-sized datasets. In this blog, I'll guide you through the essential steps to access and utilize data stored in these platforms using the R statistical language. I will provide practical examples to demonstrate:\n\n1. Establishing an efficient connection between R and Relational Database Management Systems (RDBMS).\n\n2. Querying data housed in any RDBMS directly from within R/RStudio.\n\n3. Connecting to and querying data from a Research Electronic Data Capture (REDCap) database.\n\n4. Best practices for securing your API while collaborating on projects.\n\n\nPlease note that this blog is a work in progress. In the meantime, you can access the workshop slides for reference [here.](https://github.com/cmaronga/cmaronga.github.io/blob/main/my_files/working_with_databases_in_R.pdf)\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n```\n\n::: {.cell-output .cell-output-stderr}\n```\nWarning: package 'ggplot2' was built under R version 4.3.1\n```\n:::\n\n::: {.cell-output .cell-output-stderr}\n```\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.2     ✔ readr     2.1.4\n✔ forcats   1.0.0     ✔ stringr   1.5.0\n✔ ggplot2   3.4.2     ✔ tibble    3.2.1\n✔ lubridate 1.9.2     ✔ tidyr     1.3.0\n✔ purrr     1.0.1     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors\n```\n:::\n\n```{.r .cell-code}\ndiamonds %>% \n  ggplot(aes(price)) + geom_histogram()\n```\n\n::: {.cell-output .cell-output-stderr}\n```\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n```\n:::\n\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

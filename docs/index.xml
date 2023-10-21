@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>CMaronga</title>
+<link>https://cmaronga.github.io/codecraft.blog/index.html</link>
+<atom:link href="https://cmaronga.github.io/codecraft.blog/index.xml" rel="self" type="application/rss+xml"/>
+<description>Christopher Maronga blog</description>
+<generator>quarto-1.3.450</generator>
+<lastBuildDate>Fri, 11 Jun 2021 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Working with Databases in R</title>
+  <dc:creator>Christopher Maronga</dc:creator>
+  <link>https://cmaronga.github.io/codecraft.blog/posts/working-with-databases/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>MySQL, SQLite, R</p>
+<p>This blog post comes as a follow-up to a successful online training session jointly organized by NairobiR and RLadies on June 12, 2021. If you missed the session, you can view the recording on this <a href="https://youtu.be/txMmjDQoQqE?si=3SJ2pm_gQADa_DHY">YouTube</a> link.</p>
+<p>In both the video and this accompanying blog, I delve into the fundamental principles of establishing dynamic connections and extracting data from databases using Application Programming Interfaces (APIs). Regardless of how and where data is stored, the initial step in any data management process involves loading it into your preferred working tool.</p>
+<p>Relational databases, such as RMySQL, and web-based databases, like REDCap, have gained popularity for efficiently and cost-effectively managing small to medium-sized datasets. In this blog, I’ll guide you through the essential steps to access and utilize data stored in these platforms using the R statistical language. I will provide practical examples to demonstrate:</p>
+<ol type="1">
+<li><p>Establishing an efficient connection between R and Relational Database Management Systems (RDBMS).</p></li>
+<li><p>Querying data housed in any RDBMS directly from within R/RStudio.</p></li>
+<li><p>Connecting to and querying data from a Research Electronic Data Capture (REDCap) database.</p></li>
+<li><p>Best practices for securing your API while collaborating on projects.</p></li>
+</ol>
+<p>Please note that this blog is a work in progress. In the meantime, you can access the workshop slides for reference <a href="https://github.com/cmaronga/cmaronga.github.io/blob/main/my_files/working_with_databases_in_R.pdf">here.</a></p>
+
+
+
+ ]]></description>
+  <category>news</category>
+  <category>Data Management</category>
+  <category>code</category>
+  <guid>https://cmaronga.github.io/codecraft.blog/posts/working-with-databases/index.html</guid>
+  <pubDate>Fri, 11 Jun 2021 23:00:00 GMT</pubDate>
+  <media:content url="https://cmaronga.github.io/codecraft.blog/posts/working-with-databases/thumbnail.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Automating Clinical Data Management</title>
+  <dc:creator>Christopher Maronga</dc:creator>
+  <link>https://cmaronga.github.io/codecraft.blog/posts/automating-data-management/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Using REDCap, MySQL, RShiny-server</p>
+<p>Data management in multi-centre cohort studies presents unique challenges, particularly when these study sites are widely dispersed geographically and possess varying levels of technical and human resources. It is crucial to maintain data quality, promptly address data inconsistencies, and generate timely progress reports. This is especially true for initiatives like the Childhood Acute Illness and Nutrition Network (CHAIN), which involved recruiting participants from nine hospitals located in Africa and Asia. The CHAIN study collected highly detailed data spanning various biological and social domains.</p>
+<p>To streamline data management processes, the CHAIN cohort employed Research Electronic Data Capture (REDCap), a web-based, open-source database driven by metadata. In this article, I describe our effective utilization of REDCap in combination with the open-source R software to automate the data management workflow for the CHAIN study. I aim to document, step by step, the various decisions and implementations that were instrumental in this process. I plan to make this information available on my webpage for others to read and implement, although this will require a few days to compile and potentially create informative infographics.</p>
+<p>Additionally, I had the opportunity to present this work at the Why R conference in 2021, and you can watch the presentation on <a href="https://www.youtube.com/live/PbD_e5sz4P8?si=99HGccEfNv56qmWH">YouTube</a>. The presentation slides are also accessible <a href="https://github.com/cmaronga/cmaronga.github.io/blob/main/my_files/automating_research_data_management.pdf">here</a> for download</p>
+
+
+
+ ]]></description>
+  <category>Data Management</category>
+  <category>code</category>
+  <category>analysis</category>
+  <guid>https://cmaronga.github.io/codecraft.blog/posts/automating-data-management/index.html</guid>
+  <pubDate>Sun, 16 Dec 2018 00:00:00 GMT</pubDate>
+  <media:content url="https://cmaronga.github.io/codecraft.blog/posts/automating-data-management/image.jpg" medium="image" type="image/jpeg"/>
+</item>
+</channel>
+</rss>
