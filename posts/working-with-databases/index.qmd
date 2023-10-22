@@ -3,25 +3,25 @@ title: "Working with Databases in R"
 author: "Christopher Maronga"
 date: "2021-06-12"
 categories: [news, Data Management, code]
-image: "thumbnail.jpg"
+image: "working-database.jpg"
 ---
 
 MySQL, SQLite, R
 
-This blog post comes as a follow-up to a successful online training session jointly organized by NairobiR and RLadies on June 12, 2021. If you missed the session, you can view the recording on this [YouTube](https://youtu.be/txMmjDQoQqE?si=3SJ2pm_gQADa_DHY) link.
+This blog post comes as a follow-up to a successful online training session jointly organized by NairobiR and RLadies on June 12, 2021. If you missed the session, you can view the recording on this [YouTube](https://youtu.be/txMmjDQoQqE?si=3SJ2pm_gQADa_DHY) link
 
 In both the video and this accompanying blog, I delve into the fundamental principles of establishing dynamic connections and extracting data from databases using Application Programming Interfaces (APIs). Regardless of how and where data is stored, the initial step in any data management process involves loading it into your preferred working tool.
 
 Relational databases, such as RMySQL, and web-based databases, like REDCap, have gained popularity for efficiently and cost-effectively managing small to medium-sized datasets. In this blog, I'll guide you through the essential steps to access and utilize data stored in these platforms using the R statistical language. I will provide practical examples to demonstrate:
 
-1. Establishing an efficient connection between R and Relational Database Management Systems (RDBMS).
+1.  Establishing an efficient connection between R and Relational Database Management Systems (RDBMS).
 
-2. Querying data housed in any RDBMS directly from within R/RStudio.
+2.  Querying data housed in any RDBMS directly from within R/RStudio.
 
-3. Connecting to and querying data from a Research Electronic Data Capture (REDCap) database.
+3.  Connecting to and querying data from a Research Electronic Data Capture (REDCap) database.
 
-4. Best practices for securing your API while collaborating on projects.
+4.  Best practices for securing your API while collaborating on projects.
 
+Please note that this blog is a work in progress. In the meantime, you can access the workshop slides for reference [here](https://github.com/cmaronga/cmaronga.github.io/blob/main/my_files/working_with_databases_in_R.pdf) and the youtube link should be resourceful since this was a live coding exercise.
 
-Please note that this blog is a work in progress. In the meantime, you can access the workshop slides for reference [here.](https://github.com/cmaronga/cmaronga.github.io/blob/main/my_files/working_with_databases_in_R.pdf)
-
+I also delivered a similar workshop at NHS-R conference in 2022, the workshop materials can be found [here](https://github.com/cmaronga/NHSR-databases-with-R), while the recorded workshop video can be accessed in this [YouTube](https://youtu.be/htQWauSV9J4?si=uuhIxzy5WNizkFOD) link.
