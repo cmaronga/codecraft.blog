@@ -1,5 +1,5 @@
 ---
-title: "About"
+title: "About author"
 image: profile.jpg
 about:
   template: jolla
