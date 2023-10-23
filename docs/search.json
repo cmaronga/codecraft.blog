@@ -11,20 +11,55 @@
     "href": "index.html",
     "title": "CMaronga",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n\n\n\n\n  \n\n\n\n\nWorking with Databases in R\n\n\n\n\n\n\n\n\n\n2021-06-12\n\n\n2 min\n\n\n\n\n\n\n  \n\n\n\n\nAutomating Clinical Data Management\n\n\n\n\n\n\n\n\n\n2018-12-16\n\n\n2 min\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n\n\n\n\n  \n\n\n\n\nWorking with Databases in R\n\n\n\n\n\n\n\n\n\n\n\n\n2021-06-12\n\n\n2 min\n\n\n\n\n\n\n  \n\n\n\n\nAutomating Clinical Data Management\n\n\n\n\n\n\n\n\n\n\n\n\n2018-12-16\n\n\n2 min\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About author",
     "section": "",
-    "text": "Christopher Maronga\nHello, I hail from the beautiful landscapes of Kenya, East Africa. My academic journey led me to a Bachelor’s degree in Mathematics (JKUAT) and a Master’s in Statistical Sciences (Strathmore University), shaping my career in Health Research.\nI have a wealth of experience managing and analysing healthcare data for decision-making, as well as teaching introductory and advanced training courses in R.\nI currently work at Oxford University as a Senior Data Manager for the Oxford-GSK Institute of Molecular and Computational Medicine, facilitating data access and championing FAIRsharing for researchers from both GSK and Oxford University.\nWith over a decade of R Programming experience, I’m passionate about reproducible research, automating data products, statistical computing, and data visualization."
+    "text": "My name is Christopher Maronga, I hail from the beautiful landscapes of Kenya, East Africa.\nI have a wealth of experience managing and analysing healthcare data for decision-making, as well as teaching introductory and advanced courses in R.\nI’m passionate about reproducible research, automating data products, statistical computing, and data visualization.\n\n\n\nMSc. Statistical Sciences (Strathmore University)\nBSc. in Mathematics (JKUAT)\n\n\n\n\n\nPhase II & IV CTs\nReal World Data/Real World Evidence\nHealth Research\nData Management/Wrangling\nData Analysis/Statistical Analysis\nPredictive Modelling\n\n\n\n\n\nR Programming/RShiny\nPython\nSQL/MySQL\nREDCap\nGit/GitHub\nLaTeX\nDocker"
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "About author",
+    "section": "",
+    "text": "MSc. Statistical Sciences (Strathmore University)\nBSc. in Mathematics (JKUAT)"
+  },
+  {
+    "objectID": "about.html#experience",
+    "href": "about.html#experience",
+    "title": "About author",
+    "section": "",
+    "text": "Phase II & IV CTs\nReal World Data/Real World Evidence\nHealth Research\nData Management/Wrangling\nData Analysis/Statistical Analysis\nPredictive Modelling"
+  },
+  {
+    "objectID": "about.html#skillslanguages",
+    "href": "about.html#skillslanguages",
+    "title": "About author",
+    "section": "",
+    "text": "R Programming/RShiny\nPython\nSQL/MySQL\nREDCap\nGit/GitHub\nLaTeX\nDocker"
   },
   {
     "objectID": "posts/automating-data-management/index.html",
     "href": "posts/automating-data-management/index.html",
     "title": "Automating Clinical Data Management",
     "section": "",
-    "text": "Using REDCap, MySQL, RShiny-server\nData management in multi-centre cohort studies presents unique challenges, particularly when these study sites are widely dispersed geographically and possess varying levels of technical and human resources. It is crucial to maintain data quality, promptly address data inconsistencies, and generate timely progress reports. This is especially true for initiatives like the Childhood Acute Illness and Nutrition Network (CHAIN), which involved recruiting participants from nine hospitals located in Africa and Asia. The CHAIN study collected highly detailed data spanning various biological and social domains.\nTo streamline data management processes, the CHAIN cohort employed Research Electronic Data Capture (REDCap), a web-based, open-source database driven by metadata. In this article, I describe our effective utilization of REDCap in combination with the open-source R software to automate the data management workflow for the CHAIN study. I aim to document, step by step, the various decisions and implementations that were instrumental in this process. I plan to make this information available on my webpage for others to read and implement, although this will require a few days to compile and potentially create informative infographics.\nAdditionally, I had the opportunity to present this work at the Why R conference in 2021, and you can watch the presentation on YouTube. The presentation slides are also accessible here for download\nI hope after watching the conference presentation, you shall an idea how this was set up. I am working toward presenting this work as a guideline, untill then, pleas be patient and if you have any questions, feel free to reach me via e-mai."
+    "text": "Using REDCap, MySQL, RShiny-server"
+  },
+  {
+    "objectID": "posts/automating-data-management/index.html#introduction",
+    "href": "posts/automating-data-management/index.html#introduction",
+    "title": "Automating Clinical Data Management",
+    "section": "Introduction",
+    "text": "Introduction\nData management in multi-centre cohort studies presents unique challenges, particularly when these study sites are widely dispersed geographically and possess varying levels of technical and human resources. It is crucial to maintain data quality, promptly address data inconsistencies, and generate timely progress reports. This is especially true for initiatives like the Childhood Acute Illness and Nutrition Network (CHAIN), which involved recruiting participants from nine hospitals located in Africa and Asia. The CHAIN study collected highly detailed data spanning various biological and social domains."
+  },
+  {
+    "objectID": "posts/automating-data-management/index.html#methods",
+    "href": "posts/automating-data-management/index.html#methods",
+    "title": "Automating Clinical Data Management",
+    "section": "Methods",
+    "text": "Methods\nTo streamline data management processes, the CHAIN cohort employed Research Electronic Data Capture (REDCap), a web-based, open-source database driven by metadata. In this article, I describe our effective utilization of REDCap in combination with the open-source R software to automate the data management workflow for the CHAIN study. I aim to document, step by step, the various decisions and implementations that were instrumental in this process. I plan to make this information available on my webpage for others to read and implement, although this will require a few days to compile and potentially create informative infographics.\nAdditionally, I had the opportunity to present this work at the Why R conference in 2021, and you can watch the presentation on YouTube. The presentation slides are also accessible here for download\nI hope after watching the conference presentation, you shall an idea how this was set up. I am working toward presenting this work as a guideline, untill then, pleas be patient and if you have any questions, feel free to reach me via e-mai."
   }
 ]

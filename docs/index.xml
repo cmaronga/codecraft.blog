@@ -51,12 +51,18 @@
 
 
 <p>Using REDCap, MySQL, RShiny-server</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Data management in multi-centre cohort studies presents unique challenges, particularly when these study sites are widely dispersed geographically and possess varying levels of technical and human resources. It is crucial to maintain data quality, promptly address data inconsistencies, and generate timely progress reports. This is especially true for initiatives like the Childhood Acute Illness and Nutrition Network (CHAIN), which involved recruiting participants from nine hospitals located in Africa and Asia. The CHAIN study collected highly detailed data spanning various biological and social domains.</p>
+</section>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <p>To streamline data management processes, the CHAIN cohort employed Research Electronic Data Capture (REDCap), a web-based, open-source database driven by metadata. In this article, I describe our effective utilization of REDCap in combination with the open-source R software to automate the data management workflow for the CHAIN study. I aim to document, step by step, the various decisions and implementations that were instrumental in this process. I plan to make this information available on my webpage for others to read and implement, although this will require a few days to compile and potentially create informative infographics.</p>
 <p>Additionally, I had the opportunity to present this work at the Why R conference in 2021, and you can watch the presentation on <a href="https://www.youtube.com/live/PbD_e5sz4P8?si=99HGccEfNv56qmWH">YouTube</a>. The presentation slides are also accessible <a href="https://github.com/cmaronga/cmaronga.github.io/blob/main/my_files/automating_research_data_management.pdf">here</a> for download</p>
 <p>I hope after watching the conference presentation, you shall an idea how this was set up. I am working toward presenting this work as a guideline, untill then, pleas be patient and if you have any questions, feel free to reach me via e-mai.</p>
 
 
+</section>
 
  ]]></description>
   <category>Data Management</category>
