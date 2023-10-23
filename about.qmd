@@ -3,7 +3,7 @@ title: "About author"
 image: profile.jpg
 about:
   template: trestles
-  image-shape: round
+  #image-shape: round
   #image-width: 15em
   links:
     - icon: twitter
