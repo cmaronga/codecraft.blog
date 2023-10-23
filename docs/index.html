@@ -71,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-image','listing-date','listing-title','listing-author','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] }],
       
       searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
@@ -116,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+ <span class="menu-text">About author</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/cmaronga/codecraft.blog" rel="" target=""><i class="bi bi-github" role="img">
@@ -157,10 +157,28 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+     </select>
+  </div>
+</div>
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="news,Data Management,code" data-listing-date-sort="1623452400000" data-listing-file-modified-sort="1697983300302" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="0" data-categories="news,Data Management,code" data-listing-date-sort="1623452400000" data-listing-file-modified-sort="1698082280288" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<p><a href="./posts/working-with-databases/index.html"> <img src="./posts/working-with-databases/working-database.jpg" class="thumbnail-image"> </a></p>
+<p><a href="./posts/working-with-databases/index.html"> <img src="./posts/working-with-databases/working-database.jpg" class="thumbnail-image" style="height: 150px;"> </a></p>
 </div>
 <div class="body">
 <a href="./posts/working-with-databases/index.html">
@@ -171,37 +189,21 @@ Working with Databases in R
 
 </div>
 </a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Data Management'); return false;">
-Data Management
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-</div>
-<a href="./posts/working-with-databases/index.html">
-<div class="listing-description">
-MySQL, SQLite, R
-</div>
-</a>
 </div>
 <div class="metadata">
 <a href="./posts/working-with-databases/index.html">
 <div class="listing-date">
-Jun 12, 2021
+2021-06-12
 </div>
-<div class="listing-author">
-Christopher Maronga
+<div class="listing-reading-time">
+2 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="Data Management,code,analysis" data-listing-date-sort="1544918400000" data-listing-file-modified-sort="1697981355391" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="1" data-categories="Data Management,code,analysis" data-listing-date-sort="1544918400000" data-listing-file-modified-sort="1698082262336" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<p><a href="./posts/automating-data-management/index.html"> <img src="./posts/automating-data-management/image.jpg" class="thumbnail-image"> </a></p>
+<p><a href="./posts/automating-data-management/index.html"> <img src="./posts/automating-data-management/image.jpg" class="thumbnail-image" style="height: 150px;"> </a></p>
 </div>
 <div class="body">
 <a href="./posts/automating-data-management/index.html">
@@ -212,30 +214,14 @@ Automating Clinical Data Management
 
 </div>
 </a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Data Management'); return false;">
-Data Management
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
-analysis
-</div>
-</div>
-<a href="./posts/automating-data-management/index.html">
-<div class="listing-description">
-Using REDCap, MySQL, RShiny-server
-</div>
-</a>
 </div>
 <div class="metadata">
 <a href="./posts/automating-data-management/index.html">
 <div class="listing-date">
-Dec 16, 2018
+2018-12-16
 </div>
-<div class="listing-author">
-Christopher Maronga
+<div class="listing-reading-time">
+2 min
 </div>
 </a>
 </div>

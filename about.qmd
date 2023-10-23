@@ -15,9 +15,9 @@ about:
       href: https://github.com/cmaronga
 ---
 
-Christopher Maronga
+# Christopher Maronga
 
-Hello, I'm Christopher Maronga, hailing from the beautiful landscapes of Kenya, East Africa. My academic journey led me to a Bachelor's degree in Mathematics ([JKUAT](https://www.jkuat.ac.ke/)) and a Master's in Statistical Sciences ([Strathmore University](https://strathmore.edu/)), shaping my career in Health Research.
+Hello, I hail from the beautiful landscapes of Kenya, East Africa. My academic journey led me to a Bachelor's degree in Mathematics ([JKUAT](https://www.jkuat.ac.ke/)) and a Master's in Statistical Sciences ([Strathmore University](https://strathmore.edu/)), shaping my career in Health Research.
 
 I have a wealth of experience managing and analysing healthcare data for decision-making, as well as teaching introductory and advanced training courses in R.
 
