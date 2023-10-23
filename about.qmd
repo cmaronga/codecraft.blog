@@ -25,12 +25,12 @@ I have a wealth of experience managing and analysing healthcare data for decisio
 
 I'm passionate about reproducible research, automating data products, statistical computing, and data visualization.
 
-## [Education]{.underline}
+# [Education]{.underline}
 
--   **MSc. Statistical Sciences** ([Strathmore University](https://strathmore.edu/))
--   **BSc. in Mathematics** ([JKUAT](https://www.jkuat.ac.ke/))
+-   **MSc. Statistical Sciences** |[Strathmore University](https://strathmore.edu/)
+-   **BSc. in Mathematics** |[JKUAT](https://www.jkuat.ac.ke/)
 
-## [Experience]{.underline}
+# [Experience]{.underline}
 
 -   Phase II & IV CTs
 -   Real World Data/Real World Evidence
@@ -40,7 +40,7 @@ I'm passionate about reproducible research, automating data products, statistica
 -   Predictive Modelling
 
 
-## [Skills/languages]{.underline}
+# [Skills/languages]{.underline}
 
 -   R Programming/RShiny
 -   Python

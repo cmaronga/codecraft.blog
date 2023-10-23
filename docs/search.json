@@ -9,7 +9,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "CMaronga",
+    "title": "Maronga's codecraft",
     "section": "",
     "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n\n\n\n\n  \n\n\n\n\nWorking with Databases in R\n\n\n\n\n\n\n\n\n\n\n\n\n2021-06-12\n\n\n2 min\n\n\n\n\n\n\n  \n\n\n\n\nAutomating Clinical Data Management\n\n\n\n\n\n\n\n\n\n\n\n\n2018-12-16\n\n\n2 min\n\n\n\n\n\n\nNo matching items"
   },
@@ -18,28 +18,7 @@
     "href": "about.html",
     "title": "About author",
     "section": "",
-    "text": "My name is Christopher Maronga, I hail from the beautiful landscapes of Kenya, East Africa.\nI have a wealth of experience managing and analysing healthcare data for decision-making, as well as teaching introductory and advanced courses in R.\nI’m passionate about reproducible research, automating data products, statistical computing, and data visualization.\n\n\n\nMSc. Statistical Sciences (Strathmore University)\nBSc. in Mathematics (JKUAT)\n\n\n\n\n\nPhase II & IV CTs\nReal World Data/Real World Evidence\nHealth Research\nData Management/Wrangling\nData Analysis/Statistical Analysis\nPredictive Modelling\n\n\n\n\n\nR Programming/RShiny\nPython\nSQL/MySQL\nREDCap\nGit/GitHub\nLaTeX\nDocker"
-  },
-  {
-    "objectID": "about.html#education",
-    "href": "about.html#education",
-    "title": "About author",
-    "section": "",
-    "text": "MSc. Statistical Sciences (Strathmore University)\nBSc. in Mathematics (JKUAT)"
-  },
-  {
-    "objectID": "about.html#experience",
-    "href": "about.html#experience",
-    "title": "About author",
-    "section": "",
-    "text": "Phase II & IV CTs\nReal World Data/Real World Evidence\nHealth Research\nData Management/Wrangling\nData Analysis/Statistical Analysis\nPredictive Modelling"
-  },
-  {
-    "objectID": "about.html#skillslanguages",
-    "href": "about.html#skillslanguages",
-    "title": "About author",
-    "section": "",
-    "text": "R Programming/RShiny\nPython\nSQL/MySQL\nREDCap\nGit/GitHub\nLaTeX\nDocker"
+    "text": "Bio\nMy name is Christopher Maronga, I hail from the beautiful landscapes of Kenya, East Africa.\nI have a wealth of experience managing and analysing healthcare data for decision-making, as well as teaching introductory and advanced courses in R.\nI’m passionate about reproducible research, automating data products, statistical computing, and data visualization.\n\n\nEducation\n\nMSc. Statistical Sciences |Strathmore University\nBSc. in Mathematics |JKUAT\n\n\n\nExperience\n\nPhase II & IV CTs\nReal World Data/Real World Evidence\nHealth Research\nData Management/Wrangling\nData Analysis/Statistical Analysis\nPredictive Modelling\n\n\n\nSkills/languages\n\nR Programming/RShiny\nPython\nSQL/MySQL\nREDCap\nGit/GitHub\nLaTeX\nDocker"
   },
   {
     "objectID": "posts/automating-data-management/index.html",
