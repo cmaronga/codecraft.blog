@@ -25,3 +25,4 @@ Relational databases, such as RMySQL, and web-based databases, like REDCap, have
 Please note that this blog is a work in progress. In the meantime, you can access the workshop slides for reference [here](https://github.com/cmaronga/cmaronga.github.io/blob/main/my_files/working_with_databases_in_R.pdf) and the youtube link should be resourceful since this was a live coding exercise.
 
 I also delivered a similar workshop at NHS-R conference in 2022, the workshop materials can be found [here](https://github.com/cmaronga/NHSR-databases-with-R), while the recorded workshop video can be accessed in this [YouTube](https://youtu.be/htQWauSV9J4?si=uuhIxzy5WNizkFOD) link.
+

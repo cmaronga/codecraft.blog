@@ -10,7 +10,551 @@
 <atom:link href="https://cmaronga.github.io/codecraft.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Christopher Maronga blog</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Fri, 11 Jun 2021 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 24 Oct 2021 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Celebrating 100 days of Gym dedication</title>
+  <link>https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Because I can exercise and share!</p>
+<section id="my-word" class="level2">
+<h2 class="anchored" data-anchor-id="my-word">My word</h2>
+<p>I can’t help but feel a sense of pride and great accomplishment as the year comes to an end. In 2023, I committed to fitness goals which involved gym weight-lifting and outdoor running exercises, targeting at least 11km each weekend (spoiler: I only did 22km, ~ approximately 2 weekends), nevertheless, the results is a whooping 100 days of hard-work, dedication and near addiction to gym work-out.</p>
+<p>In this short article, I will share my 100 days journey, motivations and the lessons I have picked up in the process.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Load packages for session</span></span>
+<span id="cb1-2">pacman<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">p_load</span>(</span>
+<span id="cb1-3">  lubridate,  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># handle and manage dates</span></span>
+<span id="cb1-4">  flextable,  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># for quick and neat tables</span></span>
+<span id="cb1-5">  ggthemes,    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ggplot2 themes extension</span></span>
+<span id="cb1-6">  tidyverse   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># data wrangling and viz</span></span>
+<span id="cb1-7">)</span>
+<span id="cb1-8"></span>
+<span id="cb1-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># set theme for ggplot2</span></span>
+<span id="cb1-10"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_set</span>(</span>
+<span id="cb1-11">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_hc</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">base_size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span>                  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># base size</span></span>
+<span id="cb1-12">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span>(</span>
+<span id="cb1-13">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">legend.position =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>,              <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># No legend, unless specified in the plot</span></span>
+<span id="cb1-14">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">legend.title =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_blank</span>(),         <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># No title on the legend</span></span>
+<span id="cb1-15">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">axis.title.y =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">angle =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">90</span>) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># spin y title 90 degrees</span></span>
+<span id="cb1-16">    )</span>
+<span id="cb1-17">)</span></code></pre></div>
+</div>
+<p>The below code below utilize the <code>tribble</code> function to create row-wise tibble of the workout data for the months beggining January 2023 to my celebration month and date.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Creating tibble for monthly workout counts</span></span>
+<span id="cb2-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># used to visualize in the latter sections</span></span>
+<span id="cb2-3">workout_df <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">tribble</span>(</span>
+<span id="cb2-4">  <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> month, <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span>n_workouts,</span>
+<span id="cb2-5">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2023-01"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span> ,</span>
+<span id="cb2-6">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2023-02"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>,</span>
+<span id="cb2-7">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2023-03"</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">05</span> ,</span>
+<span id="cb2-8">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2023-04"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb2-9">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2023-05"</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">02</span> ,</span>
+<span id="cb2-10">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2023-06"</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span> ,</span>
+<span id="cb2-11">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2023-07"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">23</span>,</span>
+<span id="cb2-12">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2023-08"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>,</span>
+<span id="cb2-13">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2023-09"</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> ,</span>
+<span id="cb2-14">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2023-10"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span></span>
+<span id="cb2-15">)</span>
+<span id="cb2-16"></span>
+<span id="cb2-17"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># data processing</span></span>
+<span id="cb2-18">workout_df <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> workout_df <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb2-19">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(</span>
+<span id="cb2-20">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">month =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ym</span>(month),</span>
+<span id="cb2-21">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">n_workouts =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.integer</span>(n_workouts)</span>
+<span id="cb2-22">  )</span></code></pre></div>
+</div>
+<p>It all began with setting some realistic and achievable goals. When you are working towards a plan, you get a clear compass and guiding light that keeps you focused all the time. Some of the goals I set and working towards are:-</p>
+<ul>
+<li>Improve my muscle strength [full body muscles]</li>
+<li>Build endurance</li>
+<li>Overall fitness</li>
+</ul>
+<div class="cell" data-fig.dpi="300">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">workout_df <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb3-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> month, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> n_workouts, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">group =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_point</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> n_workouts)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># size of point depends on number of workouts</span></span>
+<span id="cb3-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_line</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">linewidth =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">labs</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Trend of monthly gym workouts"</span>,</span>
+<span id="cb3-6">       <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">subtitle =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Past 10 months only"</span>,</span>
+<span id="cb3-7">       <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Month"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"No. of workouts"</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-8">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_x_date</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">date_breaks =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"month"</span>,    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># break by 1 month interval</span></span>
+<span id="cb3-9">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">date_labels =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%b"</span>)       <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># show only month of the year</span></span></code></pre></div>
+<div class="cell-output-display">
+<div id="fig-trajectory" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/index_files/figure-html/fig-trajectory-1.png" class="img-fluid figure-img" width="1248"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Monthly Gym workouts</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Figure&nbsp;1 shows a trend of monthly workouts, with my worst efforts in the months of March and May (I have an excuse though 😂). I reached by best efforts in the month of July with a total of 23 gym works in that monthly only 😰, never managed to replicate that effort, it has now since become my other additional goal, you see how it works now?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">workout_df <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb4-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> n_workouts, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">factor</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb4-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_boxplot</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">width =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb4-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">labs</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The overal picture"</span>,</span>
+<span id="cb4-5">       <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"No. of workouts"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<div id="fig-summaries" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/index_files/figure-html/fig-summaries-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Workout summary</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>I averaged 10 workouts per month during the 10 months period (despite registering 0 in April and May) Figure&nbsp;2. I registered a median of 13 workouts per month, not bad for a beginner though, proud of these numbers to the greatest heights.</p>
+</section>
+<section id="sec-monthviz" class="level2">
+<h2 class="anchored" data-anchor-id="sec-monthviz">Monthly visual chart</h2>
+<p>The cascede images below shows monthly presence in the gym. The light-green highlighted dates represents the days I worked out for that month. July has a good pattern, I love it 🤗</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/Jan2023.PNG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Jan</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/Feb2023.PNG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Feb</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/Mar2023.PNG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Mar</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/Apr2023.PNG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Apr</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/May2023.PNG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">May</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/Jun2023.PNG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Jun</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/Jul2023.PNG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Jul</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/Aug2023.PNG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Aug</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/Sept2023.PNG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Sept</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/Oct2023.PNG" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Oct</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="workout-schedule" class="level2">
+<h2 class="anchored" data-anchor-id="workout-schedule">Workout schedule</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Work out schedule</span></span>
+<span id="cb5-2">workout_sched <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">tribble</span>(</span>
+<span id="cb5-3">  <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> Day, <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">50 mins</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span>, <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">30 mins</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span>, <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">10 mins</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span>,</span>
+<span id="cb5-4">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Monday"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Chest"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Biceps"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Treadmill Run"</span>,</span>
+<span id="cb5-5">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Tuesday"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Back"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Triceps"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Treadmill Run"</span>,</span>
+<span id="cb5-6">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Wednesday"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Legs"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Shoulder"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Treadmill Run"</span>,</span>
+<span id="cb5-7">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Thursday"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Compound exercises"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Treadmill Run"</span>,</span>
+<span id="cb5-8">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Friday"</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NA_character_</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NA_character_</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Rest day (Not always)"</span>,</span>
+<span id="cb5-9">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Tuesday"</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NA_character_</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NA_character_</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Outdoor half-marathon 11 - 13kms"</span>)</span></code></pre></div>
+</div>
+<p>The table belwo shows the daily work-out schedule, making sure I spend more time on muscles that take long to grow and always end my workout with a 10 mins run on the treadmill. The headers are day of the week and mins allocated to each exercise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">workout_sched <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb6-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">qflextable</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<div id="tbl-sched" class="anchored">
+
+<div class="tabwid"><style>.cl-bc8783e8{}.cl-bc80ebf0{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-bc83787a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-bc838752{width:1.092in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc83875c{width:0.82in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc83875d{width:1.72in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc838766{width:2.62in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc838767{width:1.092in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc838770{width:0.82in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc838771{width:1.72in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc838772{width:2.62in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc838773{width:1.092in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc83877a{width:0.82in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc83877b{width:1.72in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc83877c{width:2.62in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc838784{width:1.092in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc838785{width:0.82in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc838786{width:1.72in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc83878e{width:2.62in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc83878f{width:1.092in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc838790{width:0.82in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc838798{width:1.72in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc838799{width:2.62in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-bc8783e8"><caption>Table&nbsp;1:  <p>Workout schedule</p> </caption><thead><tr style="overflow-wrap:break-word;"><th class="cl-bc838752"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Day</span></p></th><th class="cl-bc83875c"><p class="cl-bc83787a"><span class="cl-bc80ebf0">50 mins</span></p></th><th class="cl-bc83875d"><p class="cl-bc83787a"><span class="cl-bc80ebf0">30 mins</span></p></th><th class="cl-bc838766"><p class="cl-bc83787a"><span class="cl-bc80ebf0">10 mins</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-bc838767"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Monday</span></p></td><td class="cl-bc838770"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Chest</span></p></td><td class="cl-bc838771"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Biceps</span></p></td><td class="cl-bc838772"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Treadmill Run</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-bc838767"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Tuesday</span></p></td><td class="cl-bc838770"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Back</span></p></td><td class="cl-bc838771"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Triceps</span></p></td><td class="cl-bc838772"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Treadmill Run</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-bc838767"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Wednesday</span></p></td><td class="cl-bc838770"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Legs</span></p></td><td class="cl-bc838771"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Shoulder</span></p></td><td class="cl-bc838772"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Treadmill Run</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-bc838773"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Thursday</span></p></td><td class="cl-bc83877a"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Core</span></p></td><td class="cl-bc83877b"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Compound exercises</span></p></td><td class="cl-bc83877c"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Treadmill Run</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-bc838784"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Friday</span></p></td><td class="cl-bc838785"><p class="cl-bc83787a"><span class="cl-bc80ebf0"></span></p></td><td class="cl-bc838786"><p class="cl-bc83787a"><span class="cl-bc80ebf0"></span></p></td><td class="cl-bc83878e"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Rest day (Not always)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-bc83878f"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Tuesday</span></p></td><td class="cl-bc838790"><p class="cl-bc83787a"><span class="cl-bc80ebf0"></span></p></td><td class="cl-bc838798"><p class="cl-bc83787a"><span class="cl-bc80ebf0"></span></p></td><td class="cl-bc838799"><p class="cl-bc83787a"><span class="cl-bc80ebf0">Outdoor half-marathon 11 - 13kms</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+</div>
+<p>As a starting point, I aimed at working out for atleast 1hr 30 mins; focusing two muscles a day as shown in Table&nbsp;1. Friday was not all rest day as can been seen in monthly visual chart -&nbsp;2, but was mostly a plan to catch up on missed appointment a.k.a punish yourself for missing many sessions the prior month.</p>
+</section>
+<section id="conclusion-and-take-aways" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-and-take-aways">Conclusion and take aways</h2>
+<p>This celebration is about a habit I have managed to pick, the growth and the transformation it has brought about.This type of a journey requires accountability, and for that reason, I have a workout buddy who I am accountable to and the gym app was crucial to track my progress.</p>
+<p>Fitness journey comes with challenges, for instance having to wake up in the morning at around 6am to workout while you would rather keep warm and sleep is the hardest choice. Overcoming this type of challenge was key to my success, made me mentally stronger and enabled me to become more resilient.</p>
+<p>Listen to your body always, know when to push harder and when to rest. Celebrate every milestone you have achieved, even if it meant you listed 2.5kg extra. Celebrations makes you more energetic and looking forward to move up next level the following workout day.</p>
+<p>I hope my story inspires you to start your fitness journey or continue the one you already archived. It’s doable, if you put mind to it. Here is to 100 days of hard-work, dedication and determination 🙌🥳</p>
+
+
+</section>
+
+ ]]></description>
+  <category>news</category>
+  <category>social</category>
+  <category>code</category>
+  <guid>https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/index.html</guid>
+  <pubDate>Sun, 24 Oct 2021 23:00:00 GMT</pubDate>
+  <media:content url="https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/all_visits.PNG" medium="image"/>
+</item>
 <item>
   <title>Working with Databases in R</title>
   <link>https://cmaronga.github.io/codecraft.blog/posts/working-with-databases/index.html</link>

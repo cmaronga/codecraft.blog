@@ -2,18 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/posts/working-with-databases/index.html</loc>
-    <lastmod>2023-10-23T21:21:32.233Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/index.html</loc>
-    <lastmod>2023-10-23T21:21:44.065Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/about.html</loc>
-    <lastmod>2023-10-23T21:23:18.668Z</lastmod>
+    <lastmod>2023-10-25T22:48:04.454Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/posts/automating-data-management/index.html</loc>
-    <lastmod>2023-10-23T21:21:31.576Z</lastmod>
+    <lastmod>2023-10-25T22:48:02.779Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/about.html</loc>
+    <lastmod>2023-10-25T22:48:01.069Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/index.html</loc>
+    <lastmod>2023-10-25T22:48:02.105Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/index.html</loc>
+    <lastmod>2023-10-25T22:48:03.805Z</lastmod>
   </url>
 </urlset>

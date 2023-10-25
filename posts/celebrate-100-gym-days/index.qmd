@@ -1,0 +1,191 @@
+---
+title: "Celebrating 100 days of Gym dedication"
+# author: "Christopher Maronga"
+date: "2021-10-25"
+categories: [news, social, code]
+image: "all_visits.PNG"
+#draft: true
+---
+
+Because I can exercise and share!
+
+## My word
+
+I can't help but feel a sense of pride and great accomplishment as the year comes to an end. In 2023, I committed to fitness goals which involved gym weight-lifting and outdoor running exercises, targeting at least 11km each weekend (spoiler: I only did 22km, \~ approximately 2 weekends), nevertheless, the results is a whooping 100 days of hard-work, dedication and near addiction to gym work-out.
+
+In this short article, I will share my 100 days journey, motivations and the lessons I have picked up in the process.
+
+```{r}
+#| label: loading-packages
+
+# Load packages for session
+pacman::p_load(
+  lubridate,  # handle and manage dates
+  flextable,  # for quick and neat tables
+  ggthemes,    # ggplot2 themes extension
+  tidyverse   # data wrangling and viz
+)
+
+# set theme for ggplot2
+theme_set(
+  theme_hc(base_size = 18) +                  # base size
+    theme(
+      legend.position = "none",              # No legend, unless specified in the plot
+      legend.title = element_blank(),         # No title on the legend
+      axis.title.y = element_text(angle = 90) # spin y title 90 degrees
+    )
+)
+
+
+```
+
+The below code below utilize the `tribble` function to create row-wise tibble of the workout data for the months beggining January 2023 to my celebration month and date.
+
+```{r}
+#| label: data-creation
+
+# Creating tibble for monthly workout counts
+# used to visualize in the latter sections
+workout_df <- tribble(
+  ~ month, ~n_workouts,
+  "2023-01", 14 ,
+  "2023-02", 13,
+  "2023-03",05 ,
+  "2023-04", 0,
+  "2023-05",02 ,
+  "2023-06",14 ,
+  "2023-07", 23,
+  "2023-08", 15,
+  "2023-09",0 ,
+  "2023-10", 14
+)
+
+# data processing
+workout_df <- workout_df %>% 
+  mutate(
+    month = ym(month),
+    n_workouts = as.integer(n_workouts)
+  )
+```
+
+It all began with setting some realistic and achievable goals. When you are working towards a plan, you get a clear compass and guiding light that keeps you focused all the time. Some of the goals I set and working towards are:-
+
+-   Improve my muscle strength \[full body muscles\]
+-   Build endurance
+-   Overall fitness
+
+```{r}
+#| label: fig-trajectory
+#| fig-cap: Monthly Gym workouts
+#| fig-width: 13
+#| fig-height: 7
+#| fig-dpi: 300
+
+
+workout_df %>%
+  ggplot(aes(x = month, y = n_workouts, group = 1)) +
+  geom_point(aes(size = n_workouts)) +   # size of point depends on number of workouts
+  geom_line(linewidth = 0.8) +
+  labs(title = "Trend of monthly gym workouts",
+       subtitle = "Past 10 months only",
+       x = "Month", y = "No. of workouts")+
+  scale_x_date(date_breaks = "month",    # break by 1 month interval
+               date_labels = "%b")       # show only month of the year
+  
+```
+
+@fig-trajectory shows a trend of monthly workouts, with my worst efforts in the months of March and May (I have an excuse though 😂). I reached by best efforts in the month of July with a total of 23 gym works in that monthly only 😰, never managed to replicate that effort, it has now since become my other additional goal, you see how it works now?
+
+```{r}
+#| label: fig-summaries
+#| fig-cap: Workout summary
+
+workout_df %>%
+  ggplot(aes(y = n_workouts, x = factor(1))) +
+  geom_boxplot(width = 0.2) +
+  labs(title = "The overal picture",
+       x = "", y = "No. of workouts")
+
+```
+
+I averaged 10 workouts per month during the 10 months period (despite registering 0 in April and May) @fig-summaries. I registered a median of 13 workouts per month, not bad for a beginner though, proud of these numbers to the greatest heights.
+
+## Monthly visual chart {#sec-monthviz}
+
+The cascede images below shows monthly presence in the gym. The light-green highlighted dates represents the days I worked out for that month. July has a good pattern, I love it 🤗
+
+::: {layout-nrow=2}
+![Jan](Jan2023.PNG)
+
+![Feb](Feb2023.PNG)
+
+![Mar](Mar2023.PNG)
+
+![Apr](Apr2023.PNG)
+
+![May](May2023.PNG)
+
+![Jun](Jun2023.PNG)
+
+![Jul](Jul2023.PNG)
+
+![Aug](Aug2023.PNG)
+
+![Sept](Sept2023.PNG)
+
+![Oct](Oct2023.PNG)
+:::
+
+
+## Workout schedule
+
+```{r}
+# Work out schedule
+workout_sched <- tribble(
+  ~ Day, ~ `50 mins`, ~ `30 mins`, ~`10 mins`,
+  "Monday", "Chest", "Biceps", "Treadmill Run",
+  "Tuesday", "Back", "Triceps", "Treadmill Run",
+  "Wednesday", "Legs", "Shoulder", "Treadmill Run",
+  "Thursday", "Core", "Compound exercises", "Treadmill Run",
+  "Friday", NA_character_, NA_character_, "Rest day (Not always)",
+  "Tuesday", NA_character_, NA_character_, "Outdoor half-marathon 11 - 13kms")
+```
+
+The table belwo shows the daily work-out schedule, making sure I spend more time on muscles that take long to grow and always end my workout with a 10 mins run on the treadmill. The headers are day of the week and mins allocated to each exercise.
+
+```{r}
+#| label: tbl-sched
+#| tbl-cap: Workout schedule
+workout_sched %>% 
+  qflextable()
+```
+
+As a starting point, I aimed at working out for atleast 1hr 30 mins; focusing two muscles a day as shown in @tbl-sched. Friday was not all rest day as can been seen in [monthly visual chart - @sec-monthviz], but was mostly a plan to catch up on missed appointment a.k.a punish yourself for missing many sessions the prior month.
+
+
+
+## Conclusion and take aways
+
+This celebration is about a habit I have managed to pick, the growth and the transformation it has brought about.This type of a journey requires accountability, and for that reason, I have a workout buddy who I am accountable to and the gym app was crucial to track my progress.
+
+Fitness journey comes with challenges, for instance having to wake up in the morning at around 6am to workout while you would rather keep warm and sleep is the hardest choice. Overcoming this type of challenge was key to my success, made me mentally stronger and enabled me to become more resilient.
+
+Listen to your body always, know when to push harder and when to rest. Celebrate every milestone you have achieved, even if it meant you listed 2.5kg extra. Celebrations makes you more energetic and looking forward to move up next level the following workout day.
+
+
+I hope my story inspires you to start your fitness journey or continue the one you already archived. It's doable, if you put mind to it. Here is to 100 days of hard-work, dedication and determination 🙌🥳
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
