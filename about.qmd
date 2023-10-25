@@ -17,7 +17,7 @@ about:
       href: https://github.com/cmaronga
 ---
 
-# [Bio]{.underline}
+## [Bio]{.underline}
 
 My name is Christopher Maronga, I hail from the beautiful landscapes of Kenya, East Africa.
 
@@ -25,12 +25,12 @@ I have a wealth of experience managing and analysing healthcare data for decisio
 
 I'm passionate about reproducible research, automating data products, statistical computing, and data visualization.
 
-# [Education]{.underline}
+## [Education]{.underline}
 
 -   **MSc. Statistical Sciences** |[Strathmore University](https://strathmore.edu/)
 -   **BSc. in Mathematics** |[JKUAT](https://www.jkuat.ac.ke/)
 
-# [Experience]{.underline}
+## [Experience]{.underline}
 
 -   Phase II & IV CTs
 -   Real World Data/Real World Evidence
@@ -40,7 +40,7 @@ I'm passionate about reproducible research, automating data products, statistica
 -   Predictive Modelling
 
 
-# [Skills/languages]{.underline}
+## [Skills/languages]{.underline}
 
 -   R Programming/RShiny
 -   Python
@@ -49,6 +49,31 @@ I'm passionate about reproducible research, automating data products, statistica
 -   Git/GitHub
 -   LaTeX
 -   Docker
+
+##  [Workshops delivered]{.underline}
+
+- [Working with Databases in R](https://youtu.be/txMmjDQoQqE?si=BpvZyIE5W2DnLzaT) **@ RLadies Nairobi**
+- [Working with Databases in R](https://youtu.be/htQWauSV9J4?si=LXN554RCOnW64L1R) **@ NHS-R COnference**
+- [Introduction to Data Management in R](https://youtu.be/8URgFFNDGfo?si=qqebF2snXPo8z7qo) **@satRday Nairobi**
+- [Integrating Rshiny and REDCap for Data Management](https://www.youtube.com/live/PbD_e5sz4P8?si=avioFeCLgc-h9O0N) **@Why R Conference**
+- [Introduction to data structures in R](https://youtu.be/H-Tkg_aWSas?si=gkbFU5dHv7Irjmf2)**@ Ai Kenya Code Maktaba**
+
+## [Publications]{.underline}
+
+1.[Characterising paediatric mortality during and after acute illness in Sub-Saharan Africa and South Asia: a secondary analysis of the CHAIN cohort using a machine learning approach](https://www.thelancet.com/journals/eclinm/article/PIIS2589-5370(23)00015-9/fulltext#secsectitle0010)
+
+2.[Expected Benefits and Budget Impact From a Microsimulation Model Support the Prioritization and Implementation of Fracture Liaison Services](https://asbmr.onlinelibrary.wiley.com/doi/full/10.1002/jbmr.4775?af=R).
+
+3.[Primary care consultations and pain medicine prescriptions: a comparison between patients with and without chronic pain after total knee replacement](https://bmcmusculoskeletdisord.biomedcentral.com/articles/10.1186/s12891-022-05492-6)
+
+4.[Childhood mortality during and after acute illness in Africa and south Asia: a prospective cohort study](https://www.sciencedirect.com/science/article/pii/S2214109X22001188#!)
+
+5.[A systematic reviewof the quality of conduct and reporting of survival analyses of tuberculosis outcomes in Africa](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-021-01280-3)
+
+6.[The Effect of Human Immunodeficiency Virus Prevention and Reproductive Health TextMessages on Human Immunodeficiency Virus Testing Among Young Women in Rural Kenya](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4874231/)
+
+7.[The Incremental Cost of Delivering PrEP as a Bridge to ART for HIV Serodiscordant Couples in Public HIV Care Clinics in Kenya](https://www.hindawi.com/journals/art/2019/4170615/)
+
 
 <!-- My academic journey led me to a Bachelor's degree in Mathematics ([JKUAT](https://www.jkuat.ac.ke/)) and a Master's in Statistical Sciences ([Strathmore University](https://strathmore.edu/)), shaping my career in Health Research. -->
 
