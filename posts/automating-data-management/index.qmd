@@ -2,7 +2,7 @@
 title: "Automating Clinical Data Management"
 # author: "Christopher Maronga"
 date: "2018-12-16"
-categories: [Data Management, code, analysis]
+categories: [Data wrangling, REDCap, analysis]
 image: "image.jpg"
 ---
 

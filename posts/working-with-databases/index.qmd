@@ -2,7 +2,7 @@
 title: "Working with Databases in R"
 # author: "Christopher Maronga"
 date: "2021-06-12"
-categories: [news, Data Management, code]
+categories: [SQL, Data wrangling, tidyverse]
 image: "working-database.jpg"
 ---
 

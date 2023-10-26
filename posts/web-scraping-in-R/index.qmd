@@ -1,0 +1,15 @@
+---
+title: "Web scraping using R"
+# author: "Christopher Maronga"
+date: "2021-10-26"
+categories: [Data mining, Data wrangling, tidyverse]
+image: "web-scraping.jpeg"
+---
+
+Efficient, flexible and powerful!
+
+# Introduction
+
+Web scraping is concept that most probably you have heard about. This is the art of [harvesting](https://en.wikipedia.org/wiki/Web_scraping) publicly available data from a website for use in your analysis or reporting. Web scraping can be as simple as copying the contents of a website and pasting them on an excel sheet, but that’s not what we are going to do today. Most website pages are built using [HTML](https://en.wikipedia.org/wiki/HTML) and this allows us to use tools such as R to dynamically extract the data.
+
+In this tutorial, I am going walk you through how you can harvest data from websites using R programming language. You can do this by coding the logic and instructions manually or use the package [`{rvest}`](https://rvest.tidyverse.org/) to easily extract the contents of a website. We would demonstrate the examples using the below two websites

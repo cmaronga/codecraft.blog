@@ -2,7 +2,7 @@
 title: "Celebrating 100 days of Gym dedication"
 # author: "Christopher Maronga"
 date: "2021-10-24"
-categories: [news, social, code]
+categories: [social, tidyverse, Data wrangling]
 image: "all_visits.PNG"
 #draft: true
 ---
@@ -20,10 +20,13 @@ In this short article, I will share my 100 days journey, motivations and the les
 
 # Load packages for session
 pacman::p_load(
-  lubridate,  # handle and manage dates
-  flextable,  # for quick and neat tables
+  lubridate,   # handle and manage dates
+  flextable,   # for quick and neat tables
   ggthemes,    # ggplot2 themes extension
-  tidyverse   # data wrangling and viz
+  here,        # manage file paths
+  rio,         # data import
+  scales,      # for the date label function
+  tidyverse    # data wrangling and viz
 )
 
 # set theme for ggplot2
@@ -40,6 +43,8 @@ theme_set(
 ```
 
 The below code below utilize the `tribble` function to create row-wise tibble of the workout data for the months beggining January 2023 to my celebration month and date.
+
+I also import an excel log (from the gym logs) capturing start and end times for all the gym workouts for the months listed. This will be used to create intersting visualization later on.
 
 ```{r}
 #| label: data-creation
@@ -60,13 +65,46 @@ workout_df <- tribble(
   "2023-10", 14
 )
 
+# import gym logs
+gym_log_raw <- import(here("posts","celebrate-100-gym-days", "chris-gym_game.xlsx"))
+
 # data processing
 workout_df <- workout_df %>% 
   mutate(
     month = ym(month),
     n_workouts = as.integer(n_workouts)
   )
+
 ```
+
+## Cleaning gym logs data
+
+
+```{r}
+# clean the gym log data
+gym_log <- gym_log_raw %>% 
+  
+  # create visit date, stat time and end time
+  mutate(
+    visit_start_time  = str_extract(visit_start, "\\d+:\\d+[aApP][mM]"),       # extract time component
+    visit_end_time    = str_extract(visit_end, "\\d+:\\d+[aApP][mM]"),         # extract time component
+    visit_date        = str_extract(visit_start, "\\d{2} [A-Za-z]{3} \\d{2}"), # extract date component
+    visit_date        = dmy(visit_date),                                       # convert into ISO date
+    week_day          = wday(visit_date, label = T, abbr = T),                 # day of the week
+    month             = month(visit_date, label = T),                          # workout month
+    duration_mins     = as.integer(str_remove(duration, " minutes")),          # minutes in the gym
+    morning_wkout     = ifelse(str_detect(visit_start, "am"), "Yes", "No")     # Morning workout (Yes/No)
+  ) %>% 
+  
+  # drop the first 3 columns, not neede downstream
+  select(-c(1:3)) %>% 
+  arrange(visit_date)
+
+gym_log %>% select(-gym_game) %>% head(n = 8) %>% 
+  flextable()
+```
+
+
 
 It all began with setting some realistic and achievable goals. When you are working towards a plan, you get a clear compass and guiding light that keeps you focused all the time. Some of the goals I set and working towards are:-
 
@@ -88,7 +126,7 @@ workout_df %>%
   geom_line(linewidth = 0.8) +
   labs(title = "Trend of monthly gym workouts",
        subtitle = "Past 10 months only",
-       x = "Month", y = "No. of workouts")+
+       x = "Month", y = "No. of workouts") +
   scale_x_date(date_breaks = "month",    # break by 1 month interval
                date_labels = "%b")       # show only month of the year
   
@@ -160,8 +198,61 @@ workout_sched %>%
   qflextable()
 ```
 
-As a starting point, I aimed at working out for at least 1hr 30 mins; focusing two muscles a day as shown in @tbl-sched. Friday was not all rest day as can been seen in [monthly visual chart - @sec-monthviz], but was mostly a plan to catch up on missed appointment a.k.a punish yourself for missing many sessions the prior month.
+As a starting point, I aimed at working out for at least 1hr 30 mins; focusing two muscles a day as shown in @tbl-sched. Friday was not all rest day as can been seen in [monthly visual chart - @sec-monthviz], but was mostly a plan to catch up on missed appointment a.k.a punish yourself for missing many sessions the prior month.http://127.0.0.1:15909/graphics/plot_zoom_png?width=2327&height=1245
 
+
+## Visualizing workout game
+
+## Average monthly workout duration
+
+```{r}
+gym_log %>% 
+  group_by(month) %>% 
+  summarise(
+    avg_dur = mean(duration_mins)
+  ) %>% 
+  ggplot(aes(x = month, y = avg_dur, group = 1)) +
+  geom_line()+
+  geom_point()
+
+```
+
+
+## Trend - best month
+
+What is the effect of workout buddy in the trend?
+
+```{r}
+gym_log %>% 
+  filter(month == "Jul") %>% 
+  ggplot(aes(x = visit_date, y = duration_mins, group = 1)) + 
+  geom_point()+
+  geom_line() +
+  scale_x_date(date_breaks = "day",    # break by 1 month interval
+               #date_labels = "%d\n%b",
+               labels = label_date_short())       # show only month of the year
+  
+```
+
+
+
+## Summary - workout days
+
+What is the effect of workout buddy in the trend?
+
+```{r}
+gym_log %>% 
+  ggplot(aes(x = month, y = duration_mins)) +
+  geom_boxplot(width = 0.5, outlier.color = "red")
+```
+
+## Histogram of duration
+```{r}
+gym_log %>% 
+  ggplot(aes(x = duration_mins)) +
+  geom_histogram(bins = 30)
+
+```
 
 
 ## Conclusion and take aways

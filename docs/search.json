@@ -7,25 +7,88 @@
     "text": "MySQL, SQLite, R\nThis blog post comes as a follow-up to a successful online training session jointly organized by NairobiR and RLadies on June 12, 2021. If you missed the session, you can view the recording on this YouTube link\nIn both the video and this accompanying blog, I delve into the fundamental principles of establishing dynamic connections and extracting data from databases using Application Programming Interfaces (APIs). Regardless of how and where data is stored, the initial step in any data management process involves loading it into your preferred working tool.\nRelational databases, such as RMySQL, and web-based databases, like REDCap, have gained popularity for efficiently and cost-effectively managing small to medium-sized datasets. In this blog, I’ll guide you through the essential steps to access and utilize data stored in these platforms using the R statistical language. I will provide practical examples to demonstrate:\n\nEstablishing an efficient connection between R and Relational Database Management Systems (RDBMS).\nQuerying data housed in any RDBMS directly from within R/RStudio.\nConnecting to and querying data from a Research Electronic Data Capture (REDCap) database.\nBest practices for securing your API while collaborating on projects.\n\nPlease note that this blog is a work in progress. In the meantime, you can access the workshop slides for reference here and the youtube link should be resourceful since this was a live coding exercise.\nI also delivered a similar workshop at NHS-R conference in 2022, the workshop materials can be found here, while the recorded workshop video can be accessed in this YouTube link."
   },
   {
-    "objectID": "posts/automating-data-management/index.html",
-    "href": "posts/automating-data-management/index.html",
-    "title": "Automating Clinical Data Management",
+    "objectID": "posts/celebrate-100-gym-days/index.html",
+    "href": "posts/celebrate-100-gym-days/index.html",
+    "title": "Celebrating 100 days of Gym dedication",
     "section": "",
-    "text": "Using REDCap, MySQL, RShiny-server"
+    "text": "Because I can exercise and share!"
   },
   {
-    "objectID": "posts/automating-data-management/index.html#introduction",
-    "href": "posts/automating-data-management/index.html#introduction",
-    "title": "Automating Clinical Data Management",
-    "section": "Introduction",
-    "text": "Introduction\nData management in multi-centre cohort studies presents unique challenges, particularly when these study sites are widely dispersed geographically and possess varying levels of technical and human resources. It is crucial to maintain data quality, promptly address data inconsistencies, and generate timely progress reports. This is especially true for initiatives like the Childhood Acute Illness and Nutrition Network (CHAIN), which involved recruiting participants from nine hospitals located in Africa and Asia. The CHAIN study collected highly detailed data spanning various biological and social domains."
+    "objectID": "posts/celebrate-100-gym-days/index.html#my-word",
+    "href": "posts/celebrate-100-gym-days/index.html#my-word",
+    "title": "Celebrating 100 days of Gym dedication",
+    "section": "My word",
+    "text": "My word\nI can’t help but feel a sense of pride and great accomplishment as the year comes to an end. In 2023, I committed to fitness goals which involved gym weight-lifting and outdoor running exercises, targeting at least 11km each weekend (spoiler: I only did 22km, ~ approximately 2 weekends), nevertheless, the results is a whooping 100 days of hard-work, dedication and near addiction to gym work-out.\nIn this short article, I will share my 100 days journey, motivations and the lessons I have picked up in the process.\n\n# Load packages for session\npacman::p_load(\n  lubridate,   # handle and manage dates\n  flextable,   # for quick and neat tables\n  ggthemes,    # ggplot2 themes extension\n  here,        # manage file paths\n  rio,         # data import\n  scales,      # for the date label function\n  tidyverse    # data wrangling and viz\n)\n\n# set theme for ggplot2\ntheme_set(\n  theme_hc(base_size = 18) +                  # base size\n    theme(\n      legend.position = \"none\",              # No legend, unless specified in the plot\n      legend.title = element_blank(),         # No title on the legend\n      axis.title.y = element_text(angle = 90) # spin y title 90 degrees\n    )\n)\n\nThe below code below utilize the tribble function to create row-wise tibble of the workout data for the months beggining January 2023 to my celebration month and date.\nI also import an excel log (from the gym logs) capturing start and end times for all the gym workouts for the months listed. This will be used to create intersting visualization later on.\n\n# Creating tibble for monthly workout counts\n# used to visualize in the latter sections\nworkout_df &lt;- tribble(\n  ~ month, ~n_workouts,\n  \"2023-01\", 14 ,\n  \"2023-02\", 13,\n  \"2023-03\",05 ,\n  \"2023-04\", 0,\n  \"2023-05\",02 ,\n  \"2023-06\",14 ,\n  \"2023-07\", 23,\n  \"2023-08\", 15,\n  \"2023-09\",0 ,\n  \"2023-10\", 14\n)\n\n# import gym logs\ngym_log_raw &lt;- import(here(\"posts\",\"celebrate-100-gym-days\", \"chris-gym_game.xlsx\"))\n\n# data processing\nworkout_df &lt;- workout_df %&gt;% \n  mutate(\n    month = ym(month),\n    n_workouts = as.integer(n_workouts)\n  )"
   },
   {
-    "objectID": "posts/automating-data-management/index.html#methods",
-    "href": "posts/automating-data-management/index.html#methods",
-    "title": "Automating Clinical Data Management",
-    "section": "Methods",
-    "text": "Methods\nTo streamline data management processes, the CHAIN cohort employed Research Electronic Data Capture (REDCap), a web-based, open-source database driven by metadata. In this article, I describe our effective utilization of REDCap in combination with the open-source R software to automate the data management workflow for the CHAIN study. I aim to document, step by step, the various decisions and implementations that were instrumental in this process. I plan to make this information available on my webpage for others to read and implement, although this will require a few days to compile and potentially create informative infographics.\nAdditionally, I had the opportunity to present this work at the Why R conference in 2021, and you can watch the presentation on YouTube. The presentation slides are also accessible here for download\nI hope after watching the conference presentation, you shall an idea how this was set up. I am working toward presenting this work as a guideline, untill then, pleas be patient and if you have any questions, feel free to reach me via e-mai."
+    "objectID": "posts/celebrate-100-gym-days/index.html#cleaning-gym-logs-data",
+    "href": "posts/celebrate-100-gym-days/index.html#cleaning-gym-logs-data",
+    "title": "Celebrating 100 days of Gym dedication",
+    "section": "Cleaning gym logs data",
+    "text": "Cleaning gym logs data\n\n# clean the gym log data\ngym_log &lt;- gym_log_raw %&gt;% \n  \n  # create visit date, stat time and end time\n  mutate(\n    visit_start_time  = str_extract(visit_start, \"\\\\d+:\\\\d+[aApP][mM]\"),       # extract time component\n    visit_end_time    = str_extract(visit_end, \"\\\\d+:\\\\d+[aApP][mM]\"),         # extract time component\n    visit_date        = str_extract(visit_start, \"\\\\d{2} [A-Za-z]{3} \\\\d{2}\"), # extract date component\n    visit_date        = dmy(visit_date),                                       # convert into ISO date\n    week_day          = wday(visit_date, label = T, abbr = T),                 # day of the week\n    month             = month(visit_date, label = T),                          # workout month\n    duration_mins     = as.integer(str_remove(duration, \" minutes\")),          # minutes in the gym\n    morning_wkout     = ifelse(str_detect(visit_start, \"am\"), \"Yes\", \"No\")     # Morning workout (Yes/No)\n  ) %&gt;% \n  \n  # drop the first 3 columns, not neede downstream\n  select(-c(1:3)) %&gt;% \n  arrange(visit_date)\n\ngym_log %&gt;% select(-gym_game) %&gt;% head(n = 8) %&gt;% \n  flextable()\n\n\nvisit_start_timevisit_end_timevisit_dateweek_daymonthduration_minsmorning_wkout10:47am11:40am2023-01-02MonJan53Yes4:56pm6:12pm2023-01-03TueJan76No5:21pm6:37pm2023-01-04WedJan76No1:49pm3:26pm2023-01-08SunJan97No8:11pm9:23pm2023-01-09MonJan72No8:16pm9:28pm2023-01-10TueJan72No7:45pm9:04pm2023-01-11WedJan79No6:22am7:48am2023-01-13FriJan86Yes\n\n\nIt all began with setting some realistic and achievable goals. When you are working towards a plan, you get a clear compass and guiding light that keeps you focused all the time. Some of the goals I set and working towards are:-\n\nImprove my muscle strength [full body muscles]\nBuild endurance\nOverall fitness\n\n\nworkout_df %&gt;%\n  ggplot(aes(x = month, y = n_workouts, group = 1)) +\n  geom_point(aes(size = n_workouts)) +   # size of point depends on number of workouts\n  geom_line(linewidth = 0.8) +\n  labs(title = \"Trend of monthly gym workouts\",\n       subtitle = \"Past 10 months only\",\n       x = \"Month\", y = \"No. of workouts\") +\n  scale_x_date(date_breaks = \"month\",    # break by 1 month interval\n               date_labels = \"%b\")       # show only month of the year\n\n\n\n\nFigure 1: Monthly Gym workouts\n\n\n\n\nFigure 1 shows a trend of monthly workouts, with my worst efforts in the months of March and May (I have an excuse though 😂). I reached by best efforts in the month of July with a total of 23 gym works in that monthly only 😰, never managed to replicate that effort, it has now since become my other additional goal, you see how it works now?\n\nworkout_df %&gt;%\n  ggplot(aes(y = n_workouts, x = factor(1))) +\n  geom_boxplot(width = 0.2) +\n  labs(title = \"The overal picture\",\n       x = \"\", y = \"No. of workouts\")\n\n\n\n\nFigure 2: Workout summary\n\n\n\n\nI averaged 10 workouts per month during the 10 months period (despite registering 0 in April and May) Figure 2. I registered a median of 13 workouts per month, not bad for a beginner though, proud of these numbers to the greatest heights."
+  },
+  {
+    "objectID": "posts/celebrate-100-gym-days/index.html#sec-monthviz",
+    "href": "posts/celebrate-100-gym-days/index.html#sec-monthviz",
+    "title": "Celebrating 100 days of Gym dedication",
+    "section": "Monthly visual chart",
+    "text": "Monthly visual chart\nThe cascede images below shows monthly presence in the gym. The light-green highlighted dates represents the days I worked out for that month. July has a good pattern, I love it 🤗\n\n\n\n\n\n\nJan\n\n\n\n\n\n\n\nFeb\n\n\n\n\n\n\n\nMar\n\n\n\n\n\n\n\nApr\n\n\n\n\n\n\n\nMay\n\n\n\n\n\n\n\n\n\nJun\n\n\n\n\n\n\n\nJul\n\n\n\n\n\n\n\nAug\n\n\n\n\n\n\n\nSept\n\n\n\n\n\n\n\nOct"
+  },
+  {
+    "objectID": "posts/celebrate-100-gym-days/index.html#workout-schedule",
+    "href": "posts/celebrate-100-gym-days/index.html#workout-schedule",
+    "title": "Celebrating 100 days of Gym dedication",
+    "section": "Workout schedule",
+    "text": "Workout schedule\n\n# Work out schedule\nworkout_sched &lt;- tribble(\n  ~ Day, ~ `50 mins`, ~ `30 mins`, ~`10 mins`,\n  \"Monday\", \"Chest\", \"Biceps\", \"Treadmill Run\",\n  \"Tuesday\", \"Back\", \"Triceps\", \"Treadmill Run\",\n  \"Wednesday\", \"Legs\", \"Shoulder\", \"Treadmill Run\",\n  \"Thursday\", \"Core\", \"Compound exercises\", \"Treadmill Run\",\n  \"Friday\", NA_character_, NA_character_, \"Rest day (Not always)\",\n  \"Saturday\", NA_character_, NA_character_, \"Outdoor half-marathon 11 - 13kms\")\n\nThe table below shows the daily work-out schedule, making sure I spend more time on muscles that take long to grow and always end my workout with a 10 mins run on the treadmill. The headers are day of the week and mins allocated to each exercise.\n\nworkout_sched %&gt;% \n  qflextable()\n\n\n\nTable 1:  Workout schedule Day50 mins30 mins10 minsMondayChestBicepsTreadmill RunTuesdayBackTricepsTreadmill RunWednesdayLegsShoulderTreadmill RunThursdayCoreCompound exercisesTreadmill RunFridayRest day (Not always)SaturdayOutdoor half-marathon 11 - 13kms\n\n\n\nAs a starting point, I aimed at working out for at least 1hr 30 mins; focusing two muscles a day as shown in Table 1. Friday was not all rest day as can been seen in monthly visual chart - 3, but was mostly a plan to catch up on missed appointment a.k.a punish yourself for missing many sessions the prior month.http://127.0.0.1:15909/graphics/plot_zoom_png?width=2327&height=1245"
+  },
+  {
+    "objectID": "posts/celebrate-100-gym-days/index.html#visualizing-workout-game",
+    "href": "posts/celebrate-100-gym-days/index.html#visualizing-workout-game",
+    "title": "Celebrating 100 days of Gym dedication",
+    "section": "Visualizing workout game",
+    "text": "Visualizing workout game"
+  },
+  {
+    "objectID": "posts/celebrate-100-gym-days/index.html#average-monthly-workout-duration",
+    "href": "posts/celebrate-100-gym-days/index.html#average-monthly-workout-duration",
+    "title": "Celebrating 100 days of Gym dedication",
+    "section": "Average monthly workout duration",
+    "text": "Average monthly workout duration\n\ngym_log %&gt;% \n  group_by(month) %&gt;% \n  summarise(\n    avg_dur = mean(duration_mins)\n  ) %&gt;% \n  ggplot(aes(x = month, y = avg_dur, group = 1)) +\n  geom_line()+\n  geom_point()"
+  },
+  {
+    "objectID": "posts/celebrate-100-gym-days/index.html#trend---best-month",
+    "href": "posts/celebrate-100-gym-days/index.html#trend---best-month",
+    "title": "Celebrating 100 days of Gym dedication",
+    "section": "Trend - best month",
+    "text": "Trend - best month\nWhat is the effect of workout buddy in the trend?\n\ngym_log %&gt;% \n  filter(month == \"Jul\") %&gt;% \n  ggplot(aes(x = visit_date, y = duration_mins, group = 1)) + \n  geom_point()+\n  geom_line() +\n  scale_x_date(date_breaks = \"day\",    # break by 1 month interval\n               #date_labels = \"%d\\n%b\",\n               labels = label_date_short())       # show only month of the year"
+  },
+  {
+    "objectID": "posts/celebrate-100-gym-days/index.html#summary---workout-days",
+    "href": "posts/celebrate-100-gym-days/index.html#summary---workout-days",
+    "title": "Celebrating 100 days of Gym dedication",
+    "section": "Summary - workout days",
+    "text": "Summary - workout days\nWhat is the effect of workout buddy in the trend?\n\ngym_log %&gt;% \n  ggplot(aes(x = month, y = duration_mins)) +\n  geom_boxplot(width = 0.5, outlier.color = \"red\")"
+  },
+  {
+    "objectID": "posts/celebrate-100-gym-days/index.html#histogram-of-duration",
+    "href": "posts/celebrate-100-gym-days/index.html#histogram-of-duration",
+    "title": "Celebrating 100 days of Gym dedication",
+    "section": "Histogram of duration",
+    "text": "Histogram of duration\n\ngym_log %&gt;% \n  ggplot(aes(x = duration_mins)) +\n  geom_histogram(bins = 30)"
+  },
+  {
+    "objectID": "posts/celebrate-100-gym-days/index.html#conclusion-and-take-aways",
+    "href": "posts/celebrate-100-gym-days/index.html#conclusion-and-take-aways",
+    "title": "Celebrating 100 days of Gym dedication",
+    "section": "Conclusion and take aways",
+    "text": "Conclusion and take aways\nThis celebration is about a habit I have managed to pick, the growth and the transformation it has brought about.This type of a journey requires accountability, and for that reason, I have a workout buddy Tony Henry who I am accountable to, and the gym app was very crucial in tracking my progress.\nFitness journey comes with challenges, for instance having to wake up in the morning at around 6am to workout while you would rather keep warm and sleep is the hardest choice. Overcoming this type of challenge was key to my success, made me mentally stronger and enabled me to become more resilient.\nListen to your body always, know when to push harder and when to rest. Celebrate every milestone you have achieved, even if it meant you lifted 2.5kg extra on top of your regular weight limit. Celebrations makes you more energetic and looking forward to move up next level the following workout day.\nI hope my story inspires you to start your fitness journey or continue the one you already archived. It’s doable, if you put mind to it. Here is to 100 days of hard-work, dedication and determination 🙌🥳."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Maronga's codecraft",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n\n\n\n\n  \n\n\n\n\nWeb scraping using R\n\n\n\n\n\n\n\n\n\n\n\n\n2021-10-26\n\n\n1 min\n\n\n\n\n\n\n  \n\n\n\n\nCelebrating 100 days of Gym dedication\n\n\n\n\n\n\n\n\n\n\n\n\n2021-10-24\n\n\n9 min\n\n\n\n\n\n\n  \n\n\n\n\nWorking with Databases in R\n\n\n\n\n\n\n\n\n\n\n\n\n2021-06-12\n\n\n2 min\n\n\n\n\n\n\n  \n\n\n\n\nAutomating Clinical Data Management\n\n\n\n\n\n\n\n\n\n\n\n\n2018-12-16\n\n\n2 min\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -77,45 +140,31 @@
     "text": "Publications\n1.Characterising paediatric mortality during and after acute illness in Sub-Saharan Africa and South Asia: a secondary analysis of the CHAIN cohort using a machine learning approach\n2.Expected Benefits and Budget Impact From a Microsimulation Model Support the Prioritization and Implementation of Fracture Liaison Services.\n3.Primary care consultations and pain medicine prescriptions: a comparison between patients with and without chronic pain after total knee replacement\n4.Childhood mortality during and after acute illness in Africa and south Asia: a prospective cohort study\n5.A systematic reviewof the quality of conduct and reporting of survival analyses of tuberculosis outcomes in Africa\n6.The Effect of Human Immunodeficiency Virus Prevention and Reproductive Health TextMessages on Human Immunodeficiency Virus Testing Among Young Women in Rural Kenya\n7.The Incremental Cost of Delivering PrEP as a Bridge to ART for HIV Serodiscordant Couples in Public HIV Care Clinics in Kenya"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Maronga's codecraft",
+    "objectID": "posts/automating-data-management/index.html",
+    "href": "posts/automating-data-management/index.html",
+    "title": "Automating Clinical Data Management",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n\n\n\n\n  \n\n\n\n\nCelebrating 100 days of Gym dedication\n\n\n\n\n\n\n\n\n\n\n\n\n2021-10-24\n\n\n6 min\n\n\n\n\n\n\n  \n\n\n\n\nWorking with Databases in R\n\n\n\n\n\n\n\n\n\n\n\n\n2021-06-12\n\n\n2 min\n\n\n\n\n\n\n  \n\n\n\n\nAutomating Clinical Data Management\n\n\n\n\n\n\n\n\n\n\n\n\n2018-12-16\n\n\n2 min\n\n\n\n\n\n\nNo matching items"
+    "text": "Using REDCap, MySQL, RShiny-server"
   },
   {
-    "objectID": "posts/celebrate-100-gym-days/index.html",
-    "href": "posts/celebrate-100-gym-days/index.html",
-    "title": "Celebrating 100 days of Gym dedication",
+    "objectID": "posts/automating-data-management/index.html#introduction",
+    "href": "posts/automating-data-management/index.html#introduction",
+    "title": "Automating Clinical Data Management",
+    "section": "Introduction",
+    "text": "Introduction\nData management in multi-centre cohort studies presents unique challenges, particularly when these study sites are widely dispersed geographically and possess varying levels of technical and human resources. It is crucial to maintain data quality, promptly address data inconsistencies, and generate timely progress reports. This is especially true for initiatives like the Childhood Acute Illness and Nutrition Network (CHAIN), which involved recruiting participants from nine hospitals located in Africa and Asia. The CHAIN study collected highly detailed data spanning various biological and social domains."
+  },
+  {
+    "objectID": "posts/automating-data-management/index.html#methods",
+    "href": "posts/automating-data-management/index.html#methods",
+    "title": "Automating Clinical Data Management",
+    "section": "Methods",
+    "text": "Methods\nTo streamline data management processes, the CHAIN cohort employed Research Electronic Data Capture (REDCap), a web-based, open-source database driven by metadata. In this article, I describe our effective utilization of REDCap in combination with the open-source R software to automate the data management workflow for the CHAIN study. I aim to document, step by step, the various decisions and implementations that were instrumental in this process. I plan to make this information available on my webpage for others to read and implement, although this will require a few days to compile and potentially create informative infographics.\nAdditionally, I had the opportunity to present this work at the Why R conference in 2021, and you can watch the presentation on YouTube. The presentation slides are also accessible here for download\nI hope after watching the conference presentation, you shall an idea how this was set up. I am working toward presenting this work as a guideline, untill then, pleas be patient and if you have any questions, feel free to reach me via e-mai."
+  },
+  {
+    "objectID": "posts/web-scraping-in-R/index.html",
+    "href": "posts/web-scraping-in-R/index.html",
+    "title": "Web scraping using R",
     "section": "",
-    "text": "Because I can exercise and share!"
-  },
-  {
-    "objectID": "posts/celebrate-100-gym-days/index.html#my-word",
-    "href": "posts/celebrate-100-gym-days/index.html#my-word",
-    "title": "Celebrating 100 days of Gym dedication",
-    "section": "My word",
-    "text": "My word\nI can’t help but feel a sense of pride and great accomplishment as the year comes to an end. In 2023, I committed to fitness goals which involved gym weight-lifting and outdoor running exercises, targeting at least 11km each weekend (spoiler: I only did 22km, ~ approximately 2 weekends), nevertheless, the results is a whooping 100 days of hard-work, dedication and near addiction to gym work-out.\nIn this short article, I will share my 100 days journey, motivations and the lessons I have picked up in the process.\n\n# Load packages for session\npacman::p_load(\n  lubridate,  # handle and manage dates\n  flextable,  # for quick and neat tables\n  ggthemes,    # ggplot2 themes extension\n  tidyverse   # data wrangling and viz\n)\n\n# set theme for ggplot2\ntheme_set(\n  theme_hc(base_size = 18) +                  # base size\n    theme(\n      legend.position = \"none\",              # No legend, unless specified in the plot\n      legend.title = element_blank(),         # No title on the legend\n      axis.title.y = element_text(angle = 90) # spin y title 90 degrees\n    )\n)\n\nThe below code below utilize the tribble function to create row-wise tibble of the workout data for the months beggining January 2023 to my celebration month and date.\n\n# Creating tibble for monthly workout counts\n# used to visualize in the latter sections\nworkout_df &lt;- tribble(\n  ~ month, ~n_workouts,\n  \"2023-01\", 14 ,\n  \"2023-02\", 13,\n  \"2023-03\",05 ,\n  \"2023-04\", 0,\n  \"2023-05\",02 ,\n  \"2023-06\",14 ,\n  \"2023-07\", 23,\n  \"2023-08\", 15,\n  \"2023-09\",0 ,\n  \"2023-10\", 14\n)\n\n# data processing\nworkout_df &lt;- workout_df %&gt;% \n  mutate(\n    month = ym(month),\n    n_workouts = as.integer(n_workouts)\n  )\n\nIt all began with setting some realistic and achievable goals. When you are working towards a plan, you get a clear compass and guiding light that keeps you focused all the time. Some of the goals I set and working towards are:-\n\nImprove my muscle strength [full body muscles]\nBuild endurance\nOverall fitness\n\n\nworkout_df %&gt;%\n  ggplot(aes(x = month, y = n_workouts, group = 1)) +\n  geom_point(aes(size = n_workouts)) +   # size of point depends on number of workouts\n  geom_line(linewidth = 0.8) +\n  labs(title = \"Trend of monthly gym workouts\",\n       subtitle = \"Past 10 months only\",\n       x = \"Month\", y = \"No. of workouts\")+\n  scale_x_date(date_breaks = \"month\",    # break by 1 month interval\n               date_labels = \"%b\")       # show only month of the year\n\n\n\n\nFigure 1: Monthly Gym workouts\n\n\n\n\nFigure 1 shows a trend of monthly workouts, with my worst efforts in the months of March and May (I have an excuse though 😂). I reached by best efforts in the month of July with a total of 23 gym works in that monthly only 😰, never managed to replicate that effort, it has now since become my other additional goal, you see how it works now?\n\nworkout_df %&gt;%\n  ggplot(aes(y = n_workouts, x = factor(1))) +\n  geom_boxplot(width = 0.2) +\n  labs(title = \"The overal picture\",\n       x = \"\", y = \"No. of workouts\")\n\n\n\n\nFigure 2: Workout summary\n\n\n\n\nI averaged 10 workouts per month during the 10 months period (despite registering 0 in April and May) Figure 2. I registered a median of 13 workouts per month, not bad for a beginner though, proud of these numbers to the greatest heights."
-  },
-  {
-    "objectID": "posts/celebrate-100-gym-days/index.html#sec-monthviz",
-    "href": "posts/celebrate-100-gym-days/index.html#sec-monthviz",
-    "title": "Celebrating 100 days of Gym dedication",
-    "section": "Monthly visual chart",
-    "text": "Monthly visual chart\nThe cascede images below shows monthly presence in the gym. The light-green highlighted dates represents the days I worked out for that month. July has a good pattern, I love it 🤗\n\n\n\n\n\n\nJan\n\n\n\n\n\n\n\nFeb\n\n\n\n\n\n\n\nMar\n\n\n\n\n\n\n\nApr\n\n\n\n\n\n\n\nMay\n\n\n\n\n\n\n\n\n\nJun\n\n\n\n\n\n\n\nJul\n\n\n\n\n\n\n\nAug\n\n\n\n\n\n\n\nSept\n\n\n\n\n\n\n\nOct"
-  },
-  {
-    "objectID": "posts/celebrate-100-gym-days/index.html#workout-schedule",
-    "href": "posts/celebrate-100-gym-days/index.html#workout-schedule",
-    "title": "Celebrating 100 days of Gym dedication",
-    "section": "Workout schedule",
-    "text": "Workout schedule\n\n# Work out schedule\nworkout_sched &lt;- tribble(\n  ~ Day, ~ `50 mins`, ~ `30 mins`, ~`10 mins`,\n  \"Monday\", \"Chest\", \"Biceps\", \"Treadmill Run\",\n  \"Tuesday\", \"Back\", \"Triceps\", \"Treadmill Run\",\n  \"Wednesday\", \"Legs\", \"Shoulder\", \"Treadmill Run\",\n  \"Thursday\", \"Core\", \"Compound exercises\", \"Treadmill Run\",\n  \"Friday\", NA_character_, NA_character_, \"Rest day (Not always)\",\n  \"Saturday\", NA_character_, NA_character_, \"Outdoor half-marathon 11 - 13kms\")\n\nThe table below shows the daily work-out schedule, making sure I spend more time on muscles that take long to grow and always end my workout with a 10 mins run on the treadmill. The headers are day of the week and mins allocated to each exercise.\n\nworkout_sched %&gt;% \n  qflextable()\n\n\n\nTable 1:  Workout schedule Day50 mins30 mins10 minsMondayChestBicepsTreadmill RunTuesdayBackTricepsTreadmill RunWednesdayLegsShoulderTreadmill RunThursdayCoreCompound exercisesTreadmill RunFridayRest day (Not always)SaturdayOutdoor half-marathon 11 - 13kms\n\n\n\nAs a starting point, I aimed at working out for at least 1hr 30 mins; focusing two muscles a day as shown in Table 1. Friday was not all rest day as can been seen in monthly visual chart - 2, but was mostly a plan to catch up on missed appointment a.k.a punish yourself for missing many sessions the prior month."
-  },
-  {
-    "objectID": "posts/celebrate-100-gym-days/index.html#conclusion-and-take-aways",
-    "href": "posts/celebrate-100-gym-days/index.html#conclusion-and-take-aways",
-    "title": "Celebrating 100 days of Gym dedication",
-    "section": "Conclusion and take aways",
-    "text": "Conclusion and take aways\nThis celebration is about a habit I have managed to pick, the growth and the transformation it has brought about.This type of a journey requires accountability, and for that reason, I have a workout buddy Tony Henry who I am accountable to, and the gym app was very crucial in tracking my progress.\nFitness journey comes with challenges, for instance having to wake up in the morning at around 6am to workout while you would rather keep warm and sleep is the hardest choice. Overcoming this type of challenge was key to my success, made me mentally stronger and enabled me to become more resilient.\nListen to your body always, know when to push harder and when to rest. Celebrate every milestone you have achieved, even if it meant you lifted 2.5kg extra on top of your regular weight limit. Celebrations makes you more energetic and looking forward to move up next level the following workout day.\nI hope my story inspires you to start your fitness journey or continue the one you already archived. It’s doable, if you put mind to it. Here is to 100 days of hard-work, dedication and determination 🙌🥳."
+    "text": "Efficient, flexible and powerful!\n\nIntroduction\nWeb scraping is concept that most probably you have heard about. This is the art of harvesting publicly available data from a website for use in your analysis or reporting. Web scraping can be as simple as copying the contents of a website and pasting them on an excel sheet, but that’s not what we are going to do today. Most website pages are built using HTML and this allows us to use tools such as R to dynamically extract the data.\nIn this tutorial, I am going walk you through how you can harvest data from websites using R programming language. You can do this by coding the logic and instructions manually or use the package {rvest} to easily extract the contents of a website. We would demonstrate the examples using the below two websites"
   }
 ]
