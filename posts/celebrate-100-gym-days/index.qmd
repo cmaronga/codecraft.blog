@@ -5,15 +5,17 @@ date: "2021-10-24"
 categories: [social, tidyverse, Data wrangling]
 image: "all_visits.PNG"
 #draft: true
+execute: 
+  warning: false
 ---
 
-Because I can exercise and share!
+Because I can exercise and share a brief story!
 
-## My word
+## Introduction
 
-I can't help but feel a sense of pride and great accomplishment as the year comes to an end. In 2023, I committed to fitness goals which involved gym weight-lifting and outdoor running exercises, targeting at least 11km each weekend (spoiler: I only did 22km, \~ approximately 2 weekends), nevertheless, the results is a whooping 100 days of hard-work, dedication and near addiction to gym work-out.
+Welcome to the journey of celebrating 100 days of unwavering dedication to my fitness regimen. Beginning of the year, I embarked on a quest for personal betterment, focusing on gym weight-lifting and outdoor running exercises, with a target of achieving at least 11 kilometers each weekend (fun fact: I exceeded my goal by running approximately 28 kilometers in just about two weekends).
 
-In this short article, I will share my 100 days journey, motivations and the lessons I have picked up in the process.
+This journey culminated in a staggering 100 days of sheer hard work, unwavering dedication, and a growing passion for all things fitness. In this article, I aim to take you through this transformative 100-day journey, sharing the challenges I overcame, and the invaluable lessons I've learned along the way.
 
 ```{r}
 #| label: loading-packages
@@ -44,7 +46,7 @@ theme_set(
 
 The below code below utilize the `tribble` function to create row-wise tibble of the workout data for the months beggining January 2023 to my celebration month and date.
 
-I also import an excel log (from the gym logs) capturing start and end times for all the gym workouts for the months listed. This will be used to create intersting visualization later on.
+I also import an excel log (from the gym logs) capturing start and end times for all the gym workouts for the months listed. This will be used to create interesting visualization later on.
 
 ```{r}
 #| label: data-creation
@@ -79,7 +81,6 @@ workout_df <- workout_df %>%
 
 ## Cleaning gym logs data
 
-
 ```{r}
 # clean the gym log data
 gym_log <- gym_log_raw %>% 
@@ -104,13 +105,13 @@ gym_log %>% select(-gym_game) %>% head(n = 8) %>%
   flextable()
 ```
 
+My journey commenced with setting realistic and achievable fitness goals, providing me with a clear path and unwavering focus. My objectives included:-
 
-
-It all began with setting some realistic and achievable goals. When you are working towards a plan, you get a clear compass and guiding light that keeps you focused all the time. Some of the goals I set and working towards are:-
-
--   Improve my muscle strength \[full body muscles\]
+-   Enhancing full-body muscle strength
 -   Build endurance
 -   Overall fitness
+
+My workout routine was marked by monthly fluctuations, and I visualized these trends to identify both my best and most challenging months.
 
 ```{r}
 #| label: fig-trajectory
@@ -142,17 +143,18 @@ workout_df %>%
   ggplot(aes(y = n_workouts, x = factor(1))) +
   geom_boxplot(width = 0.2) +
   labs(title = "The overal picture",
-       x = "", y = "No. of workouts")
+       x = "", y = "No. of workouts") +
+  theme(axis.text.x = element_blank())
 
 ```
 
 I averaged 10 workouts per month during the 10 months period (despite registering 0 in April and May) @fig-summaries. I registered a median of 13 workouts per month, not bad for a beginner though, proud of these numbers to the greatest heights.
 
-## Monthly visual chart {#sec-monthviz}
+## Monthly Visual Chart {#sec-monthviz}
 
 The cascede images below shows monthly presence in the gym. The light-green highlighted dates represents the days I worked out for that month. July has a good pattern, I love it 🤗
 
-::: {layout-nrow=2}
+::: {layout-nrow="2"}
 ![Jan](Jan2023.PNG)
 
 ![Feb](Feb2023.PNG)
@@ -174,8 +176,9 @@ The cascede images below shows monthly presence in the gym. The light-green high
 ![Oct](Oct2023.PNG)
 :::
 
-## Workout schedule
+## Workout schedule: Structuring Success
 
+A structured workout schedule was instrumental in maintaining consistency. It included various exercises targeting different muscle groups and allocated specific times to each.
 
 ```{r}
 # Work out schedule
@@ -198,14 +201,17 @@ workout_sched %>%
   qflextable()
 ```
 
-As a starting point, I aimed at working out for at least 1hr 30 mins; focusing two muscles a day as shown in @tbl-sched. Friday was not all rest day as can been seen in [monthly visual chart - @sec-monthviz], but was mostly a plan to catch up on missed appointment a.k.a punish yourself for missing many sessions the prior month.http://127.0.0.1:15909/graphics/plot_zoom_png?width=2327&height=1245
+As a starting point, I aimed at working out for at least 1hr 30 mins; focusing two muscles a day as shown in @tbl-sched. Friday was not all rest day as can been seen in [monthly visual chart - @sec-monthviz], but was mostly a plan to catch up on missed appointment a.k.a punish yourself for missing many sessions the prior month.
 
+## Visualizing Progress: Tracking Transformations
 
-## Visualizing workout game
+Visualizing my workout data unveiled the trends in my workout duration, enabling me to track improvements and shifts in my routine.
 
-## Average monthly workout duration
+### Average monthly workout duration
 
 ```{r}
+#| label: fig-trend
+#| fig-cap: Average workout duration
 gym_log %>% 
   group_by(month) %>% 
   summarise(
@@ -213,47 +219,78 @@ gym_log %>%
   ) %>% 
   ggplot(aes(x = month, y = avg_dur, group = 1)) +
   geom_line()+
-  geom_point()
+  geom_point() +
+  labs(
+    title = "Monthly average workout duration in minutes",
+    x = "Month",
+    y = "duration (mins)"
+  )
 
 ```
 
+The month of June was my worst solo effort, but this trend shows the significance of my gym buddy the month of after June and the average stay and working out in the gym that shot up by approximately 38% and almost stabilized. I can only hope for an upward trend going forward.
 
-## Trend - best month
+### Trend - best month
 
-What is the effect of workout buddy in the trend?
+The month after getting a workout buddy was the best. All metrics were at their all time best i.e. more days in the gym, more time working out for the days designated; and in fact, the second best monthly average workout duration this year @fig-trend. This once again tells the importance of the incoming energy, support, encouragement and accountability from my workout buddy.
 
 ```{r}
+#| label: fig-bestmonth
+#| fig-cap: Dialy work out trend, July 2023
+# create metrics for dynamic labeling
+tot_mins <- gym_log %>% filter(month == "Jul") %>% 
+  select(duration_mins) %>% pluck() %>% sum()
+
+# days worked
+days_work <- gym_log %>% filter(month == "Jul") %>% nrow()
+ 
+
 gym_log %>% 
   filter(month == "Jul") %>% 
   ggplot(aes(x = visit_date, y = duration_mins, group = 1)) + 
   geom_point()+
   geom_line() +
-  scale_x_date(date_breaks = "day",    # break by 1 month interval
+  scale_x_date(date_breaks = "2 days",    # break by 1 month interval
                #date_labels = "%d\n%b",
-               labels = label_date_short())       # show only month of the year
+               labels = label_date_short()) +       # show only month of the year
+  labs(x = "Date", y = "duration(mins)",
+       title = "Trend of best effort, July 2023",
+       caption = str_glue("Days working out = {days_work}\nTotal mins = {comma(tot_mins)}"))
   
 ```
 
+### Summary of workout days:Evolution of Dedication
 
-
-## Summary - workout days
-
-What is the effect of workout buddy in the trend?
+In general, my working out routine greatly improved months following June and this can all be attributed to having a workout buddy. The box plots below paint a picture of a transformation in the process; which can only get better with time. Amidst all the fired up effort, I missed a few days/months; but that's a story for another day of why that happened.
 
 ```{r}
+#| label: fig-boxplot-workout
+#| fig-cap: Summary of monthly workouts
 gym_log %>% 
   ggplot(aes(x = month, y = duration_mins)) +
-  geom_boxplot(width = 0.5, outlier.color = "red")
+  geom_boxplot(width = 0.5, outlier.color = "red") +
+  labs(y = "duration(mins)")
 ```
 
-## Histogram of duration
+Summarizing my monthly workouts using box plots revealed the distribution of my workout durations and provided further insights into my fitness journey @fig-boxplot-workout.
+
+### Histogram of workout duration
+
+A histogram of workout duration showcases the diverse nature of my exercise routines, with both short, intense sessions and longer, endurance-based workouts.
+
+I am proud of every value on the x-axis and how many times it occurred on the y-axis. I don't want to settle on the middle ground but I lik the extremes because they come into play when circumstance prevail.
+
 ```{r}
+#| label: fig-histogram-durat
+#| fig-cap: Histogram of all-time workout duration
 gym_log %>% 
   ggplot(aes(x = duration_mins)) +
-  geom_histogram(bins = 30)
+  geom_histogram(fill = "steelblue") +
+  labs(x = "duration(mins)", y = "Frequency",
+       title = "Histogram of all-time workout duration",
+       subtitle = "Jan upto Oct 2023")
 
 ```
-
 
 ## Conclusion and take aways
 
@@ -263,20 +300,4 @@ Fitness journey comes with challenges, for instance having to wake up in the mor
 
 Listen to your body always, know when to push harder and when to rest. Celebrate every milestone you have achieved, even if it meant you lifted 2.5kg extra on top of your regular weight limit. Celebrations makes you more energetic and looking forward to move up next level the following workout day.
 
-
 I hope my story inspires you to start your fitness journey or continue the one you already archived. It's doable, if you put mind to it. Here is to 100 days of hard-work, dedication and determination 🙌🥳.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
