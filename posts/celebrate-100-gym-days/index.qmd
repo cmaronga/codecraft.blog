@@ -136,8 +136,8 @@ The cascede images below shows monthly presence in the gym. The light-green high
 ![Oct](Oct2023.PNG)
 :::
 
-
 ## Workout schedule
+
 
 ```{r}
 # Work out schedule
@@ -166,7 +166,7 @@ As a starting point, I aimed at working out for at least 1hr 30 mins; focusing t
 
 ## Conclusion and take aways
 
-This celebration is about a habit I have managed to pick, the growth and the transformation it has brought about.This type of a journey requires accountability, and for that reason, I have a workout buddy who I am accountable to and the gym app was crucial to track my progress.
+This celebration is about a habit I have managed to pick, the growth and the transformation it has brought about.This type of a journey requires accountability, and for that reason, I have a workout buddy [Tony Henry](https://www.linkedin.com/in/tony-henry-43a372a0/) who I am accountable to, and the gym app was very crucial in tracking my progress.
 
 Fitness journey comes with challenges, for instance having to wake up in the morning at around 6am to workout while you would rather keep warm and sleep is the hardest choice. Overcoming this type of challenge was key to my success, made me mentally stronger and enabled me to become more resilient.
 
