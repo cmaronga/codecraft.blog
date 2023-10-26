@@ -151,7 +151,7 @@ workout_sched <- tribble(
   "Saturday", NA_character_, NA_character_, "Outdoor half-marathon 11 - 13kms")
 ```
 
-The table belwo shows the daily work-out schedule, making sure I spend more time on muscles that take long to grow and always end my workout with a 10 mins run on the treadmill. The headers are day of the week and mins allocated to each exercise.
+The table below shows the daily work-out schedule, making sure I spend more time on muscles that take long to grow and always end my workout with a 10 mins run on the treadmill. The headers are day of the week and mins allocated to each exercise.
 
 ```{r}
 #| label: tbl-sched
@@ -160,7 +160,7 @@ workout_sched %>%
   qflextable()
 ```
 
-As a starting point, I aimed at working out for atleast 1hr 30 mins; focusing two muscles a day as shown in @tbl-sched. Friday was not all rest day as can been seen in [monthly visual chart - @sec-monthviz], but was mostly a plan to catch up on missed appointment a.k.a punish yourself for missing many sessions the prior month.
+As a starting point, I aimed at working out for at least 1hr 30 mins; focusing two muscles a day as shown in @tbl-sched. Friday was not all rest day as can been seen in [monthly visual chart - @sec-monthviz], but was mostly a plan to catch up on missed appointment a.k.a punish yourself for missing many sessions the prior month.
 
 
 
@@ -173,7 +173,7 @@ Fitness journey comes with challenges, for instance having to wake up in the mor
 Listen to your body always, know when to push harder and when to rest. Celebrate every milestone you have achieved, even if it meant you lifted 2.5kg extra on top of your regular weight limit. Celebrations makes you more energetic and looking forward to move up next level the following workout day.
 
 
-I hope my story inspires you to start your fitness journey or continue the one you already archived. It's doable, if you put mind to it. Here is to 100 days of hard-work, dedication and determination 🙌🥳
+I hope my story inspires you to start your fitness journey or continue the one you already archived. It's doable, if you put mind to it. Here is to 100 days of hard-work, dedication and determination 🙌🥳.
 
 
 
