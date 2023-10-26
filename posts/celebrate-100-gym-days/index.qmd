@@ -148,7 +148,7 @@ workout_sched <- tribble(
   "Wednesday", "Legs", "Shoulder", "Treadmill Run",
   "Thursday", "Core", "Compound exercises", "Treadmill Run",
   "Friday", NA_character_, NA_character_, "Rest day (Not always)",
-  "Tuesday", NA_character_, NA_character_, "Outdoor half-marathon 11 - 13kms")
+  "Saturday", NA_character_, NA_character_, "Outdoor half-marathon 11 - 13kms")
 ```
 
 The table belwo shows the daily work-out schedule, making sure I spend more time on muscles that take long to grow and always end my workout with a 10 mins run on the treadmill. The headers are day of the week and mins allocated to each exercise.
@@ -170,7 +170,7 @@ This celebration is about a habit I have managed to pick, the growth and the tra
 
 Fitness journey comes with challenges, for instance having to wake up in the morning at around 6am to workout while you would rather keep warm and sleep is the hardest choice. Overcoming this type of challenge was key to my success, made me mentally stronger and enabled me to become more resilient.
 
-Listen to your body always, know when to push harder and when to rest. Celebrate every milestone you have achieved, even if it meant you listed 2.5kg extra. Celebrations makes you more energetic and looking forward to move up next level the following workout day.
+Listen to your body always, know when to push harder and when to rest. Celebrate every milestone you have achieved, even if it meant you lifted 2.5kg extra on top of your regular weight limit. Celebrations makes you more energetic and looking forward to move up next level the following workout day.
 
 
 I hope my story inspires you to start your fitness journey or continue the one you already archived. It's doable, if you put mind to it. Here is to 100 days of hard-work, dedication and determination 🙌🥳
