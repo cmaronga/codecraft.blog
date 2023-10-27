@@ -6,6 +6,9 @@ website:
   title: "Maronga's codecraft"
   site-url: https://cmaronga.github.io/codecraft.blog/
   description: "Christopher Maronga blog"
+  comments: 
+    utterances:
+      repo: cmaronga/codecraft_web
   navbar:
     right:
       - about.qmd
@@ -17,7 +20,7 @@ website:
         href: index.xml
 format:
   html:
-    theme: litera
+    theme: Flatly #Materia # Simplex # Zephyr #litera  ## These are my all favourite themes
     css: styles.css
     toc: true
     toc-location: left
