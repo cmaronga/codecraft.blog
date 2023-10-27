@@ -6,9 +6,6 @@ website:
   title: "Maronga's codecraft"
   site-url: https://cmaronga.github.io/codecraft.blog/
   description: "Christopher Maronga blog"
-  comments: 
-    utterances:
-      repo: cmaronga/codecraft_web
   navbar:
     right:
       - about.qmd
@@ -24,3 +21,7 @@ format:
     css: styles.css
     toc: true
     toc-location: left
+    comments: 
+      utterances: 
+        repo: cmaronga/codecraft.blog
+        label: blogcomment
