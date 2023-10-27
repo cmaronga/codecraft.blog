@@ -1,35 +1,130 @@
 ---
-title: "coalesce() in action"
+title: "dplyr::coalesce() in action"
 # author: "Christopher Maronga"
 date: "2023-10-27"
-categories: [SQL, Data wrangling, tidyverse]
+categories: [Data wrangling, tidyverse, code]
 image: "coalesce.jpg"
-draft: true
+#draft: true
 ---
+
+Viable shortcut to missing-value-free data set
 
 ## Introduction
 
+Missing data can be a major headache when handling data in R; more especially if these NA's are scattered across multiple columns representing your one variable of interest.
 
+The [coalesce()](https://dplyr.tidyverse.org/reference/coalesce.html#:~:text=Given%20a%20set%20of%20vectors,thing%20for%20SQL%20NULL%20s.) function from [dplyr](https://dplyr.tidyverse.org/index.html) package comes in handy in such situations. In this short article, I am going to show you how powerful the function `coalesce()` is and how it can make your data manipulation task easy. To put in perspective, the function extracts the first non-missing (non-NA) value from a set of columns or values, making your data cleaner and analysis-ready, it does this by prioritizing a designated column as we will see from the worked out examples below.
 
 
 ## Create fictious data
 
 ```{r}
+
 # load packages
 pacman::p_load(
-  tidyverse
+  tidyverse,
+  flextable
 )
 
 # Create fictitious data
 fict_data <- tribble(
- ~PTID, ~ HT_ADM, ~ HT_DISCH, ~ HT_D45, ~ HT_D90,
-  7001,    100,      101,        100,       NA_real_,
-  7002,    97,       98,         NA_real_,  100,
-  7003,    97.6,     NA_real_,    93,      95,
-  7004,    NA_real_,  105,        99.8,     100,
-  7005,    NA_real_,  NA_real_,   78.9,     81,
-  7006,    NA_real_,  NA_real_,   NA_real_,  102.1,
-  7007,    78.5,      80,         NA_real_,    NA_real_,
-  7008,    97.3,      100,        99.2,       NA_real_)
+ ~PTID, ~ HT_ADM, ~ HT_DISCH, ~ HT_D45, ~ HT_D90,       # patient ID and Height measurements at different time-points
+  "7001",    100,      100.1,        100,       NA_real_,
+  "7002",    97,       98,         NA_real_,  97.5,
+  "7003",    97.6,     NA_real_,    97,      97.5,
+  "7004",    NA_real_,  99,        99.8,     100,
+  "7005",    79.5,  NA_real_,   78.9,     NA_real_,
+  "7006",    NA_real_,  NA_real_,   NA_real_,  102.1,
+  "7007",    78.5,      79,         NA_real_,    NA_real_,
+  "7008",    NA_real_,      98,        98,       NA_real_)
+
 ```
+
+
+
+```{r}
+#| label: tbl-fakedata
+#| tbl-cap: Ficticious patient data
+
+# qflextable-it
+fict_data %>% 
+  qflextable()
+```
+
+The data in @tbl-fakedata is a made up one, representing height measurements of 8 patients across 4 time-points i.e during admission, discharge, day 45 and day 90 follow up visits respectively. As you can see, there is no single column with complete data. The assumption is that the measurement are subject to some absolute error and therefore any column can be used as measured height in an analysis; the problem is that no column is complete and this is what we are going to tackle using `coalesce()`
+
+
+## Creating Height column
+
+The aim is to use `coalesce()` to create a column HT_cm with non-missing data using. We can try a few combination, but I am confident that if you look carefully, there are probably a few combination of two columns that can give you that.
+
+**NOTE:** This is an illustration of how `coalesce()` works, your use-case might be different, just think how this function fits in.
+
+
+### HT_ADM vs HT_D90
+
+Here `coalesce()` gives priority to `HT_ADM` and if this column has some NA's while `HT_D90` has values in the same row; the values of `HT_D90` get pulled/filled in place of NA's to form `HT_CM`.
+
+```{r}
+
+fict_data %>% 
+  mutate(
+    HT_CM = coalesce(HT_ADM, HT_D90)    # prioritize _ADM over _D90
+  ) %>% 
+  flextable()
+
+```
+
+But we still have one more missing value for patient 7008
+
+
+### HT_ADM vs HT_DISH
+
+Take a combination of measurement at admission and discharge for instance.
+
+```{r}
+fict_data %>% 
+  mutate(
+    HT_CM = coalesce(HT_ADM, HT_DISCH) # prioritize _ADM over _DISCH
+  ) %>% 
+  flextable()
+```
+
+Same problem, we still have a missing cell for patient 7006 on the HT_CM column
+
+
+### HT_D90 vs HT_DISCH
+
+We can reverse the natural order of the visits and the logic still remains. In the below example, `coalesce()` prioritizes `HT_D90` over `HT_DISCH` but we still end up a missing cell in patient 7005 since both measurements are NA at discharge and at day 90.
+
+```{r}
+fict_data %>% 
+  mutate(
+    HT_CM = coalesce(HT_D90, HT_DISCH)   # prioritize _D90 over _DISCH
+  ) %>%  
+  flextable()
+```
+
+
+### Use all columns
+
+The ideal is to use all the columns. `coalesce()` prioritizes form "left to right" (in this case `HT_ADM`) filling in the missing cells on the left with the first non-missing value it encounters to the right. This is how it takes care of the non-missing business in your data.
+
+```{r}
+fict_data %>% 
+  mutate(
+    HT_CM = coalesce(HT_ADM, HT_DISCH, HT_D45, HT_D90)
+  ) %>% 
+  flextable()
+```
+
+
+
+# Conclusion
+
+I hope the examples helped you understand this simple, yet powerful function to handle missing data in your data wrangling efforts.
+
+
+
+
 

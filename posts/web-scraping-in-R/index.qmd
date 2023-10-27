@@ -4,7 +4,7 @@ title: "Web scraping using R"
 date: "2021-10-26"
 categories: [Data mining, Data wrangling, tidyverse]
 image: "web-scraping.jpeg"
-#draft: true
+draft: true
 ---
 
 Efficient, flexible and powerful!

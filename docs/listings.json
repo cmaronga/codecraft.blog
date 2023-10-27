@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/coalesce-in-action/index.html",
       "/posts/celebrate-100-gym-days/index.html",
       "/posts/working-with-databases/index.html",
       "/posts/automating-data-management/index.html"
