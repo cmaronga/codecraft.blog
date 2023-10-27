@@ -20,7 +20,7 @@ website:
         href: index.xml
 format:
   html:
-    theme: Flatly #Materia # Simplex # Zephyr #litera  ## These are my all favourite themes
+    theme: Flatly #(Materia # Simplex # Zephyr #litera)  ## These are my all favourite themes
     css: styles.css
     toc: true
     toc-location: left

@@ -1,7 +1,7 @@
 ---
 title: "Celebrating 100 days of Gym dedication"
 # author: "Christopher Maronga"
-date: "2021-10-24"
+date: "2023-10-24"
 categories: [social, tidyverse, Data wrangling]
 image: "all_visits.PNG"
 #draft: true

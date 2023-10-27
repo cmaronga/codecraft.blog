@@ -6,7 +6,7 @@ listing:
   sort: "date desc"
   date-format: iso
   categories: true
-  page-size: 10
+  page-size: 6
   image-align: right
   image-height: 150px
   feed: true

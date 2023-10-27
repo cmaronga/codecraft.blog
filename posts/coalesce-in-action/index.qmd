@@ -1,0 +1,35 @@
+---
+title: "coalesce() in action"
+# author: "Christopher Maronga"
+date: "2023-10-27"
+categories: [SQL, Data wrangling, tidyverse]
+image: "coalesce.jpg"
+draft: true
+---
+
+## Introduction
+
+
+
+
+## Create fictious data
+
+```{r}
+# load packages
+pacman::p_load(
+  tidyverse
+)
+
+# Create fictitious data
+fict_data <- tribble(
+ ~PTID, ~ HT_ADM, ~ HT_DISCH, ~ HT_D45, ~ HT_D90,
+  7001,    100,      101,        100,       NA_real_,
+  7002,    97,       98,         NA_real_,  100,
+  7003,    97.6,     NA_real_,    93,      95,
+  7004,    NA_real_,  105,        99.8,     100,
+  7005,    NA_real_,  NA_real_,   78.9,     81,
+  7006,    NA_real_,  NA_real_,   NA_real_,  102.1,
+  7007,    78.5,      80,         NA_real_,    NA_real_,
+  7008,    97.3,      100,        99.2,       NA_real_)
+```
+

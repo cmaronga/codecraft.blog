@@ -1,0 +1,14 @@
+{
+  "hash": "d8b7bbdc62cc7301a57b71dfea2872bc",
+  "result": {
+    "markdown": "---\ntitle: \"coalesce() in action\"\n# author: \"Christopher Maronga\"\ndate: \"2023-10-27\"\ncategories: [SQL, Data wrangling, tidyverse]\nimage: \"coalesce.jpg\"\ndraft: true\n---\n\n\n## Introduction\n\n\n\n\n## Create fictious data\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# load packages\npacman::p_load(\n  tidyverse\n)\n\n# Create fictitious data\nfict_data <- tribble(\n ~PTID, ~ HT_ADM, ~ HT_DISCH, ~ HT_D45, ~ HT_D90,\n  7001,    100,      101,        100,       NA_real_,\n  7002,    97,       98,         NA_real_,  100,\n  7003,    97.6,     NA_real_,    93,      95,\n  7004,    NA_real_,  105,        99.8,     100,\n  7005,    NA_real_,  NA_real_,   78.9,     81,\n  7006,    NA_real_,  NA_real_,   NA_real_,  102.1,\n  7007,    78.5,      80,         NA_real_,    NA_real_,\n  7008,    97.3,      100,        99.2,       NA_real_)\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
