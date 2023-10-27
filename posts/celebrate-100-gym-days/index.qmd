@@ -5,6 +5,9 @@ date: "2021-10-24"
 categories: [social, tidyverse, Data wrangling]
 image: "all_visits.PNG"
 #draft: true
+comments: 
+  utterances: 
+    repo: cmaronga/codecraft.blog
 execute: 
   warning: false
 ---
