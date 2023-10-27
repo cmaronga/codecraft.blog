@@ -4,7 +4,6 @@ title: "dplyr::coalesce() in action"
 date: "2023-10-27"
 categories: [Data wrangling, tidyverse, code]
 image: "coalesce.jpg"
-#draft: true
 ---
 
 Viable shortcut to missing-value-free data set
