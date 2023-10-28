@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Maronga's codecraft"
+  title: "Codecraft ya mwanastatistiki"
   site-url: https://cmaronga.github.io/codecraft.blog/
   description: "Christopher Maronga blog"
   comments: 
