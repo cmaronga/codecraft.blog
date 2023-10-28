@@ -1,0 +1,64 @@
+---
+#title: "&nbsp;"
+toc: false
+listing:
+  - id: "publications"
+    sort-ui: false
+    #filter-ui: true
+    categories: false
+    # type: table
+    page-size: 10
+    #fields: [title, description]
+    contents: 
+      - "*.qmd"
+resources:
+  - "**"
+  - "!(.qmd|.rmd)"
+execute: 
+  warning: false
+  echo: false
+---
+
+
+## Contributed publications
+
+```{r}
+library(tidyverse)
+library(flextable)
+
+publications <- tibble::tribble(
+ ~ Year, ~ `Affiliated institution`, ~ Publication,
+"2023", "KEMRI-Wellcome KEMRI-Wellcome Trust Research Programme", "Characterising paediatric mortality during and after acute illness in Sub-Saharan Africa and South Asia: a secondary analysis of the CHAIN cohort using a machine learning approach",
+ 
+"2023", "University of Oxford", "Expected Benefits and Budget Impact From a Microsimulation Model Support the Prioritization and Implementation of Fracture Liaison Services",
+
+"2022", "University of Oxford", "Primary care consultations and pain medicine prescriptions: a comparison between patients with and without chronic pain after total knee replacemen",
+
+"2022", "KEMRI-Wellcome KEMRI-Wellcome Trust Research Programme" , "Childhood mortality during and after acute illness in Africa and south Asia: a prospective cohort study",
+
+"2021", "KEMRI-Wellcome KEMRI-Wellcome Trust Research Programme" , "A systematic review of the quality of conduct and reporting of survival analyses of tuberculosis outcomes in Africa",
+
+"2016", "Centre for Clinical Research, Kenya Medical Research Institute", "The Effect of Human Immunodeficiency Virus Prevention and Reproductive Health Text Messages on Human Immunodeficiency Virus Testing Among Young Women in Rural Kenya",
+
+"2019", "Centre for Clinical Research, Kenya Medical Research Institute", "The Incremental Cost of Delivering PrEP as a Bridge to ART for HIV Serodiscordant Couples in Public HIV Care Clinics in Kenya"
+
+) %>% arrange(desc(Year))
+
+
+# manually shift some rows to align institutions
+kemri_row <- publications[1, ]
+
+publications_edit <- publications %>% slice(-1) # remove first row
+
+# add the row back
+publications_edit <- publications_edit %>% 
+  add_row(.after = 2)
+
+publications_edit[3, ] <- kemri_row
+
+# print table
+publications_edit %>% 
+  qflextable()
+
+
+```

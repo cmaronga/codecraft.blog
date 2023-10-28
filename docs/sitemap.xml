@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/posts/working-with-databases/index.html</loc>
-    <lastmod>2023-10-27T15:10:09.336Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/posts/coalesce-in-action/index.html</loc>
-    <lastmod>2023-10-27T15:10:07.921Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/posts/automating-data-management/index.html</loc>
-    <lastmod>2023-10-27T15:10:05.493Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/about.html</loc>
-    <lastmod>2023-10-27T15:10:03.487Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/index.html</loc>
-    <lastmod>2023-10-27T15:10:04.689Z</lastmod>
+    <loc>https://cmaronga.github.io/codecraft.blog/publications/publications.html</loc>
+    <lastmod>2023-10-28T11:21:32.694Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/index.html</loc>
-    <lastmod>2023-10-27T15:10:06.831Z</lastmod>
+    <lastmod>2023-10-28T11:11:26.014Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/index.html</loc>
+    <lastmod>2023-10-28T11:21:36.965Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/about.html</loc>
+    <lastmod>2023-10-28T11:20:58.265Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/posts/automating-data-management/index.html</loc>
+    <lastmod>2023-10-28T11:11:24.557Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/posts/coalesce-in-action/index.html</loc>
+    <lastmod>2023-10-28T11:11:27.035Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/posts/working-with-databases/index.html</loc>
+    <lastmod>2023-10-28T11:11:28.457Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/docs/publications/publications.html</loc>
+    <lastmod>2023-10-28T11:12:02.841Z</lastmod>
   </url>
 </urlset>

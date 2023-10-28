@@ -1,5 +1,9 @@
 [
   {
+    "listing": "/publications/publications.html",
+    "items": []
+  },
+  {
     "listing": "/index.html",
     "items": [
       "/posts/coalesce-in-action/index.html",
@@ -7,5 +11,9 @@
       "/posts/working-with-databases/index.html",
       "/posts/automating-data-management/index.html"
     ]
+  },
+  {
+    "listing": "/docs/publications/publications.html",
+    "items": []
   }
 ]

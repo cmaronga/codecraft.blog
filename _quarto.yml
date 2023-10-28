@@ -11,7 +11,14 @@ website:
       repo: cmaronga/codecraft.blog
   navbar:
     right:
-      - about.qmd
+      - text: "Blog site"
+        file: index.qmd
+      - text: "About author"
+        file: about.qmd
+      - text: "Publications"
+        file: publications/publications.qmd
+      - text: "CV"
+        file: documents/Christopher_Maronga_Resume.pdf
       - icon: github
         href: https://github.com/cmaronga/codecraft.blog
       - icon: twitter
