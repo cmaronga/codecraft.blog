@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Maronga codecraft &amp; Blog – about</title>
+<title>Maronga codecraft &amp; Blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,9 +30,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -58,12 +61,43 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-image','listing-date','listing-title','listing-author','listing-reading-time','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
-</head>
+<link rel="alternate" type="application/rss+xml" title="Maronga codecraft &amp; Blog" href="index.xml"></head>
 
-<body class="floating nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -81,11 +115,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
+    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
  <span class="menu-text">Blog site</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="./about.html" rel="" target="">
  <span class="menu-text">About author</span></a>
   </li>  
   <li class="nav-item">
@@ -119,108 +153,157 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-  <ul>
-  <li><a href="#bio" id="toc-bio" class="nav-link active" data-scroll-target="#bio"><u>Bio</u></a></li>
-  <li><a href="#education" id="toc-education" class="nav-link" data-scroll-target="#education"><u>Education</u></a></li>
-  <li><a href="#experience" id="toc-experience" class="nav-link" data-scroll-target="#experience"><u>Experience</u></a></li>
-  <li><a href="#skillslanguages" id="toc-skillslanguages" class="nav-link" data-scroll-target="#skillslanguages"><u>Skills/languages</u></a></li>
-  <li><a href="#workshops-delivered" id="toc-workshops-delivered" class="nav-link" data-scroll-target="#workshops-delivered"><u>Workshops delivered</u></a></li>
-  </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Data wrangling">Data wrangling <span class="quarto-category-count">(4)</span></div><div class="category" data-category="REDCap">REDCap <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SQL">SQL <span class="quarto-category-count">(1)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="social">social <span class="quarto-category-count">(1)</span></div><div class="category" data-category="tidyverse">tidyverse <span class="quarto-category-count">(3)</span></div></div></div>
 <!-- main -->
-<div class="quarto-about-trestles">
-  <div class="about-entity">
-    <img src="profile.jpg" class="about-image
-  rounded " style="width: 20em;">
-    <div class="about-links">
-  <a href="https://twitter.com/krissianyo" class="about-link" rel="" target="">
-    <i class="bi bi-twitter"></i>
-     <span class="about-link-text">Twitter</span>
-  </a>
-  <a href="https://www.linkedin.com/in/christopher-maronga-61031b7a/" class="about-link" rel="" target="">
-    <i class="bi bi-linkedin"></i>
-     <span class="about-link-text">LinkedIn</span>
-  </a>
-  <a href="https://github.com/cmaronga" class="about-link" rel="" target="">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">Github</span>
-  </a>
-</div>
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+     </select>
   </div>
-  <div class="about-contents"><main class="content" id="quarto-document-content">
-
-<section id="bio" class="level2">
-<h2 data-anchor-id="bio"><u>Bio</u></h2>
-<p>My name is Christopher Maronga, I hail from the beautiful landscapes of Kenya, East Africa.</p>
-<p>I have a wealth of experience managing and analysing healthcare data for decision-making, as well as teaching introductory and advanced courses in R.</p>
-<p>I’m passionate about reproducible research, automating data products, statistical computing, and data visualization.</p>
-</section>
-<section id="education" class="level2">
-<h2 data-anchor-id="education"><u>Education</u></h2>
-<ul>
-<li><strong>MSc. Statistical Sciences</strong> |<a href="https://strathmore.edu/">Strathmore University</a></li>
-<li><strong>BSc. in Mathematics</strong> |<a href="https://www.jkuat.ac.ke/">JKUAT</a></li>
-</ul>
-</section>
-<section id="experience" class="level2">
-<h2 data-anchor-id="experience"><u>Experience</u></h2>
-<ul>
-<li>Phase II &amp; IV CTs</li>
-<li>Real World Data/Real World Evidence</li>
-<li>Health Research</li>
-<li>Data Management/Wrangling</li>
-<li>Data Analysis/Statistical Analysis</li>
-<li>Predictive Modelling</li>
-</ul>
-</section>
-<section id="skillslanguages" class="level2">
-<h2 data-anchor-id="skillslanguages"><u>Skills/languages</u></h2>
-<ul>
-<li>R Programming/RShiny</li>
-<li>Python</li>
-<li>SQL/MySQL</li>
-<li>REDCap</li>
-<li>Git/GitHub</li>
-<li>LaTeX</li>
-<li>Docker</li>
-</ul>
-</section>
-<section id="workshops-delivered" class="level2">
-<h2 data-anchor-id="workshops-delivered"><u>Workshops delivered</u></h2>
-<ul>
-<li><a href="https://youtu.be/txMmjDQoQqE?si=BpvZyIE5W2DnLzaT">Working with Databases in R</a> <strong>@ RLadies Nairobi</strong></li>
-<li><a href="https://youtu.be/htQWauSV9J4?si=LXN554RCOnW64L1R">Working with Databases in R</a> <strong>@ NHS-R COnference</strong></li>
-<li><a href="https://youtu.be/8URgFFNDGfo?si=qqebF2snXPo8z7qo">Introduction to Data Management in R</a> <strong><span class="citation" data-cites="satRday">@satRday</span> Nairobi</strong></li>
-<li><a href="https://www.youtube.com/live/PbD_e5sz4P8?si=avioFeCLgc-h9O0N">Integrating Rshiny and REDCap for Data Management</a> <strong><span class="citation" data-cites="Why">@Why</span> R Conference</strong></li>
-<li><a href="https://youtu.be/H-Tkg_aWSas?si=gkbFU5dHv7Irjmf2">Introduction to data structures in R</a><strong>@ Ai Kenya Code Maktaba</strong></li>
-</ul>
-<!-- ## [Publications]{.underline} -->
-<!-- 1.[Characterising paediatric mortality during and after acute illness in Sub-Saharan Africa and South Asia: a secondary analysis of the CHAIN cohort using a machine learning approach](https://www.thelancet.com/journals/eclinm/article/PIIS2589-5370(23)00015-9/fulltext#secsectitle0010) -->
-<!-- 2.[Expected Benefits and Budget Impact From a Microsimulation Model Support the Prioritization and Implementation of Fracture Liaison Services](https://asbmr.onlinelibrary.wiley.com/doi/full/10.1002/jbmr.4775?af=R). -->
-<!-- 3.[Primary care consultations and pain medicine prescriptions: a comparison between patients with and without chronic pain after total knee replacement](https://bmcmusculoskeletdisord.biomedcentral.com/articles/10.1186/s12891-022-05492-6) -->
-<!-- 4.[Childhood mortality during and after acute illness in Africa and south Asia: a prospective cohort study](https://www.sciencedirect.com/science/article/pii/S2214109X22001188#!) -->
-<!-- 5.[A systematic reviewof the quality of conduct and reporting of survival analyses of tuberculosis outcomes in Africa](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-021-01280-3) -->
-<!-- 6.[The Effect of Human Immunodeficiency Virus Prevention and Reproductive Health TextMessages on Human Immunodeficiency Virus Testing Among Young Women in Rural Kenya](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4874231/) -->
-<!-- 7.[The Incremental Cost of Delivering PrEP as a Bridge to ART for HIV Serodiscordant Couples in Public HIV Care Clinics in Kenya](https://www.hindawi.com/journals/art/2019/4170615/) -->
-<!-- My academic journey led me to a Bachelor's degree in Mathematics ([JKUAT](https://www.jkuat.ac.ke/)) and a Master's in Statistical Sciences ([Strathmore University](https://strathmore.edu/)), shaping my career in Health Research. -->
-<!-- I have a wealth of experience managing and analysing healthcare data for decision-making, as well as teaching introductory and advanced training courses in R. -->
-<!-- I currently work at Oxford University as a Senior Data Manager for the Oxford-GSK Institute of Molecular and Computational Medicine, facilitating data access and championing **FAIRsharing** for researchers from both GSK and Oxford University. -->
-<!-- With over a decade of R Programming experience, I'm passionate about reproducible research, automating data products, statistical computing, and data visualization. -->
-
-
-</section>
-</main></div>
 </div>
- <!-- /main -->
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="Data wrangling,tidyverse,code" data-listing-date-sort="1698361200000" data-listing-file-modified-sort="1698419539414" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="thumbnail">
+<p><a href="./posts/coalesce-in-action/index.html"> <img src="./posts/coalesce-in-action/coalesce.jpg" class="thumbnail-image" style="height: 150px;"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/coalesce-in-action/index.html">
+<h3 class="no-anchor listing-title">
+dplyr::coalesce() in action
+</h3>
+<div class="listing-subtitle">
+
+</div>
+<div class="listing-description">
+Viable shortcut to missing-value-free data set
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/coalesce-in-action/index.html">
+<div class="listing-date">
+2023-10-27
+</div>
+<div class="listing-reading-time">
+4 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="social,tidyverse,Data wrangling" data-listing-date-sort="1698102000000" data-listing-file-modified-sort="1698414912764" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<div class="thumbnail">
+<p><a href="./posts/celebrate-100-gym-days/index.html"> <img src="./posts/celebrate-100-gym-days/all_visits.PNG" class="thumbnail-image" style="height: 150px;"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/celebrate-100-gym-days/index.html">
+<h3 class="no-anchor listing-title">
+Celebrating 100 days of Gym dedication
+</h3>
+<div class="listing-subtitle">
+
+</div>
+<div class="listing-description">
+Because I can exercise and share a brief story!
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/celebrate-100-gym-days/index.html">
+<div class="listing-date">
+2023-10-24
+</div>
+<div class="listing-reading-time">
+11 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="SQL,Data wrangling,tidyverse" data-listing-date-sort="1623452400000" data-listing-file-modified-sort="1698327927550" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="thumbnail">
+<p><a href="./posts/working-with-databases/index.html"> <img src="./posts/working-with-databases/working-database.jpg" class="thumbnail-image" style="height: 150px;"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/working-with-databases/index.html">
+<h3 class="no-anchor listing-title">
+Working with Databases in R
+</h3>
+<div class="listing-subtitle">
+
+</div>
+<div class="listing-description">
+MySQL, SQLite, R
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/working-with-databases/index.html">
+<div class="listing-date">
+2021-06-12
+</div>
+<div class="listing-reading-time">
+2 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="Data wrangling,REDCap,analysis" data-listing-date-sort="1544918400000" data-listing-file-modified-sort="1698400910247" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="thumbnail">
+<p><a href="./posts/automating-data-management/index.html"> <img src="./posts/automating-data-management/image.jpg" class="thumbnail-image" style="height: 150px;"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/automating-data-management/index.html">
+<h3 class="no-anchor listing-title">
+Automating Clinical Data Management
+</h3>
+<div class="listing-subtitle">
+
+</div>
+<div class="listing-description">
+Using REDCap, MySQL, RShiny-server
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/automating-data-management/index.html">
+<div class="listing-date">
+2018-12-16
+</div>
+<div class="listing-reading-time">
+2 min
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -241,6 +324,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
