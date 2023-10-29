@@ -6,7 +6,7 @@ listing:
     sort-ui: false
     #filter-ui: true
     categories: false
-    # type: table
+    #type: table
     page-size: 10
     #fields: [title, description]
     contents: 
@@ -150,7 +150,7 @@ conference_papers %>%
       Publication = colDef(
         minWidth = 450,
         cell = function(value, index) {
-          url_in <- publications$url[index]
+          url_in <- conference_papers$url[index]
           htmltools::a(href = url_in, value)
         }
       ),
