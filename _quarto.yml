@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Maronga codecraft & Blog"
+  title: "Maronga CodeCraft Blog"
   site-url: https://cmaronga.github.io/codecraft.blog/
   description: "Christopher Maronga blog"
   comments: 

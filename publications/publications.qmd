@@ -134,8 +134,7 @@ conference_papers <- tibble::tribble(
  "Prevalence of cardiovascular disease events and determinants in patients with X-Linked Hypophosphatemia", "https://www.ndorms.ox.ac.uk/publications/1338095", "2023", "University of Oxford",
  
  
- "Innovative open source approaches to automating clinical data management for a large multi-centre cohort study.", "chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.eahealth.org/sites/www.eahealth.org/files/content/attachments/2019-10-07/Book%20of%20Abstracts%202019_FINAL_FINAL.pdf", "2018", "KEMRI-Wellcome KEMRI-Wellcome Trust Research Programme"
-)
+ "Innovative open source approaches to automating clinical data management for a large multi-centre cohort study.", "chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.eahealth.org/sites/www.eahealth.org/files/content/attachments/2019-10-07/Book%20of%20Abstracts%202019_FINAL_FINAL.pdf", "2018", "KEMRI-Wellcome KEMRI-Wellcome Trust Research Programme")
 
 
 conference_papers %>%
@@ -163,8 +162,7 @@ conference_papers %>%
       highlightColor = "blue",
       cellPadding = "8px 12px",
       style = list(fontFamily = "-apple-system, Lato, sans-serif",
-        fontSize = "16px"),
-    )
+        fontSize = "16px"),)
   )
 
 ```
