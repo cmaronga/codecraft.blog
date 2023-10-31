@@ -1,7 +1,7 @@
 ---
 title: "Web scraping using R"
 # author: "Christopher Maronga"
-date: "2021-10-26"
+date: "2023-10-31"
 categories: [Data mining, Data wrangling, tidyverse]
 image: "web-scraping.jpeg"
 draft: true
@@ -13,4 +13,172 @@ Efficient, flexible and powerful!
 
 Web scraping is concept that most probably you have heard about. This is the art of [harvesting](https://en.wikipedia.org/wiki/Web_scraping) publicly available data from a website for use in your analysis or reporting. Web scraping can be as simple as copying the contents of a website and pasting them on an excel sheet, but that’s not what we are going to do today. Most website pages are built using [HTML](https://en.wikipedia.org/wiki/HTML) and this allows us to use tools such as R to dynamically extract the data.
 
-In this tutorial, I am going walk you through how you can harvest data from websites using R programming language. You can do this by coding the logic and instructions manually or use the package [`{rvest}`](https://rvest.tidyverse.org/) to easily extract the contents of a website. We would demonstrate the examples using the below two websites
+In this tutorial, I am going walk you through how you can harvest data from websites using R programming language. You can do this by coding the logic and instructions manually or use the package [`{rvest}`](https://rvest.tidyverse.org/) to easily extract the contents of a website. We would demonstrate the examples using the below two websites.
+
+```{r}
+
+# loading packages
+pacman::p_load(
+  rvest,
+  ggthemes,
+  lubridate,
+  here,
+  tidyverse
+)
+```
+
+
+
+## Dollar exchange data
+
+I came across this website [Exchange rate to USD by country](https://www.theglobaleconomy.com/rankings/Dollar_exchange_rate/) while I was working on aggregating output from an[ economic micro-simulation model](https://asbmr.onlinelibrary.wiley.com/doi/full/10.1002/jbmr.4775?af=R) estimating benefits and budget impact of setting up fracture liaison services. Part of my reporting costs associated with the FLS, reported in local currency for about 10 different countries, but for harmonized reporting and international consumption, I need to convert the local currencies to US Dollars, hence I needed a source that I could cite and is updated regularly.
+
+
+### using `rvest`
+
+```{r}
+# get url from website
+exchange_rate_url <- "https://www.theglobaleconomy.com/rankings/Dollar_exchange_rate/"
+
+# read HTML from website
+exchange_rate_webpage <- read_html(exchange_rate_url)       # read html site
+
+
+# create a datframe containing the exchange rates for use
+currency_rates <- exchange_rate_webpage %>%
+  html_table() %>%                                          # output a list contain the exchange rate table from website
+  as.data.frame() %>%                                       # transform into a tibble
+  # rename columns appropriately
+  rename(
+    Country        = Countries,
+    LatestData     = "Reference.date",
+    LatesValue     = "Latest.available.value",
+    Change3months  = "Change.three.months",
+    Change12months = "Change.twelve.months"
+  ) %>%
+  mutate(across(LatesValue, as.numeric),                  # convert to numeric column containing exchange rate
+         
+         # On the date column; remove white space and replace "/" with "-"
+         LatestData = str_squish(
+           str_replace_all(
+             string = LatestData,
+             pattern = "/",
+             replacement = "-"
+           )
+         )) %>% 
+  # transform `LatestData` into a proper date column
+  mutate(
+    LatestData = my(LatestData),                       # proper date format
+    LatestData = format(LatestData, "%Y-%m")           # YYYY-mm
+  )
+
+```
+
+
+```{r}
+# Export the data
+
+rio::export(currency_rates, here("datasets", "dollar_exchange_rates.rds"))
+
+```
+
+
+
+
+
+### Using `readLines()`
+
+```{r}
+
+```
+
+
+## Available CRAN packages
+
+### CRAN packages by date
+
+```{r}
+
+# Specifying the url
+url <- 'https://cran.r-project.org/web/packages/available_packages_by_date.html'
+
+
+# create a dataframe using `rvest` functions
+r_pkgs_by_date <- read_html(url) %>% 
+  html_table() %>% 
+  as.data.frame() %>% 
+  mutate(
+    Date = ymd(Date)
+  ) %>% 
+  rename(pkg_name = Package)
+
+```
+
+### CRAN packages metadata
+
+If I need additional details, I can use the function xxxxx; downside, it doesn't contain date of publication but some other metrics which are equally important.
+
+
+```{r}
+
+available_pks <- available.packages(#repos = "http://cran.us.r-project.org",
+                                                                            # specify CRAN mirroe and metadata to extract
+  repos = "https://cran.r-project.org/")[, c("Version",
+                                             "Depends",
+                                             "Repository",
+                                             "NeedsCompilation",
+                                             "License")] %>%
+  as.data.frame() %>% tibble::rownames_to_column(var = "pkg_name")
+```
+
+
+### CRAN packages downloads
+
+We can grab metric on number of downloads for each package in CRAN for this website xxx
+
+
+```{r}
+
+pkg_down_url <- "https://www.datasciencemeta.com/rpackages"
+
+pkg_downloads <- read_html(pkg_down_url) %>% 
+  html_table() %>% 
+  as.data.frame() %>% 
+  select(-c(Author, Maintainer)) %>%                          # remove columns with no data
+  mutate(
+    Downloads = str_remove_all(Downloads, pattern = ","),     # get rid of commas
+    Downloads = as.integer(Downloads)                         # convert into an integer
+  ) %>% 
+  rename(pkg_name = "Package.Name")
+
+```
+
+
+
+We can now join all the three datasets telling different aspects of the packages to have one dataframe we can use for visualization and expropriation🙂
+
+
+```{r}
+
+CRAN_pkgs <- reduce(
+  list(r_pkgs_by_date, pkg_downloads, available_pks),
+  left_join,
+  by = "pkg_name"
+) %>% arrange(Rank) %>% 
+  select(Rank, pkg_name, Downloads, everything())
+
+```
+
+
+```{r}
+# export data for playing around with
+
+rio::export(CRAN_pkgs, here("datasets", "CRAN_pkgs.rds"))
+
+```
+
+
+
+
+
+
