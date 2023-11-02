@@ -19,11 +19,12 @@ In this tutorial, I am going walk you through how you can harvest data from webs
 
 # loading packages
 pacman::p_load(
-  rvest,
-  ggthemes,
-  lubridate,
-  here,
-  tidyverse
+  rvest,        # functions for webscraping
+  ggthemes,     # extend themes for ggplot2
+  lubridate,    # handle dates
+  here,         # manage file paths
+  flextable,    # quick tables
+  tidyverse     # data wranglinga and visualization
 )
 ```
 
@@ -85,15 +86,23 @@ rio::export(currency_rates, here("datasets", "dollar_exchange_rates.rds"))
 
 
 
-
 ### Using `readLines()`
 
 ```{r}
+
+# store url link
+dollar_ex_url <- "https://www.theglobaleconomy.com/rankings/Dollar_exchange_rate/"
+
+#Reading the HTML code from the website
+dollaEx_webpage <- readLines(dollar_ex_url)
+
+head(dollaEx_webpage, 15)
 
 ```
 
 
 ## Available CRAN packages
+
 
 ### CRAN packages by date
 
