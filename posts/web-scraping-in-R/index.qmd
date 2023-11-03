@@ -4,7 +4,7 @@ title: "Web scraping using R"
 date: "2023-10-31"
 categories: [Data mining, Data wrangling, tidyverse]
 image: "web-scraping.jpeg"
-draft: true
+#draft: true
 ---
 
 Efficient, flexible and powerful!
@@ -14,6 +14,12 @@ Efficient, flexible and powerful!
 Web scraping is concept that most probably you have heard about. This is the art of [harvesting](https://en.wikipedia.org/wiki/Web_scraping) publicly available data from a website for use in your analysis or reporting. Web scraping can be as simple as copying the contents of a website and pasting them on an excel sheet, but that’s not what we are going to do today. Most website pages are built using [HTML](https://en.wikipedia.org/wiki/HTML) and this allows us to use tools such as R to dynamically extract the data.
 
 In this tutorial, I am going walk you through how you can harvest data from websites using R programming language. You can do this by coding the logic and instructions manually or use the package [`{rvest}`](https://rvest.tidyverse.org/) to easily extract the contents of a website. We would demonstrate the examples using the below two websites.
+
+- TheGlobalEconomy.com, [Exchange rate to USD by country](https://www.theglobaleconomy.com/rankings/Dollar_exchange_rate/)
+- [CRAN package](https://cran.r-project.org/web/packages/available_packages_by_date.html) website and [package download metrics](https://www.datasciencemeta.com/rpackages) website
+
+
+First, let's load the packages/tools of trade for the exercise.
 
 ```{r}
 
@@ -26,16 +32,33 @@ pacman::p_load(
   flextable,    # quick tables
   tidyverse     # data wranglinga and visualization
 )
+
+# set theme for ggplot2
+theme_set(
+  theme_hc(base_size = 18) +                  # base size
+    theme(
+      legend.position = "none",              # No legend, unless specified in the plot
+      legend.title = element_blank(),         # No title on the legend
+      axis.title.y = element_text(angle = 90) # spin y title 90 degrees
+    )
+)
+
 ```
 
+# using `rvest`
 
+This is the simplest and easiest approach of then all. [rvest helps you scrape (or harvest)](https://rvest.tidyverse.org/) data from web pages and it's designed to work with the pipe chain style of coding.
+
+Three simples steps using this package:-
+
+- Use `read_tml` function to convert the the url into an `xml document`
+- pass the `xlm document` to the function `html_table` to convert it into a list contain table(s) from the url source site.
+- Now that you have tabular data, you can proceed with various data wrangling approaches to clean it up for use.
 
 ## Dollar exchange data
 
 I came across this website [Exchange rate to USD by country](https://www.theglobaleconomy.com/rankings/Dollar_exchange_rate/) while I was working on aggregating output from an[ economic micro-simulation model](https://asbmr.onlinelibrary.wiley.com/doi/full/10.1002/jbmr.4775?af=R) estimating benefits and budget impact of setting up fracture liaison services. Part of my reporting costs associated with the FLS, reported in local currency for about 10 different countries, but for harmonized reporting and international consumption, I need to convert the local currencies to US Dollars, hence I needed a source that I could cite and is updated regularly.
 
-
-### using `rvest`
 
 ```{r}
 # get url from website
@@ -75,6 +98,15 @@ currency_rates <- exchange_rate_webpage %>%
 
 ```
 
+The first 15 rows of the harvested data are show below
+
+```{r}
+currency_rates %>% 
+  head(15)
+```
+
+
+You can now export the harvested data for later use downstream or in your modelling framework like I did. You see, easy and straight forward, right?
 
 ```{r}
 # Export the data
@@ -84,27 +116,19 @@ rio::export(currency_rates, here("datasets", "dollar_exchange_rates.rds"))
 ```
 
 
-
-
-### Using `readLines()`
-
-```{r}
-
-# store url link
-dollar_ex_url <- "https://www.theglobaleconomy.com/rankings/Dollar_exchange_rate/"
-
-#Reading the HTML code from the website
-dollaEx_webpage <- readLines(dollar_ex_url)
-
-head(dollaEx_webpage, 15)
-
-```
-
-
 ## Available CRAN packages
 
+In this section, we are going to harvest data from two websites:-
 
-### CRAN packages by date
+- List of available [CRAN packages](https://cran.r-project.org/web/packages/available_packages_by_date.html) by data of publication
+- Tracked website of [CRAN packages by number of downloads](https://www.datasciencemeta.com/rpackages)
+- Additionally, to get some metrics to combine with data from the above 2 sites, we I use `available.packages` function for all cran packages in this [mirror](https://cran.r-project.org/)
+
+
+
+### CRAN packages by publication date
+
+I will use the 3 simple steps already covered earlier, employing `rvest` package.
 
 ```{r}
 
@@ -119,31 +143,41 @@ r_pkgs_by_date <- read_html(url) %>%
   mutate(
     Date = ymd(Date)
   ) %>% 
-  rename(pkg_name = Package)
+  rename(pkg_name = Package, date_published = Date)
+
+# view top n rows
+r_pkgs_by_date %>% 
+  head(10)
 
 ```
 
 ### CRAN packages metadata
 
-If I need additional details, I can use the function xxxxx; downside, it doesn't contain date of publication but some other metrics which are equally important.
+If I need additional details, I can use the function `available.packages()`; downside, it doesn't contain date of publication, but some other metrics which are equally important are returned by this function. So, I ma going to do that below.
 
 
 ```{r}
+# using available.packages function
 
 available_pks <- available.packages(#repos = "http://cran.us.r-project.org",
-                                                                            # specify CRAN mirroe and metadata to extract
+                                                                            # specify CRAN mirror and metadata to extract
   repos = "https://cran.r-project.org/")[, c("Version",
                                              "Depends",
                                              "Repository",
                                              "NeedsCompilation",
                                              "License")] %>%
   as.data.frame() %>% tibble::rownames_to_column(var = "pkg_name")
+
+# view top n rows
+available_pks %>% 
+  head(10)
+
 ```
 
 
 ### CRAN packages downloads
 
-We can grab metric on number of downloads for each package in CRAN for this website xxx
+We can grab metric on number of downloads for each package in CRAN from this [website.](https://www.datasciencemeta.com/rpackages)
 
 
 ```{r}
@@ -158,26 +192,49 @@ pkg_downloads <- read_html(pkg_down_url) %>%
     Downloads = str_remove_all(Downloads, pattern = ","),     # get rid of commas
     Downloads = as.integer(Downloads)                         # convert into an integer
   ) %>% 
-  rename(pkg_name = "Package.Name")
+  rename(pkg_name = "Package.Name", downloads = Downloads)
+
+# view top n rows
+pkg_downloads %>% 
+  head(10)
 
 ```
 
 
-
-We can now join all the three datasets telling different aspects of the packages to have one dataframe we can use for visualization and expropriation🙂
+Here is the fun part, we can now join all the three datasets telling different aspects of the packages to have one dataframe we can use for visualization and expropriation, how cool is that🙂
 
 
 ```{r}
 
 CRAN_pkgs <- reduce(
-  list(r_pkgs_by_date, pkg_downloads, available_pks),
+  list(r_pkgs_by_date, pkg_downloads, available_pks), # reduce from purrr package
   left_join,
-  by = "pkg_name"
+  by = "pkg_name"                                     # join by package_name
 ) %>% arrange(Rank) %>% 
-  select(Rank, pkg_name, Downloads, everything())
+  select(Rank, pkg_name, downloads, everything())
+
+# view top n rows
+
+CRAN_pkgs %>% 
+  head(5) %>% 
+  reactable::reactable()
 
 ```
 
+
+For instance, as of the harvesting of this data, what are the top 20 most downloaded packages from CRAN. We can be able to summarize and visualize that information
+
+```{r}
+CRAN_pkgs %>% 
+  filter(Rank <= 20) %>% 
+  reactable::reactable()
+```
+
+
+More fun exploration and data wrangling can be performed on the harvested data, feel free to play with the data further.
+
+
+Export the combined dataset
 
 ```{r}
 # export data for playing around with
@@ -185,6 +242,196 @@ CRAN_pkgs <- reduce(
 rio::export(CRAN_pkgs, here("datasets", "CRAN_pkgs.rds"))
 
 ```
+
+
+
+# Manually using `readLines()`
+
+Sometimes, not all websites are structured in the manner that the dollar exchange website is. What this means is that the magic of the two functions above (`read_html` and `html_tabel`) do not work as expected.
+
+In such scenarios, I am going to show you a manual way to still harvest data using the `readLines` functions. I must admit that this is a very painful approach and is NOT standard nor reproducible as it depends on the state/structure of the website at the time of harvesting.
+
+
+
+#### **Read the webpage**
+
+The first step is to read the html code from the website using `readLines` function.
+
+
+```{r}
+
+# store url link
+dollar_ex_url <- "https://www.theglobaleconomy.com/rankings/Dollar_exchange_rate/"
+
+# Reading the HTML code from the website
+dollaEx_webpage <- readLines(dollar_ex_url)
+
+head(dollaEx_webpage, 15)
+
+```
+
+The `dollaEx_webpage` is basically a HTML page with all the usual html tags and stuff. So, we are going refer to the website for a start point to give us reference for first entry and last entry of the page. From experience, I have found focusing on the actual data saves time and very easy to proceed forth as opposed to randomly picking any entry on the page.
+
+For instance, Afghanistan is the first entry on the table and Zambia is the last entry, this gives me an idea of the bound of the data that I want. Ideally I need everything between entry one and last entry and I am going to show you how.
+
+
+#### **Search for data bounds**
+
+Now, the manual work starts here. From the source website, I want to find the index or indices of `Afghanistan`, my first data point.
+
+```{r}
+str_which(dollaEx_webpage, "Afghanistan")
+```
+
+What this means is that the key word Afghanistan has been found in position 922 (sometimes multiple positions get returned). We can try to triangulate around these positions and see what we’ve got going. There is not rule for triangulation, you just throw the net and inspect the output, that’s why it’s a manual approach.
+
+From the `dollaEx_webpage` object and with the index of my first data point, I start the triangulation process. For instance, let me view the next 10 lines after position `922`
+
+
+```{r}
+dollaEx_webpage[922:932] # first 10 lines
+```
+
+Clearly from the above output, if I were interested in data for `Afghanistan` only, i.e. the 5 columns from the table in the website, they are contained between positions 922 and 926, see below.
+
+```{r}
+dollaEx_webpage[922:926] 
+```
+
+**NOTE**, I am ONLY interested at the start and end of the data string containing the columns a.ka. data that I need. Do the same for the last entry on the table (in the website), which in this case is `Zambia.` 
+
+
+```{r}
+# Last entry
+str_which(dollaEx_webpage, "Zambia")
+```
+
+NOTE, I am interested at the start and end of the data string. The index for Zambia is 2252, based on what I did with the first entry on the table, it simply means that the data bound for Zambia is contained within 4 steps/lines from 2252. See below.
+
+```{r}
+dollaEx_webpage[2252:2256]
+```
+
+After carefully inspecting the above outputs, I can conclude that the data I am looking for (the whole table) lies between 922 to 2256. Anything before or after contain nothing other than "\t\t\t\t\t\t\t\t\t\t\t\t\t" tags only.
+
+
+#### **Define whole data bounds**
+
+After arriving at this conclusion, then next step is to now narrow your webpage to the data bounds only i.e.
+
+```{r}
+# resize your webpage to only contain the data
+dollaEx_webData <- dollaEx_webpage[922:2256]
+
+head(dollaEx_webData, 15)
+```
+
+If you widely look at the object `dollaEx_webData`, it contains a lot of unnecessary "\t\t\t\t\t\t\t\t\t\t\t\t\t" tags, so now it’s time to clean this object carefully ind order to obtain the data.
+
+
+#### **Cleanup process**
+
+First get rid of all the `"\t\t\t\t\t\t\t\t\t\t\t\t\t"`
+
+```{r}
+# remove ALL the "\t"
+dollaEx_clean <- dollaEx_webData %>% str_remove_all(pattern = "\t")
+
+head(dollaEx_clean,25)
+```
+
+The object `dollaEx_webData` basically contains unique strings that contain data from the column of the table in the `url.` If you look closely, you will see a recurring pattern of strings, each starting with `""<td><a href='/" `and ending with a double `"</tr>"`; and ideally, this is the trick. The ability to understand the output and content of `dollaEx_clean.`
+
+If you then count these start and end of recurring patterns, you find that they are 7 in number, so a single country data is composed of 7 unique strings Try viewing the first 25 rows of `dollaEx_clean`, you will be able to see what I mean.
+
+Take these unique strings and turn them into a matrix with each column containing the vital pieces of information and drop what is NOT required.
+
+```{r}
+dollaEx_matrix <- matrix(dollaEx_clean, 
+                         ncol = 7, # 7 columns because there were 7 unique strings
+                         byrow = TRUE)
+
+head(dollaEx_matrix, 4)
+```
+
+The matrix contains 7 columns (7 uniques strings, remember?). Information that we are most interested in (i.e the columns of the table in the url) are contained in the following columns of the matrix.
+
+  - column 1 contains country
+  - column 3 contains latest data from
+  - column 2 contains latest value
+  - column 4 contains change 3 months
+  - column 5 contains change 12 months
+
+With this information, we can now construct the final clean matrix by droping column 6 and 7 which contains nothing we are interested in.
+
+```{r}
+# drop columns that don't contain information of interest
+dollaEx_matrix_clean <- dollaEx_matrix[, c(1, 2, 3, 4, 5)]
+
+head(dollaEx_matrix_clean, 5)
+```
+
+
+Now construct a tibble from the above matrix and this will be our final product of the table from the url
+
+```{r}
+# final table
+exchange_data <- tibble(
+      Country = dollaEx_matrix_clean[, 1],
+      LatestData = dollaEx_matrix_clean[, 3],
+      LatesValue = dollaEx_matrix_clean[, 2],
+      Change3months = dollaEx_matrix_clean[ ,4],
+      Change12months = dollaEx_matrix_clean[ ,5]
+    )
+
+head(exchange_data)
+```
+
+
+Further clean up process for the columns (They don't contain usable date yet), so many html tags that needs to be removed.
+
+```{r}
+exchange_data <- exchange_data %>% 
+  mutate(
+    Country = str_remove(Country, pattern = "/Dollar_exchange_rate/.*"), # remove all characters after "/Dollar_exchange_rate/"
+    Country = str_remove(Country, pattern = "<td><a href='/")            # remove the start tag for each value of country
+  )
+
+head(exchange_data, 5)
+```
+
+
+The rest contain almost similar pattern, we are going to clean all them at a go. Basically remove the patterns/tags `<td>` and `</td>` from our columns.
+
+```{r}
+exchange_data <- exchange_data %>% 
+  mutate(across(.cols = c(LatestData:Change12months),
+                .fns = ~ str_remove_all(., pattern = "<td>|</td>")    # remove the patterns "<td>|</td>"
+                  )) %>%
+  mutate(across(LatesValue, as.numeric),                              # convert to numeric column containing exchange rate
+         
+         # On the date column; remove white space and replace "/" with "-"
+         LatestData = str_squish(
+           str_replace_all(
+             string = LatestData,
+             pattern = "/",
+             replacement = "-"
+           )
+         )) %>% 
+  # transform `LatestData` into a proper date column
+  mutate(
+    LatestData = my(LatestData),                       # proper date format
+    LatestData = format(LatestData, "%Y-%m")           # YYYY-mm
+  )
+
+exchange_data %>% 
+  tail(6)
+```
+
+
+**NOTE**: The downside of this manual approach is that it always depends on the website not changing structure, for instance if we had other countries added after Zambia, then our code above would not be able to extract that extra data sadly.
+
+
 
 
 

@@ -30,5 +30,6 @@ format:
     theme: Flatly #(Materia # Simplex # Zephyr #litera)  ## These are my all favourite themes
     css: styles.css
     toc: true
+    toc-depth: 4
     toc-location: left
 

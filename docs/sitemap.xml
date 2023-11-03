@@ -2,30 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/publications/publications.html</loc>
-    <lastmod>2023-10-31T16:29:21.489Z</lastmod>
+    <lastmod>2023-11-03T18:24:27.743Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/posts/web-scraping-in-R/index.html</loc>
+    <lastmod>2023-11-03T18:24:23.384Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/index.html</loc>
-    <lastmod>2023-10-31T16:29:15.262Z</lastmod>
+    <lastmod>2023-11-03T18:24:20.928Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/index.html</loc>
-    <lastmod>2023-10-31T16:29:13.013Z</lastmod>
+    <lastmod>2023-11-03T18:24:18.503Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/about.html</loc>
-    <lastmod>2023-10-31T16:29:11.788Z</lastmod>
+    <lastmod>2023-11-03T18:24:17.136Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/posts/automating-data-management/index.html</loc>
-    <lastmod>2023-10-31T16:29:13.756Z</lastmod>
+    <lastmod>2023-11-03T18:24:19.199Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/posts/coalesce-in-action/index.html</loc>
-    <lastmod>2023-10-31T16:29:16.253Z</lastmod>
+    <lastmod>2023-11-03T18:24:21.971Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/posts/working-with-databases/index.html</loc>
-    <lastmod>2023-10-31T16:29:17.915Z</lastmod>
+    <lastmod>2023-11-03T18:24:24.074Z</lastmod>
   </url>
 </urlset>

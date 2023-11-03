@@ -6,6 +6,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/web-scraping-in-R/index.html",
       "/posts/coalesce-in-action/index.html",
       "/posts/celebrate-100-gym-days/index.html",
       "/posts/working-with-databases/index.html",

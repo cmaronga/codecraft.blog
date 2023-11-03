@@ -10,7 +10,1266 @@
 <atom:link href="https://cmaronga.github.io/codecraft.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Christopher Maronga blog</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Thu, 26 Oct 2023 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 31 Oct 2023 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Web scraping using R</title>
+  <link>https://cmaronga.github.io/codecraft.blog/posts/web-scraping-in-R/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Efficient, flexible and powerful!</p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Web scraping is concept that most probably you have heard about. This is the art of <a href="https://en.wikipedia.org/wiki/Web_scraping">harvesting</a> publicly available data from a website for use in your analysis or reporting. Web scraping can be as simple as copying the contents of a website and pasting them on an excel sheet, but that’s not what we are going to do today. Most website pages are built using <a href="https://en.wikipedia.org/wiki/HTML">HTML</a> and this allows us to use tools such as R to dynamically extract the data.</p>
+<p>In this tutorial, I am going walk you through how you can harvest data from websites using R programming language. You can do this by coding the logic and instructions manually or use the package <a href="https://rvest.tidyverse.org/"><code>{rvest}</code></a> to easily extract the contents of a website. We would demonstrate the examples using the below two websites.</p>
+<ul>
+<li>TheGlobalEconomy.com, <a href="https://www.theglobaleconomy.com/rankings/Dollar_exchange_rate/">Exchange rate to USD by country</a></li>
+<li><a href="https://cran.r-project.org/web/packages/available_packages_by_date.html">CRAN package</a> website and <a href="https://www.datasciencemeta.com/rpackages">package download metrics</a> website</li>
+</ul>
+<p>First, let’s load the packages/tools of trade for the exercise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># loading packages</span></span>
+<span id="cb1-2">pacman<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">p_load</span>(</span>
+<span id="cb1-3">  rvest,        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># functions for webscraping</span></span>
+<span id="cb1-4">  ggthemes,     <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># extend themes for ggplot2</span></span>
+<span id="cb1-5">  lubridate,    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># handle dates</span></span>
+<span id="cb1-6">  here,         <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># manage file paths</span></span>
+<span id="cb1-7">  flextable,    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># quick tables</span></span>
+<span id="cb1-8">  tidyverse     <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># data wranglinga and visualization</span></span>
+<span id="cb1-9">)</span>
+<span id="cb1-10"></span>
+<span id="cb1-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># set theme for ggplot2</span></span>
+<span id="cb1-12"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_set</span>(</span>
+<span id="cb1-13">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_hc</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">base_size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span>                  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># base size</span></span>
+<span id="cb1-14">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span>(</span>
+<span id="cb1-15">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">legend.position =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>,              <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># No legend, unless specified in the plot</span></span>
+<span id="cb1-16">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">legend.title =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_blank</span>(),         <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># No title on the legend</span></span>
+<span id="cb1-17">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">axis.title.y =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">angle =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">90</span>) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># spin y title 90 degrees</span></span>
+<span id="cb1-18">    )</span>
+<span id="cb1-19">)</span></code></pre></div>
+</div>
+</section>
+<section id="using-rvest" class="level1">
+<h1>using <code>rvest</code></h1>
+<p>This is the simplest and easiest approach of then all. <a href="https://rvest.tidyverse.org/">rvest helps you scrape (or harvest)</a> data from web pages and it’s designed to work with the pipe chain style of coding.</p>
+<p>Three simples steps using this package:-</p>
+<ul>
+<li>Use <code>read_tml</code> function to convert the the url into an <code>xml document</code></li>
+<li>pass the <code>xlm document</code> to the function <code>html_table</code> to convert it into a list contain table(s) from the url source site.</li>
+<li>Now that you have tabular data, you can proceed with various data wrangling approaches to clean it up for use.</li>
+</ul>
+<section id="dollar-exchange-data" class="level2">
+<h2 class="anchored" data-anchor-id="dollar-exchange-data">Dollar exchange data</h2>
+<p>I came across this website <a href="https://www.theglobaleconomy.com/rankings/Dollar_exchange_rate/">Exchange rate to USD by country</a> while I was working on aggregating output from an<a href="https://asbmr.onlinelibrary.wiley.com/doi/full/10.1002/jbmr.4775?af=R">economic micro-simulation model</a> estimating benefits and budget impact of setting up fracture liaison services. Part of my reporting costs associated with the FLS, reported in local currency for about 10 different countries, but for harmonized reporting and international consumption, I need to convert the local currencies to US Dollars, hence I needed a source that I could cite and is updated regularly.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># get url from website</span></span>
+<span id="cb2-2">exchange_rate_url <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://www.theglobaleconomy.com/rankings/Dollar_exchange_rate/"</span></span>
+<span id="cb2-3"></span>
+<span id="cb2-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># read HTML from website</span></span>
+<span id="cb2-5">exchange_rate_webpage <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_html</span>(exchange_rate_url)       <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># read html site</span></span>
+<span id="cb2-6"></span>
+<span id="cb2-7"></span>
+<span id="cb2-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># create a datframe containing the exchange rates for use</span></span>
+<span id="cb2-9">currency_rates <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> exchange_rate_webpage <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb2-10">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">html_table</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span>                                          <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># output a list contain the exchange rate table from website</span></span>
+<span id="cb2-11">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.data.frame</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span>                                       <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># transform into a tibble</span></span>
+<span id="cb2-12">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># rename columns appropriately</span></span>
+<span id="cb2-13">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rename</span>(</span>
+<span id="cb2-14">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Country        =</span> Countries,</span>
+<span id="cb2-15">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">LatestData     =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Reference.date"</span>,</span>
+<span id="cb2-16">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">LatesValue     =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Latest.available.value"</span>,</span>
+<span id="cb2-17">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Change3months  =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Change.three.months"</span>,</span>
+<span id="cb2-18">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Change12months =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Change.twelve.months"</span></span>
+<span id="cb2-19">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb2-20">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">across</span>(LatesValue, as.numeric),                  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># convert to numeric column containing exchange rate</span></span>
+<span id="cb2-21">         </span>
+<span id="cb2-22">         <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># On the date column; remove white space and replace "/" with "-"</span></span>
+<span id="cb2-23">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">LatestData =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_squish</span>(</span>
+<span id="cb2-24">           <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_replace_all</span>(</span>
+<span id="cb2-25">             <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">string =</span> LatestData,</span>
+<span id="cb2-26">             <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"/"</span>,</span>
+<span id="cb2-27">             <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">replacement =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-"</span></span>
+<span id="cb2-28">           )</span>
+<span id="cb2-29">         )) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb2-30">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># transform `LatestData` into a proper date column</span></span>
+<span id="cb2-31">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(</span>
+<span id="cb2-32">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">LatestData =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">my</span>(LatestData),                       <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># proper date format</span></span>
+<span id="cb2-33">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">LatestData =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">format</span>(LatestData, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%Y-%m"</span>)           <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># YYYY-mm</span></span>
+<span id="cb2-34">  )</span></code></pre></div>
+</div>
+<p>The first 15 rows of the harvested data are show below</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">currency_rates <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb3-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Country LatesValue LatestData Change3months Change12months
+1          Afghanistan    75.4778    2023-10       -13.35%        -13.07%
+2              Albania   100.1403    2023-10         6.77%        -15.96%
+3              Algeria   137.2571    2023-10         1.59%         -2.22%
+4              Andorra     0.9466    2023-10         4.67%         -6.90%
+5               Angola   828.1470    2023-10         0.28%         83.55%
+6  Antigua and Barbuda     2.7026    2023-10         0.00%          0.00%
+7            Argentina   349.9246    2023-10        31.68%        130.05%
+8              Armenia   402.5164    2023-10         4.31%          0.08%
+9                Aruba     1.8011    2023-10        -0.03%          0.01%
+10           Australia     1.5759    2023-10         6.05%          0.25%
+11             Austria     0.9466    2023-10         4.67%         -6.90%
+12          Azerbaijan     1.7000    2023-10         0.00%          0.00%
+13             Bahamas     0.9995    2023-10         0.10%         -0.01%
+14             Bahrain     0.3767    2023-10         0.05%         -0.13%
+15          Bangladesh   110.1738    2023-10         1.65%          7.81%</code></pre>
+</div>
+</div>
+<p>You can now export the harvested data for later use downstream or in your modelling framework like I did. You see, easy and straight forward, right?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Export the data</span></span>
+<span id="cb5-2"></span>
+<span id="cb5-3">rio<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">export</span>(currency_rates, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"datasets"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dollar_exchange_rates.rds"</span>))</span></code></pre></div>
+</div>
+</section>
+<section id="available-cran-packages" class="level2">
+<h2 class="anchored" data-anchor-id="available-cran-packages">Available CRAN packages</h2>
+<p>In this section, we are going to harvest data from two websites:-</p>
+<ul>
+<li>List of available <a href="https://cran.r-project.org/web/packages/available_packages_by_date.html">CRAN packages</a> by data of publication</li>
+<li>Tracked website of <a href="https://www.datasciencemeta.com/rpackages">CRAN packages by number of downloads</a></li>
+<li>Additionally, to get some metrics to combine with data from the above 2 sites, we I use <code>available.packages</code> function for all cran packages in this <a href="https://cran.r-project.org/">mirror</a></li>
+</ul>
+<section id="cran-packages-by-publication-date" class="level3">
+<h3 class="anchored" data-anchor-id="cran-packages-by-publication-date">CRAN packages by publication date</h3>
+<p>I will use the 3 simple steps already covered earlier, employing <code>rvest</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Specifying the url</span></span>
+<span id="cb6-2">url <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'https://cran.r-project.org/web/packages/available_packages_by_date.html'</span></span>
+<span id="cb6-3"></span>
+<span id="cb6-4"></span>
+<span id="cb6-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># create a dataframe using `rvest` functions</span></span>
+<span id="cb6-6">r_pkgs_by_date <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_html</span>(url) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb6-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">html_table</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb6-8">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.data.frame</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb6-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(</span>
+<span id="cb6-10">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Date =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ymd</span>(Date)</span>
+<span id="cb6-11">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb6-12">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rename</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pkg_name =</span> Package, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">date_published =</span> Date)</span>
+<span id="cb6-13"></span>
+<span id="cb6-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># view top n rows</span></span>
+<span id="cb6-15">r_pkgs_by_date <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb6-16">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   date_published      pkg_name
+1      2023-11-03           abn
+2      2023-11-03          afpt
+3      2023-11-03     betaDelta
+4      2023-11-03          bild
+5      2023-11-03     chisquare
+6      2023-11-03           DPQ
+7      2023-11-03 DTRKernSmooth
+8      2023-11-03       fBasics
+9      2023-11-03     FieldSimR
+10     2023-11-03     GOxploreR
+                                                                                                       Title
+1                                                Modelling Multivariate Data with Additive Bayesian Networks
+2                                                           Tools for Modelling of Animal Flight Performance
+3                                              Confidence Intervals for Standardized Regression Coefficients
+4                                                                     A Package for BInary Longitudinal Data
+5  Chi-Square and G-Square Test of Independence, Residual Analysis,\nand Measures of Categorical Association
+6                                                        Density, Probability, Quantile ('DPQ') Computations
+7                          Estimate and Make Inference About Optimal Treatment Regimes via\nSmoothed Methods
+8                                                                    Rmetrics - Markets and Basic Statistics
+9                                   Simulation of Plot Errors and Phenotypes in Plant Breeding Field\nTrials
+10                                           Structural Exploration of the Gene Ontology (GO) Knowledge Base</code></pre>
+</div>
+</div>
+</section>
+<section id="cran-packages-metadata" class="level3">
+<h3 class="anchored" data-anchor-id="cran-packages-metadata">CRAN packages metadata</h3>
+<p>If I need additional details, I can use the function <code>available.packages()</code>; downside, it doesn’t contain date of publication, but some other metrics which are equally important are returned by this function. So, I ma going to do that below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># using available.packages function</span></span>
+<span id="cb8-2"></span>
+<span id="cb8-3">available_pks <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">available.packages</span>(<span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#repos = "http://cran.us.r-project.org",</span></span>
+<span id="cb8-4">                                                                            <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># specify CRAN mirror and metadata to extract</span></span>
+<span id="cb8-5">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">repos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://cran.r-project.org/"</span>)[, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Version"</span>,</span>
+<span id="cb8-6">                                             <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Depends"</span>,</span>
+<span id="cb8-7">                                             <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Repository"</span>,</span>
+<span id="cb8-8">                                             <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"NeedsCompilation"</span>,</span>
+<span id="cb8-9">                                             <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"License"</span>)] <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb8-10">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.data.frame</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> tibble<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rownames_to_column</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">var =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pkg_name"</span>)</span>
+<span id="cb8-11"></span>
+<span id="cb8-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># view top n rows</span></span>
+<span id="cb8-13">available_pks <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb8-14">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pkg_name Version                                             Depends
+1             A3   1.0.0                      R (&gt;= 2.15.0), xtable, pbapply
+2  AalenJohansen     1.0                                                &lt;NA&gt;
+3       AATtools   0.0.2                                        R (&gt;= 3.6.0)
+4         ABACUS   1.0.0                                        R (&gt;= 3.1.0)
+5    abasequence   0.1.0                                                &lt;NA&gt;
+6     abbreviate     0.1                                                &lt;NA&gt;
+7            abc   2.2.1 R (&gt;= 2.10), abc.data, nnet, quantreg, MASS, locfit
+8       abc.data     1.0                                         R (&gt;= 2.10)
+9        ABC.RAP   0.9.0                                        R (&gt;= 3.1.0)
+10   ABCanalysis   1.2.1                                         R (&gt;= 2.10)
+                               Repository NeedsCompilation    License
+1  https://cran.r-project.org/src/contrib               no GPL (&gt;= 2)
+2  https://cran.r-project.org/src/contrib               no GPL (&gt;= 2)
+3  https://cran.r-project.org/src/contrib               no      GPL-3
+4  https://cran.r-project.org/src/contrib               no      GPL-3
+5  https://cran.r-project.org/src/contrib               no      GPL-3
+6  https://cran.r-project.org/src/contrib               no      GPL-3
+7  https://cran.r-project.org/src/contrib               no GPL (&gt;= 3)
+8  https://cran.r-project.org/src/contrib               no GPL (&gt;= 3)
+9  https://cran.r-project.org/src/contrib               no      GPL-3
+10 https://cran.r-project.org/src/contrib               no      GPL-3</code></pre>
+</div>
+</div>
+</section>
+<section id="cran-packages-downloads" class="level3">
+<h3 class="anchored" data-anchor-id="cran-packages-downloads">CRAN packages downloads</h3>
+<p>We can grab metric on number of downloads for each package in CRAN from this <a href="https://www.datasciencemeta.com/rpackages">website.</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">pkg_down_url <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://www.datasciencemeta.com/rpackages"</span></span>
+<span id="cb10-2"></span>
+<span id="cb10-3">pkg_downloads <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_html</span>(pkg_down_url) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb10-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">html_table</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb10-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.data.frame</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb10-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(Author, Maintainer)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span>                          <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># remove columns with no data</span></span>
+<span id="cb10-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(</span>
+<span id="cb10-8">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Downloads =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_remove_all</span>(Downloads, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">","</span>),     <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># get rid of commas</span></span>
+<span id="cb10-9">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Downloads =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.integer</span>(Downloads)                         <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># convert into an integer</span></span>
+<span id="cb10-10">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb10-11">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rename</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pkg_name =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Package.Name"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">downloads =</span> Downloads)</span>
+<span id="cb10-12"></span>
+<span id="cb10-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># view top n rows</span></span>
+<span id="cb10-14">pkg_downloads <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb10-15">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Rank pkg_name downloads
+1     1  ggplot2 127088264
+2     2    rlang 118170119
+3     3 magrittr 115906264
+4     4    dplyr  96514386
+5     5    vctrs  84215499
+6     6   tibble  81744821
+7     7      cli  80994837
+8     8 devtools  80226146
+9     9 jsonlite  79806265
+10   10   pillar  76393888</code></pre>
+</div>
+</div>
+<p>Here is the fun part, we can now join all the three datasets telling different aspects of the packages to have one dataframe we can use for visualization and expropriation, how cool is that🙂</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">CRAN_pkgs <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reduce</span>(</span>
+<span id="cb12-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(r_pkgs_by_date, pkg_downloads, available_pks), <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># reduce from purrr package</span></span>
+<span id="cb12-3">  left_join,</span>
+<span id="cb12-4">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pkg_name"</span>                                     <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># join by package_name</span></span>
+<span id="cb12-5">) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">arrange</span>(Rank) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb12-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(Rank, pkg_name, downloads, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">everything</span>())</span>
+<span id="cb12-7"></span>
+<span id="cb12-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># view top n rows</span></span>
+<span id="cb12-9"></span>
+<span id="cb12-10">CRAN_pkgs <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb12-11">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb12-12">  reactable<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reactable</span>()</span></code></pre></div>
+<div class="cell-output-display">
+
+<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-4852f58c89c3183ecac6" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-4852f58c89c3183ecac6">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Rank":[1,2,3,4,5],"pkg_name":["ggplot2","rlang","magrittr","dplyr","vctrs"],"downloads":[127088264,118170119,115906264,96514386,84215499],"date_published":["2023-10-12","2023-04-28","2022-03-30","2023-09-03","2023-10-12"],"Title":["Create Elegant Data Visualisations Using the Grammar of Graphics","Functions for Base Types and Core R and 'Tidyverse' Features","A Forward-Pipe Operator for R","A Grammar of Data Manipulation","Vector Helpers"],"Version":["3.4.4","1.1.1","2.0.3","1.1.3","0.6.4"],"Depends":["R (>= 3.3)","R (>= 3.5.0)","R (>= 3.4.0)","R (>= 3.5.0)","R (>= 3.5.0)"],"Repository":["https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib"],"NeedsCompilation":["no","yes","yes","yes","yes"],"License":["MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE"]},"columns":[{"id":"Rank","name":"Rank","type":"numeric"},{"id":"pkg_name","name":"pkg_name","type":"character"},{"id":"downloads","name":"downloads","type":"numeric"},{"id":"date_published","name":"date_published","type":"Date"},{"id":"Title","name":"Title","type":"character"},{"id":"Version","name":"Version","type":"character"},{"id":"Depends","name":"Depends","type":"character"},{"id":"Repository","name":"Repository","type":"character"},{"id":"NeedsCompilation","name":"NeedsCompilation","type":"character"},{"id":"License","name":"License","type":"character"}],"dataKey":"78bf2e3e9dbd55091d79de567d7a8911"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>For instance, as of the harvesting of this data, what are the top 20 most downloaded packages from CRAN. We can be able to summarize and visualize that information</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">CRAN_pkgs <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb13-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(Rank <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb13-3">  reactable<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reactable</span>()</span></code></pre></div>
+<div class="cell-output-display">
+
+<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a41543dc8d17ed6d353a" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a41543dc8d17ed6d353a">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Rank":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"pkg_name":["ggplot2","rlang","magrittr","dplyr","vctrs","tibble","cli","devtools","jsonlite","pillar","Rcpp","glue","lifecycle","stringr","stringi","ragg","textshaping","digest","tidyverse","knitr"],"downloads":[127088264,118170119,115906264,96514386,84215499,81744821,80994837,80226146,79806265,76393888,76161093,73824263,71584623,68447620,65611001,64115392,62983902,61962888,61464580,58384350],"date_published":["2023-10-12","2023-04-28","2022-03-30","2023-09-03","2023-10-12","2023-03-20","2023-03-23","2022-10-11","2023-06-29","2023-03-22","2023-07-06","2022-02-24","2022-10-07","2022-12-02","2023-01-11","2023-10-10","2023-10-09","2023-07-07","2023-02-22","2023-10-30"],"Title":["Create Elegant Data Visualisations Using the Grammar of Graphics","Functions for Base Types and Core R and 'Tidyverse' Features","A Forward-Pipe Operator for R","A Grammar of Data Manipulation","Vector Helpers","Simple Data Frames","Helpers for Developing Command Line Interfaces","Tools to Make Developing R Packages Easier","A Simple and Robust JSON Parser and Generator for R","Coloured Formatting for Columns","Seamless R and C++ Integration","Interpreted String Literals","Manage the Life Cycle of your Package Functions","Simple, Consistent Wrappers for Common String Operations","Fast and Portable Character String Processing Facilities","Graphic Devices Based on AGG","Bindings to the 'HarfBuzz' and 'Fribidi' Libraries for Text\nShaping","Create Compact Hash Digests of R Objects","Easily Install and Load the 'Tidyverse'","A General-Purpose Package for Dynamic Report Generation in R"],"Version":["3.4.4","1.1.1","2.0.3","1.1.3","0.6.4","3.2.1","3.6.1","2.4.5","1.8.7","1.9.0","1.0.11","1.6.2","1.0.3","1.5.0","1.7.12","1.2.6","0.3.7","0.6.33","2.0.0","1.45"],"Depends":["R (>= 3.3)","R (>= 3.5.0)","R (>= 3.4.0)","R (>= 3.5.0)","R (>= 3.5.0)","R (>= 3.4.0)","R (>= 3.4)","R (>= 3.0.2), usethis (>= 2.1.6)","methods",null,null,"R (>= 3.4)","R (>= 3.4)","R (>= 3.3)","R (>= 3.1)",null,"R (>= 3.2.0)","R (>= 3.3.0)","R (>= 3.3)","R (>= 3.3.0)"],"Repository":["https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib"],"NeedsCompilation":["no","yes","yes","yes","yes","yes","yes","no","yes","no","yes","yes","no","no","yes","yes","yes","yes","no","no"],"License":["MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","GPL (>= 2)","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","file LICENSE","MIT + file LICENSE","MIT + file LICENSE","GPL (>= 2)","MIT + file LICENSE","GPL"]},"columns":[{"id":"Rank","name":"Rank","type":"numeric"},{"id":"pkg_name","name":"pkg_name","type":"character"},{"id":"downloads","name":"downloads","type":"numeric"},{"id":"date_published","name":"date_published","type":"Date"},{"id":"Title","name":"Title","type":"character"},{"id":"Version","name":"Version","type":"character"},{"id":"Depends","name":"Depends","type":"character"},{"id":"Repository","name":"Repository","type":"character"},{"id":"NeedsCompilation","name":"NeedsCompilation","type":"character"},{"id":"License","name":"License","type":"character"}],"dataKey":"d72049164000c3f8f5b19f242a888ae4"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>More fun exploration and data wrangling can be performed on the harvested data, feel free to play with the data further.</p>
+<p>Export the combined dataset</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># export data for playing around with</span></span>
+<span id="cb14-2"></span>
+<span id="cb14-3">rio<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">export</span>(CRAN_pkgs, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"datasets"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"CRAN_pkgs.rds"</span>))</span></code></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="manually-using-readlines" class="level1">
+<h1>Manually using <code>readLines()</code></h1>
+<p>Sometimes, not all websites are structured in the manner that the dollar exchange website is. What this means is that the magic of the two functions above (<code>read_html</code> and <code>html_tabel</code>) do not work as expected.</p>
+<p>In such scenarios, I am going to show you a manual way to still harvest data using the <code>readLines</code> functions. I must admit that this is a very painful approach and is NOT standard nor reproducible as it depends on the state/structure of the website at the time of harvesting.</p>
+<section id="read-the-webpage" class="level4">
+<h4 class="anchored" data-anchor-id="read-the-webpage"><strong>Read the webpage</strong></h4>
+<p>The first step is to read the html code from the website using <code>readLines</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># store url link</span></span>
+<span id="cb15-2">dollar_ex_url <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://www.theglobaleconomy.com/rankings/Dollar_exchange_rate/"</span></span>
+<span id="cb15-3"></span>
+<span id="cb15-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Reading the HTML code from the website</span></span>
+<span id="cb15-5">dollaEx_webpage <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">readLines</span>(dollar_ex_url)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in readLines(dollar_ex_url): incomplete final line found on
+'https://www.theglobaleconomy.com/rankings/Dollar_exchange_rate/'</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(dollaEx_webpage, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "&lt;!DOCTYPE html&gt;"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+ [2] "&lt;html xmlns='https://www.w3.org/1999/xhtml' lang=\"en\" xml:lang='en' &gt;"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+ [3] "\t&lt;head&gt;"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+ [4] "\t\t&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0\"/&gt;"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+ [5] "\t\t"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+ [6] "\t\t&lt;link rel=\"canonical\" href=\"https://www.theglobaleconomy.com/rankings/Dollar_exchange_rate/\"&gt;"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+ [7] "\t\t"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+ [8] "\t\t\t\t&lt;meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /&gt;"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+ [9] "\t\t"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+[10] "\t\t&lt;link rel=\"shortcut icon\" href=\"/favicon.ico\" type=\"image/x-icon\"&gt;"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+[11] "\t\t&lt;link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\"&gt;"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+[12] "\t\t"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+[13] "\t\t&lt;title&gt;Exchange rate to USD around the world | TheGlobalEconomy.com&lt;/title&gt;"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+[14] "\t\t&lt;meta name=\"Keywords\" content=\"Exchange rate to USD around the world\" /&gt;"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+[15] "\t\t&lt;meta name=\"Description\" content=\"What do we see on the table: June 2022 update Several countries, including Yemen, Sri Lanka, and Belarus experienced sizable depreciation again the dollar in the last three months. In contrast, the Russian ruble strengthened against the dollar. Over the last three months to May 2022, the dollar appreciated against the euro by about 7 percent, 12 percent against the Japanese yen and about 8 percent against the British pound. In short, the dollar has gained value against all major currencies. It also gained on the Chinese renminbi and the Indian rupee but lost some ground to the Brazilian real. What factors determine the exchange rates The exchange rate is the price of one currency expressed in units of another currency. We say that a currency is appreciating/depreciating relative to another currency if … continue reading below the table \" /&gt;"</code></pre>
+</div>
+</div>
+<p>The <code>dollaEx_webpage</code> is basically a HTML page with all the usual html tags and stuff. So, we are going refer to the website for a start point to give us reference for first entry and last entry of the page. From experience, I have found focusing on the actual data saves time and very easy to proceed forth as opposed to randomly picking any entry on the page.</p>
+<p>For instance, Afghanistan is the first entry on the table and Zambia is the last entry, this gives me an idea of the bound of the data that I want. Ideally I need everything between entry one and last entry and I am going to show you how.</p>
+</section>
+<section id="search-for-data-bounds" class="level4">
+<h4 class="anchored" data-anchor-id="search-for-data-bounds"><strong>Search for data bounds</strong></h4>
+<p>Now, the manual work starts here. From the source website, I want to find the index or indices of <code>Afghanistan</code>, my first data point.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_which</span>(dollaEx_webpage, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Afghanistan"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 922</code></pre>
+</div>
+</div>
+<p>What this means is that the key word Afghanistan has been found in position 922 (sometimes multiple positions get returned). We can try to triangulate around these positions and see what we’ve got going. There is not rule for triangulation, you just throw the net and inspect the output, that’s why it’s a manual approach.</p>
+<p>From the <code>dollaEx_webpage</code> object and with the index of my first data point, I start the triangulation process. For instance, let me view the next 10 lines after position <code>922</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">dollaEx_webpage[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">922</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">932</span>] <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># first 10 lines</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "\t\t\t\t\t\t&lt;td&gt;&lt;a href='/Afghanistan/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Afghanistan&lt;/a&gt;&lt;/td&gt;"
+ [2] "\t\t\t\t\t\t&lt;td&gt;75.4778&lt;/td&gt;"                                                                           
+ [3] "\t\t\t\t\t\t&lt;td&gt;Oct / 2023&lt;/td&gt;"                                                                        
+ [4] "\t\t\t\t\t\t\t\t\t\t\t\t&lt;td&gt;-13.35%&lt;/td&gt;"                                                               
+ [5] "\t\t\t\t\t\t&lt;td&gt;-13.07%&lt;/td&gt;"                                                                           
+ [6] "\t\t\t\t\t\t\t\t\t\t\t&lt;/tr&gt;"                                                                            
+ [7] "\t\t\t\t\t\t\t\t\t&lt;tr&gt;"                                                                                 
+ [8] "\t\t\t\t\t\t&lt;td&gt;&lt;a href='/Albania/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Albania&lt;/a&gt;&lt;/td&gt;"        
+ [9] "\t\t\t\t\t\t&lt;td&gt;100.1403&lt;/td&gt;"                                                                          
+[10] "\t\t\t\t\t\t&lt;td&gt;Oct / 2023&lt;/td&gt;"                                                                        
+[11] "\t\t\t\t\t\t\t\t\t\t\t\t&lt;td&gt;6.77%&lt;/td&gt;"                                                                 </code></pre>
+</div>
+</div>
+<p>Clearly from the above output, if I were interested in data for <code>Afghanistan</code> only, i.e.&nbsp;the 5 columns from the table in the website, they are contained between positions 922 and 926, see below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1">dollaEx_webpage[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">922</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">926</span>] </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "\t\t\t\t\t\t&lt;td&gt;&lt;a href='/Afghanistan/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Afghanistan&lt;/a&gt;&lt;/td&gt;"
+[2] "\t\t\t\t\t\t&lt;td&gt;75.4778&lt;/td&gt;"                                                                           
+[3] "\t\t\t\t\t\t&lt;td&gt;Oct / 2023&lt;/td&gt;"                                                                        
+[4] "\t\t\t\t\t\t\t\t\t\t\t\t&lt;td&gt;-13.35%&lt;/td&gt;"                                                               
+[5] "\t\t\t\t\t\t&lt;td&gt;-13.07%&lt;/td&gt;"                                                                           </code></pre>
+</div>
+</div>
+<p><strong>NOTE</strong>, I am ONLY interested at the start and end of the data string containing the columns a.ka. data that I need. Do the same for the last entry on the table (in the website), which in this case is <code>Zambia.</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Last entry</span></span>
+<span id="cb25-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_which</span>(dollaEx_webpage, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Zambia"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2252</code></pre>
+</div>
+</div>
+<p>NOTE, I am interested at the start and end of the data string. The index for Zambia is 2252, based on what I did with the first entry on the table, it simply means that the data bound for Zambia is contained within 4 steps/lines from 2252. See below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1">dollaEx_webpage[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2252</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2256</span>]</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "\t\t\t\t\t\t&lt;td&gt;&lt;a href='/Zambia/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Zambia&lt;/a&gt;&lt;/td&gt;"
+[2] "\t\t\t\t\t\t&lt;td&gt;21.5142&lt;/td&gt;"                                                                 
+[3] "\t\t\t\t\t\t&lt;td&gt;Oct / 2023&lt;/td&gt;"                                                              
+[4] "\t\t\t\t\t\t\t\t\t\t\t\t&lt;td&gt;16.24%&lt;/td&gt;"                                                      
+[5] "\t\t\t\t\t\t&lt;td&gt;35.05%&lt;/td&gt;"                                                                  </code></pre>
+</div>
+</div>
+<p>After carefully inspecting the above outputs, I can conclude that the data I am looking for (the whole table) lies between 922 to 2256. Anything before or after contain nothing other than “ tags only.</p>
+</section>
+<section id="define-whole-data-bounds" class="level4">
+<h4 class="anchored" data-anchor-id="define-whole-data-bounds"><strong>Define whole data bounds</strong></h4>
+<p>After arriving at this conclusion, then next step is to now narrow your webpage to the data bounds only i.e.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># resize your webpage to only contain the data</span></span>
+<span id="cb29-2">dollaEx_webData <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> dollaEx_webpage[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">922</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2256</span>]</span>
+<span id="cb29-3"></span>
+<span id="cb29-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(dollaEx_webData, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "\t\t\t\t\t\t&lt;td&gt;&lt;a href='/Afghanistan/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Afghanistan&lt;/a&gt;&lt;/td&gt;"
+ [2] "\t\t\t\t\t\t&lt;td&gt;75.4778&lt;/td&gt;"                                                                           
+ [3] "\t\t\t\t\t\t&lt;td&gt;Oct / 2023&lt;/td&gt;"                                                                        
+ [4] "\t\t\t\t\t\t\t\t\t\t\t\t&lt;td&gt;-13.35%&lt;/td&gt;"                                                               
+ [5] "\t\t\t\t\t\t&lt;td&gt;-13.07%&lt;/td&gt;"                                                                           
+ [6] "\t\t\t\t\t\t\t\t\t\t\t&lt;/tr&gt;"                                                                            
+ [7] "\t\t\t\t\t\t\t\t\t&lt;tr&gt;"                                                                                 
+ [8] "\t\t\t\t\t\t&lt;td&gt;&lt;a href='/Albania/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Albania&lt;/a&gt;&lt;/td&gt;"        
+ [9] "\t\t\t\t\t\t&lt;td&gt;100.1403&lt;/td&gt;"                                                                          
+[10] "\t\t\t\t\t\t&lt;td&gt;Oct / 2023&lt;/td&gt;"                                                                        
+[11] "\t\t\t\t\t\t\t\t\t\t\t\t&lt;td&gt;6.77%&lt;/td&gt;"                                                                 
+[12] "\t\t\t\t\t\t&lt;td&gt;-15.96%&lt;/td&gt;"                                                                           
+[13] "\t\t\t\t\t\t\t\t\t\t\t&lt;/tr&gt;"                                                                            
+[14] "\t\t\t\t\t\t\t\t\t&lt;tr&gt;"                                                                                 
+[15] "\t\t\t\t\t\t&lt;td&gt;&lt;a href='/Algeria/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Algeria&lt;/a&gt;&lt;/td&gt;"        </code></pre>
+</div>
+</div>
+<p>If you widely look at the object <code>dollaEx_webData</code>, it contains a lot of unnecessary “ tags, so now it’s time to clean this object carefully ind order to obtain the data.</p>
+</section>
+<section id="cleanup-process" class="level4">
+<h4 class="anchored" data-anchor-id="cleanup-process"><strong>Cleanup process</strong></h4>
+<p>First get rid of all the <code>"\t\t\t\t\t\t\t\t\t\t\t\t\t"</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># remove ALL the "\t"</span></span>
+<span id="cb31-2">dollaEx_clean <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> dollaEx_webData <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_remove_all</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\t</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb31-3"></span>
+<span id="cb31-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(dollaEx_clean,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">25</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "&lt;td&gt;&lt;a href='/Afghanistan/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Afghanistan&lt;/a&gt;&lt;/td&gt;"
+ [2] "&lt;td&gt;75.4778&lt;/td&gt;"                                                                           
+ [3] "&lt;td&gt;Oct / 2023&lt;/td&gt;"                                                                        
+ [4] "&lt;td&gt;-13.35%&lt;/td&gt;"                                                                           
+ [5] "&lt;td&gt;-13.07%&lt;/td&gt;"                                                                           
+ [6] "&lt;/tr&gt;"                                                                                      
+ [7] "&lt;tr&gt;"                                                                                       
+ [8] "&lt;td&gt;&lt;a href='/Albania/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Albania&lt;/a&gt;&lt;/td&gt;"        
+ [9] "&lt;td&gt;100.1403&lt;/td&gt;"                                                                          
+[10] "&lt;td&gt;Oct / 2023&lt;/td&gt;"                                                                        
+[11] "&lt;td&gt;6.77%&lt;/td&gt;"                                                                             
+[12] "&lt;td&gt;-15.96%&lt;/td&gt;"                                                                           
+[13] "&lt;/tr&gt;"                                                                                      
+[14] "&lt;tr&gt;"                                                                                       
+[15] "&lt;td&gt;&lt;a href='/Algeria/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Algeria&lt;/a&gt;&lt;/td&gt;"        
+[16] "&lt;td&gt;137.2571&lt;/td&gt;"                                                                          
+[17] "&lt;td&gt;Oct / 2023&lt;/td&gt;"                                                                        
+[18] "&lt;td&gt;1.59%&lt;/td&gt;"                                                                             
+[19] "&lt;td&gt;-2.22%&lt;/td&gt;"                                                                            
+[20] "&lt;/tr&gt;"                                                                                      
+[21] "&lt;tr&gt;"                                                                                       
+[22] "&lt;td&gt;&lt;a href='/Andorra/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Andorra&lt;/a&gt;&lt;/td&gt;"        
+[23] "&lt;td&gt;0.9466&lt;/td&gt;"                                                                            
+[24] "&lt;td&gt;Oct / 2023&lt;/td&gt;"                                                                        
+[25] "&lt;td&gt;4.67%&lt;/td&gt;"                                                                             </code></pre>
+</div>
+</div>
+<p>The object <code>dollaEx_webData</code> basically contains unique strings that contain data from the column of the table in the <code>url.</code> If you look closely, you will see a recurring pattern of strings, each starting with <code>""&lt;td&gt;&lt;a href='/"</code>and ending with a double <code>"&lt;/tr&gt;"</code>; and ideally, this is the trick. The ability to understand the output and content of <code>dollaEx_clean.</code></p>
+<p>If you then count these start and end of recurring patterns, you find that they are 7 in number, so a single country data is composed of 7 unique strings Try viewing the first 25 rows of <code>dollaEx_clean</code>, you will be able to see what I mean.</p>
+<p>Take these unique strings and turn them into a matrix with each column containing the vital pieces of information and drop what is NOT required.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1">dollaEx_matrix <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">matrix</span>(dollaEx_clean, </span>
+<span id="cb33-2">                         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 7 columns because there were 7 unique strings</span></span>
+<span id="cb33-3">                         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in matrix(dollaEx_clean, ncol = 7, byrow = TRUE): data length [1335] is
+not a sub-multiple or multiple of the number of rows [191]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(dollaEx_matrix, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]                                                                                         
+[1,] "&lt;td&gt;&lt;a href='/Afghanistan/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Afghanistan&lt;/a&gt;&lt;/td&gt;"
+[2,] "&lt;td&gt;&lt;a href='/Albania/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Albania&lt;/a&gt;&lt;/td&gt;"        
+[3,] "&lt;td&gt;&lt;a href='/Algeria/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Algeria&lt;/a&gt;&lt;/td&gt;"        
+[4,] "&lt;td&gt;&lt;a href='/Andorra/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Andorra&lt;/a&gt;&lt;/td&gt;"        
+     [,2]                [,3]                  [,4]              
+[1,] "&lt;td&gt;75.4778&lt;/td&gt;"  "&lt;td&gt;Oct / 2023&lt;/td&gt;" "&lt;td&gt;-13.35%&lt;/td&gt;"
+[2,] "&lt;td&gt;100.1403&lt;/td&gt;" "&lt;td&gt;Oct / 2023&lt;/td&gt;" "&lt;td&gt;6.77%&lt;/td&gt;"  
+[3,] "&lt;td&gt;137.2571&lt;/td&gt;" "&lt;td&gt;Oct / 2023&lt;/td&gt;" "&lt;td&gt;1.59%&lt;/td&gt;"  
+[4,] "&lt;td&gt;0.9466&lt;/td&gt;"   "&lt;td&gt;Oct / 2023&lt;/td&gt;" "&lt;td&gt;4.67%&lt;/td&gt;"  
+     [,5]               [,6]    [,7]  
+[1,] "&lt;td&gt;-13.07%&lt;/td&gt;" "&lt;/tr&gt;" "&lt;tr&gt;"
+[2,] "&lt;td&gt;-15.96%&lt;/td&gt;" "&lt;/tr&gt;" "&lt;tr&gt;"
+[3,] "&lt;td&gt;-2.22%&lt;/td&gt;"  "&lt;/tr&gt;" "&lt;tr&gt;"
+[4,] "&lt;td&gt;-6.90%&lt;/td&gt;"  "&lt;/tr&gt;" "&lt;tr&gt;"</code></pre>
+</div>
+</div>
+<p>The matrix contains 7 columns (7 uniques strings, remember?). Information that we are most interested in (i.e the columns of the table in the url) are contained in the following columns of the matrix.</p>
+<ul>
+<li>column 1 contains country</li>
+<li>column 3 contains latest data from</li>
+<li>column 2 contains latest value</li>
+<li>column 4 contains change 3 months</li>
+<li>column 5 contains change 12 months</li>
+</ul>
+<p>With this information, we can now construct the final clean matrix by droping column 6 and 7 which contains nothing we are interested in.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># drop columns that don't contain information of interest</span></span>
+<span id="cb37-2">dollaEx_matrix_clean <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> dollaEx_matrix[, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)]</span>
+<span id="cb37-3"></span>
+<span id="cb37-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(dollaEx_matrix_clean, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]                                                                                         
+[1,] "&lt;td&gt;&lt;a href='/Afghanistan/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Afghanistan&lt;/a&gt;&lt;/td&gt;"
+[2,] "&lt;td&gt;&lt;a href='/Albania/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Albania&lt;/a&gt;&lt;/td&gt;"        
+[3,] "&lt;td&gt;&lt;a href='/Algeria/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Algeria&lt;/a&gt;&lt;/td&gt;"        
+[4,] "&lt;td&gt;&lt;a href='/Andorra/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Andorra&lt;/a&gt;&lt;/td&gt;"        
+[5,] "&lt;td&gt;&lt;a href='/Angola/Dollar_exchange_rate/' style=\"color:#000;\"&gt;Angola&lt;/a&gt;&lt;/td&gt;"          
+     [,2]                [,3]                  [,4]              
+[1,] "&lt;td&gt;75.4778&lt;/td&gt;"  "&lt;td&gt;Oct / 2023&lt;/td&gt;" "&lt;td&gt;-13.35%&lt;/td&gt;"
+[2,] "&lt;td&gt;100.1403&lt;/td&gt;" "&lt;td&gt;Oct / 2023&lt;/td&gt;" "&lt;td&gt;6.77%&lt;/td&gt;"  
+[3,] "&lt;td&gt;137.2571&lt;/td&gt;" "&lt;td&gt;Oct / 2023&lt;/td&gt;" "&lt;td&gt;1.59%&lt;/td&gt;"  
+[4,] "&lt;td&gt;0.9466&lt;/td&gt;"   "&lt;td&gt;Oct / 2023&lt;/td&gt;" "&lt;td&gt;4.67%&lt;/td&gt;"  
+[5,] "&lt;td&gt;828.1470&lt;/td&gt;" "&lt;td&gt;Oct / 2023&lt;/td&gt;" "&lt;td&gt;0.28%&lt;/td&gt;"  
+     [,5]              
+[1,] "&lt;td&gt;-13.07%&lt;/td&gt;"
+[2,] "&lt;td&gt;-15.96%&lt;/td&gt;"
+[3,] "&lt;td&gt;-2.22%&lt;/td&gt;" 
+[4,] "&lt;td&gt;-6.90%&lt;/td&gt;" 
+[5,] "&lt;td&gt;83.55%&lt;/td&gt;" </code></pre>
+</div>
+</div>
+<p>Now construct a tibble from the above matrix and this will be our final product of the table from the url</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># final table</span></span>
+<span id="cb39-2">exchange_data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">tibble</span>(</span>
+<span id="cb39-3">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Country =</span> dollaEx_matrix_clean[, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb39-4">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">LatestData =</span> dollaEx_matrix_clean[, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>],</span>
+<span id="cb39-5">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">LatesValue =</span> dollaEx_matrix_clean[, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>],</span>
+<span id="cb39-6">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Change3months =</span> dollaEx_matrix_clean[ ,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>],</span>
+<span id="cb39-7">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Change12months =</span> dollaEx_matrix_clean[ ,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>]</span>
+<span id="cb39-8">    )</span>
+<span id="cb39-9"></span>
+<span id="cb39-10"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(exchange_data)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  Country                     LatestData LatesValue Change3months Change12months
+  &lt;chr&gt;                       &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt;         
+1 "&lt;td&gt;&lt;a href='/Afghanistan… &lt;td&gt;Oct /… &lt;td&gt;75.47… &lt;td&gt;-13.35%&lt;… &lt;td&gt;-13.07%&lt;/…
+2 "&lt;td&gt;&lt;a href='/Albania/Dol… &lt;td&gt;Oct /… &lt;td&gt;100.1… &lt;td&gt;6.77%&lt;/t… &lt;td&gt;-15.96%&lt;/…
+3 "&lt;td&gt;&lt;a href='/Algeria/Dol… &lt;td&gt;Oct /… &lt;td&gt;137.2… &lt;td&gt;1.59%&lt;/t… &lt;td&gt;-2.22%&lt;/t…
+4 "&lt;td&gt;&lt;a href='/Andorra/Dol… &lt;td&gt;Oct /… &lt;td&gt;0.946… &lt;td&gt;4.67%&lt;/t… &lt;td&gt;-6.90%&lt;/t…
+5 "&lt;td&gt;&lt;a href='/Angola/Doll… &lt;td&gt;Oct /… &lt;td&gt;828.1… &lt;td&gt;0.28%&lt;/t… &lt;td&gt;83.55%&lt;/t…
+6 "&lt;td&gt;&lt;a href='/Antigua-and… &lt;td&gt;Oct /… &lt;td&gt;2.702… &lt;td&gt;0.00%&lt;/t… &lt;td&gt;0.00%&lt;/td&gt;</code></pre>
+</div>
+</div>
+<p>Further clean up process for the columns (They don’t contain usable date yet), so many html tags that needs to be removed.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1">exchange_data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> exchange_data <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb41-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(</span>
+<span id="cb41-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Country =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_remove</span>(Country, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"/Dollar_exchange_rate/.*"</span>), <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># remove all characters after "/Dollar_exchange_rate/"</span></span>
+<span id="cb41-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Country =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_remove</span>(Country, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&lt;td&gt;&lt;a href='/"</span>)            <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># remove the start tag for each value of country</span></span>
+<span id="cb41-5">  )</span>
+<span id="cb41-6"></span>
+<span id="cb41-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(exchange_data, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  Country     LatestData          LatesValue        Change3months Change12months
+  &lt;chr&gt;       &lt;chr&gt;               &lt;chr&gt;             &lt;chr&gt;         &lt;chr&gt;         
+1 Afghanistan &lt;td&gt;Oct / 2023&lt;/td&gt; &lt;td&gt;75.4778&lt;/td&gt;  &lt;td&gt;-13.35%&lt;… &lt;td&gt;-13.07%&lt;/…
+2 Albania     &lt;td&gt;Oct / 2023&lt;/td&gt; &lt;td&gt;100.1403&lt;/td&gt; &lt;td&gt;6.77%&lt;/t… &lt;td&gt;-15.96%&lt;/…
+3 Algeria     &lt;td&gt;Oct / 2023&lt;/td&gt; &lt;td&gt;137.2571&lt;/td&gt; &lt;td&gt;1.59%&lt;/t… &lt;td&gt;-2.22%&lt;/t…
+4 Andorra     &lt;td&gt;Oct / 2023&lt;/td&gt; &lt;td&gt;0.9466&lt;/td&gt;   &lt;td&gt;4.67%&lt;/t… &lt;td&gt;-6.90%&lt;/t…
+5 Angola      &lt;td&gt;Oct / 2023&lt;/td&gt; &lt;td&gt;828.1470&lt;/td&gt; &lt;td&gt;0.28%&lt;/t… &lt;td&gt;83.55%&lt;/t…</code></pre>
+</div>
+</div>
+<p>The rest contain almost similar pattern, we are going to clean all them at a go. Basically remove the patterns/tags <code>&lt;td&gt;</code> and <code>&lt;/td&gt;</code> from our columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1">exchange_data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> exchange_data <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb43-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">across</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">.cols =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(LatestData<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>Change12months),</span>
+<span id="cb43-3">                <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">.fns =</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_remove_all</span>(., <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&lt;td&gt;|&lt;/td&gt;"</span>)    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># remove the patterns "&lt;td&gt;|&lt;/td&gt;"</span></span>
+<span id="cb43-4">                  )) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb43-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">across</span>(LatesValue, as.numeric),                              <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># convert to numeric column containing exchange rate</span></span>
+<span id="cb43-6">         </span>
+<span id="cb43-7">         <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># On the date column; remove white space and replace "/" with "-"</span></span>
+<span id="cb43-8">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">LatestData =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_squish</span>(</span>
+<span id="cb43-9">           <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_replace_all</span>(</span>
+<span id="cb43-10">             <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">string =</span> LatestData,</span>
+<span id="cb43-11">             <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"/"</span>,</span>
+<span id="cb43-12">             <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">replacement =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-"</span></span>
+<span id="cb43-13">           )</span>
+<span id="cb43-14">         )) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb43-15">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># transform `LatestData` into a proper date column</span></span>
+<span id="cb43-16">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(</span>
+<span id="cb43-17">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">LatestData =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">my</span>(LatestData),                       <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># proper date format</span></span>
+<span id="cb43-18">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">LatestData =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">format</span>(LatestData, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%Y-%m"</span>)           <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># YYYY-mm</span></span>
+<span id="cb43-19">  )</span>
+<span id="cb43-20"></span>
+<span id="cb43-21">exchange_data <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb43-22">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">tail</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  Country    LatestData LatesValue Change3months Change12months
+  &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;         
+1 Uruguay    2023-10          39.6 4.72%         -3.58%        
+2 Uzbekistan 2023-10       12215.  5.52%         9.95%         
+3 Vanuatu    2018-06         109.  -0.00%        -0.63%        
+4 Vietnam    2023-10       24485.  3.46%         0.63%         
+5 Yemen      2023-10        1239   0.00%         0.00%         
+6 Zambia     2023-10          21.5 16.24%        35.05%        </code></pre>
+</div>
+</div>
+<p><strong>NOTE</strong>: The downside of this manual approach is that it always depends on the website not changing structure, for instance if we had other countries added after Zambia, then our code above would not be able to extract that extra data sadly.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Data mining</category>
+  <category>Data wrangling</category>
+  <category>tidyverse</category>
+  <guid>https://cmaronga.github.io/codecraft.blog/posts/web-scraping-in-R/index.html</guid>
+  <pubDate>Tue, 31 Oct 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://cmaronga.github.io/codecraft.blog/posts/web-scraping-in-R/web-scraping.jpeg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>dplyr::coalesce() in action</title>
   <link>https://cmaronga.github.io/codecraft.blog/posts/coalesce-in-action/index.html</link>
