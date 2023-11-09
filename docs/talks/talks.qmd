@@ -1,0 +1,87 @@
+---
+toc: false
+listing:
+  - id: "publications"
+    sort-ui: false
+    #filter-ui: true
+    categories: false
+    #type: table
+    page-size: 10
+    #fields: [title, description]
+    contents: 
+      - "*.qmd"
+resources:
+  - "**"
+  - "!(.qmd|.rmd)"
+execute: 
+  warning: false
+  echo: false
+---
+
+
+## Talks and Workshops
+
+
+```{r}
+# load packages
+pacman::p_load(dplyr,    
+               reactable)
+
+publications <- tibble::tribble(
+  ~Title, ~url, ~Year, ~ Venue,
+  
+  "Working with Databases in R", "https://youtu.be/txMmjDQoQqE?si=BpvZyIE5W2DnLzaT", "2021", "RLadies Nairobi",
+  
+  "Working with Databases in R", "https://youtu.be/htQWauSV9J4?si=LXN554RCOnW64L1R", "2022", "NHS-R COnference",
+  
+  "Introduction to Data Management in R", "https://youtu.be/8URgFFNDGfo?si=qqebF2snXPo8z7qo", "2021", "satRday Nairobi",
+  
+ "Integrating Rshiny and REDCap for Data Management", "https://www.youtube.com/live/PbD_e5sz4P8?si=avioFeCLgc-h9O0N", "2020", "Why R Conference",
+ 
+ "Introduction to data structures in R", "https://youtu.be/H-Tkg_aWSas?si=gkbFU5dHv7Irjmf2", "2019", "Ai Kenya Code Maktaba"
+  
+)
+
+
+publications %>%
+  select(Year, Title, Venue, everything()) %>% 
+  arrange(desc(Year)) %>% 
+  reactable::reactable(
+    searchable = FALSE,
+    pagination = TRUE,
+    language = reactableLang(
+    searchPlaceholder = "Filter",
+    ),
+    columns = list(
+      Title = colDef(
+        minWidth = 450,
+        cell = function(value, index) {
+          url_in <- publications$url[index]
+          htmltools::a(href = url_in, value)
+        }
+      ),
+      url = colDef(show = FALSE),
+      Venue = colDef(minWidth = 200)
+    ),
+    theme = reactableTheme(
+      borderColor = "steelblue",
+      stripedColor = "grey",
+      highlightColor = "blue",
+      cellPadding = "8px 12px",
+      style = list(fontFamily = "-apple-system, Lato, sans-serif",
+        fontSize = "16px"),
+    )
+  )
+
+```
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 [
   {
-    "listing": "/publications/publications.html",
+    "listing": "/talks/talks.html",
     "items": []
   },
   {
@@ -12,5 +12,9 @@
       "/posts/working-with-databases/index.html",
       "/posts/automating-data-management/index.html"
     ]
+  },
+  {
+    "listing": "/publications/publications.html",
+    "items": []
   }
 ]

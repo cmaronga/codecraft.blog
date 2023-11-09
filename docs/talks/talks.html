@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Maronga’s CodeCraft Blog</title>
+<title>Maronga's CodeCraft Blog – talks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +23,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-listing/list.min.js"></script>
+<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -64,20 +64,20 @@ ul.task-list li input[type="checkbox"] {
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    const listingTargetEl = window.document.querySelector('#listing-publications .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
     }
 
     const options = {
-      valueNames: ['listing-image','listing-date','listing-title','listing-author','listing-reading-time','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] }],
+      valueNames: [{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: [],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+    window['quarto-listings']['listing-publications'] = new List('listing-publications', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -91,20 +91,28 @@ ul.task-list li input[type="checkbox"] {
   })
   </script>
 
+<script src="../site_libs/core-js-2.5.3/shim.min.js"></script>
+<script src="../site_libs/react-17.0.0/react.min.js"></script>
+<script src="../site_libs/react-17.0.0/react-dom.min.js"></script>
+<script src="../site_libs/reactwidget-1.0.0/react-tools.js"></script>
+<script src="../site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="../site_libs/reactable-0.4.4/reactable.css" rel="stylesheet">
+<script src="../site_libs/reactable-binding-0.4.4/reactable.js"></script>
+
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Maronga's CodeCraft Blog" href="index.xml"></head>
+<link rel="stylesheet" href="../styles.css">
+</head>
 
-<body class="nav-fixed">
+<body class="floating nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Maronga’s CodeCraft Blog</span>
     </a>
   </div>
@@ -115,19 +123,19 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
+    <a class="nav-link" href="../about.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./talks/talks.html" rel="" target="">
+    <a class="nav-link active" href="../talks/talks.html" rel="" target="" aria-current="page">
  <span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./publications/publications.html" rel="" target="">
+    <a class="nav-link" href="../publications/publications.html" rel="" target="">
  <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./documents/Christopher_Maronga_Resume.pdf" rel="" target="">
+    <a class="nav-link" href="../documents/Christopher_Maronga_Resume.pdf" rel="" target="">
  <span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item compact">
@@ -141,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./index.xml" rel="" target=""><i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -153,180 +161,36 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Data mining">Data mining <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Data wrangling">Data wrangling <span class="quarto-category-count">(5)</span></div><div class="category" data-category="REDCap">REDCap <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SQL">SQL <span class="quarto-category-count">(1)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="social">social <span class="quarto-category-count">(1)</span></div><div class="category" data-category="tidyverse">tidyverse <span class="quarto-category-count">(4)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 
 
+<section id="talks-and-workshops" class="level2">
+<h2 class="anchored" data-anchor-id="talks-and-workshops">Talks and Workshops</h2>
+<div class="cell">
+<div class="cell-output-display">
 
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">Order By</option>
-       <option value="index" data-direction="asc">Default</option>
-         <option value="listing-title" data-direction="asc">
-          Title
-        </option>
-         <option value="listing-date-sort" data-direction="asc">
-          Date - Oldest
-        </option>
-         <option value="listing-date-sort" data-direction="desc">
-          Date - Newest
-        </option>
-     </select>
-  </div>
+<div class="reactable html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1642c9e62eb29adeb08e" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-1642c9e62eb29adeb08e">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Year":["2022","2021","2021","2020","2019"],"Title":["Working with Databases in R","Working with Databases in R","Introduction to Data Management in R","Integrating Rshiny and REDCap for Data Management","Introduction to data structures in R"],"Venue":["NHS-R COnference","RLadies Nairobi","satRday Nairobi","Why R Conference","Ai Kenya Code Maktaba"],"url":["https://youtu.be/htQWauSV9J4?si=LXN554RCOnW64L1R","https://youtu.be/txMmjDQoQqE?si=BpvZyIE5W2DnLzaT","https://youtu.be/8URgFFNDGfo?si=qqebF2snXPo8z7qo","https://www.youtube.com/live/PbD_e5sz4P8?si=avioFeCLgc-h9O0N","https://youtu.be/H-Tkg_aWSas?si=gkbFU5dHv7Irjmf2"]},"columns":[{"id":"Year","name":"Year","type":"character"},{"id":"Title","name":"Title","type":"character","cell":[{"name":"a","attribs":{"href":"https://youtu.be/txMmjDQoQqE?si=BpvZyIE5W2DnLzaT"},"children":["Working with Databases in R"]},{"name":"a","attribs":{"href":"https://youtu.be/htQWauSV9J4?si=LXN554RCOnW64L1R"},"children":["Working with Databases in R"]},{"name":"a","attribs":{"href":"https://youtu.be/8URgFFNDGfo?si=qqebF2snXPo8z7qo"},"children":["Introduction to Data Management in R"]},{"name":"a","attribs":{"href":"https://www.youtube.com/live/PbD_e5sz4P8?si=avioFeCLgc-h9O0N"},"children":["Integrating Rshiny and REDCap for Data Management"]},{"name":"a","attribs":{"href":"https://youtu.be/H-Tkg_aWSas?si=gkbFU5dHv7Irjmf2"},"children":["Introduction to data structures in R"]}],"minWidth":450},{"id":"Venue","name":"Venue","type":"character","minWidth":200},{"id":"url","name":"url","type":"character","show":false}],"theme":{"borderColor":"steelblue","stripedColor":"grey","highlightColor":"blue","cellPadding":"8px 12px","style":{"fontFamily":"-apple-system, Lato, sans-serif","fontSize":"16px"}},"language":{"searchPlaceholder":"Filter"},"dataKey":"28d40eb4ac01809ac5c6d0dabdc809d7"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
+</div>
+
+
+
+</section>
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-publications">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Data mining,Data wrangling,tidyverse" data-listing-date-sort="1698710400000" data-listing-file-modified-sort="1699035715496" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16">
-<div class="thumbnail">
-<p><a href="./posts/web-scraping-in-R/index.html"> <img src="./posts/web-scraping-in-R/web-scraping.jpeg" class="thumbnail-image" style="height: 150px;"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/web-scraping-in-R/index.html">
-<h3 class="no-anchor listing-title">
-Web scraping using R
-</h3>
-<div class="listing-subtitle">
 
-</div>
-<div class="listing-description">
-Efficient, flexible and powerful!
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/web-scraping-in-R/index.html">
-<div class="listing-date">
-2023-10-31
-</div>
-<div class="listing-reading-time">
-16 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="Data wrangling,tidyverse,code" data-listing-date-sort="1698361200000" data-listing-file-modified-sort="1698419539414" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
-<div class="thumbnail">
-<p><a href="./posts/coalesce-in-action/index.html"> <img src="./posts/coalesce-in-action/coalesce.jpg" class="thumbnail-image" style="height: 150px;"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/coalesce-in-action/index.html">
-<h3 class="no-anchor listing-title">
-dplyr::coalesce() in action
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-Viable shortcut to missing-value-free data set
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/coalesce-in-action/index.html">
-<div class="listing-date">
-2023-10-27
-</div>
-<div class="listing-reading-time">
-4 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="social,tidyverse,Data wrangling" data-listing-date-sort="1698102000000" data-listing-file-modified-sort="1698414912764" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
-<div class="thumbnail">
-<p><a href="./posts/celebrate-100-gym-days/index.html"> <img src="./posts/celebrate-100-gym-days/all_visits.PNG" class="thumbnail-image" style="height: 150px;"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/celebrate-100-gym-days/index.html">
-<h3 class="no-anchor listing-title">
-Celebrating 100 days of Gym dedication
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-Because I can exercise and share a brief story!
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/celebrate-100-gym-days/index.html">
-<div class="listing-date">
-2023-10-24
-</div>
-<div class="listing-reading-time">
-11 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="SQL,Data wrangling,tidyverse" data-listing-date-sort="1623452400000" data-listing-file-modified-sort="1698327927550" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
-<div class="thumbnail">
-<p><a href="./posts/working-with-databases/index.html"> <img src="./posts/working-with-databases/working-database.jpg" class="thumbnail-image" style="height: 150px;"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/working-with-databases/index.html">
-<h3 class="no-anchor listing-title">
-Working with Databases in R
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-MySQL, SQLite, R
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/working-with-databases/index.html">
-<div class="listing-date">
-2021-06-12
-</div>
-<div class="listing-reading-time">
-2 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="Data wrangling,REDCap,analysis" data-listing-date-sort="1544918400000" data-listing-file-modified-sort="1698400910247" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
-<div class="thumbnail">
-<p><a href="./posts/automating-data-management/index.html"> <img src="./posts/automating-data-management/image.jpg" class="thumbnail-image" style="height: 150px;"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/automating-data-management/index.html">
-<h3 class="no-anchor listing-title">
-Automating Clinical Data Management
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-Using REDCap, MySQL, RShiny-server
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/automating-data-management/index.html">
-<div class="listing-date">
-2018-12-16
-</div>
-<div class="listing-reading-time">
-2 min
-</div>
-</a>
-</div>
-</div>
 </div>
 <div class="listing-no-matching d-none">
 No matching items

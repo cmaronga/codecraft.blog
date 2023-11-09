@@ -49,13 +49,13 @@ I'm passionate about reproducible research, automating data products, statistica
 -   LaTeX
 -   Docker
 
-##  [Workshops delivered]{.underline}
+<!-- ##  [Workshops delivered]{.underline} -->
 
-- [Working with Databases in R](https://youtu.be/txMmjDQoQqE?si=BpvZyIE5W2DnLzaT) **@ RLadies Nairobi**
-- [Working with Databases in R](https://youtu.be/htQWauSV9J4?si=LXN554RCOnW64L1R) **@ NHS-R COnference**
-- [Introduction to Data Management in R](https://youtu.be/8URgFFNDGfo?si=qqebF2snXPo8z7qo) **@satRday Nairobi**
-- [Integrating Rshiny and REDCap for Data Management](https://www.youtube.com/live/PbD_e5sz4P8?si=avioFeCLgc-h9O0N) **@Why R Conference**
-- [Introduction to data structures in R](https://youtu.be/H-Tkg_aWSas?si=gkbFU5dHv7Irjmf2)**@ Ai Kenya Code Maktaba**
+<!-- - [Working with Databases in R](https://youtu.be/txMmjDQoQqE?si=BpvZyIE5W2DnLzaT) **@ RLadies Nairobi** -->
+<!-- - [Working with Databases in R](https://youtu.be/htQWauSV9J4?si=LXN554RCOnW64L1R) **@ NHS-R COnference** -->
+<!-- - [Introduction to Data Management in R](https://youtu.be/8URgFFNDGfo?si=qqebF2snXPo8z7qo) **@satRday Nairobi** -->
+<!-- - [Integrating Rshiny and REDCap for Data Management](https://www.youtube.com/live/PbD_e5sz4P8?si=avioFeCLgc-h9O0N) **@Why R Conference** -->
+<!-- - [Introduction to data structures in R](https://youtu.be/H-Tkg_aWSas?si=gkbFU5dHv7Irjmf2)**@ Ai Kenya Code Maktaba** -->
 
 
 <!-- ## [Publications]{.underline} -->
