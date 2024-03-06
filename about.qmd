@@ -37,6 +37,7 @@ I'm passionate about reproducible research, automating data products, statistica
 -   Data Management/Wrangling
 -   Data Analysis/Statistical Analysis
 -   Predictive Modelling
+-   Health Economics
 
 
 ## [Skills/languages]{.underline}
