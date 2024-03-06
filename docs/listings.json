@@ -4,6 +4,10 @@
     "items": []
   },
   {
+    "listing": "/publications/publications.html",
+    "items": []
+  },
+  {
     "listing": "/index.html",
     "items": [
       "/posts/web-scraping-in-R/index.html",
@@ -12,9 +16,5 @@
       "/posts/working-with-databases/index.html",
       "/posts/automating-data-management/index.html"
     ]
-  },
-  {
-    "listing": "/publications/publications.html",
-    "items": []
   }
 ]

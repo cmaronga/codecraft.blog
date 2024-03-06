@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/about.html</loc>
+    <lastmod>2024-03-06T20:47:11.023Z</lastmod>
+  </url>
+  <url>
     <loc>https://cmaronga.github.io/codecraft.blog/talks/talks.html</loc>
-    <lastmod>2023-11-09T11:24:59.460Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/posts/working-with-databases/index.html</loc>
-    <lastmod>2023-11-09T11:24:51.830Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/posts/coalesce-in-action/index.html</loc>
-    <lastmod>2023-11-09T11:24:49.579Z</lastmod>
+    <lastmod>2024-03-06T20:47:10.410Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/posts/automating-data-management/index.html</loc>
-    <lastmod>2023-11-09T11:24:46.730Z</lastmod>
+    <lastmod>2024-03-06T20:47:08.919Z</lastmod>
   </url>
   <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/about.html</loc>
-    <lastmod>2023-11-09T11:24:44.486Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/index.html</loc>
-    <lastmod>2023-11-09T11:24:45.905Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/index.html</loc>
-    <lastmod>2023-11-09T11:24:48.378Z</lastmod>
+    <loc>https://cmaronga.github.io/codecraft.blog/posts/working-with-databases/index.html</loc>
+    <lastmod>2024-03-06T20:47:08.008Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/posts/web-scraping-in-R/index.html</loc>
-    <lastmod>2023-11-09T11:24:51.005Z</lastmod>
+    <lastmod>2024-03-06T20:47:07.224Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/posts/coalesce-in-action/index.html</loc>
+    <lastmod>2024-03-06T20:47:07.750Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/index.html</loc>
+    <lastmod>2024-03-06T20:47:08.666Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/publications/publications.html</loc>
-    <lastmod>2023-11-09T11:24:55.851Z</lastmod>
+    <lastmod>2024-03-06T20:47:09.708Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/index.html</loc>
+    <lastmod>2024-03-06T20:47:10.770Z</lastmod>
   </url>
 </urlset>

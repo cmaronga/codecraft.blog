@@ -1,5 +1,4 @@
 ---
-#title: "&nbsp;"
 toc: false
 listing:
   - id: "publications"
@@ -9,11 +8,11 @@ listing:
     #type: table
     page-size: 10
     #fields: [title, description]
-    contents: 
-      - "*.qmd"
-resources:
-  - "**"
-  - "!(.qmd|.rmd)"
+    # contents: 
+    #   - "*.qmd"
+# resources:
+#   - "**"
+#   - "!(.qmd|.rmd)"
 execute: 
   warning: false
   echo: false
