@@ -2,35 +2,35 @@
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "Maronga's CodeCraft Blog",
+    "title": "Christopher Maronga",
     "section": "",
     "text": "My name is Christopher Maronga, I hail from the beautiful landscapes of Kenya, East Africa.\nI have a wealth of experience managing and analysing healthcare data for decision-making, as well as teaching introductory and advanced courses in R.\nI’m passionate about reproducible research, automating data products, statistical computing, and data visualization."
   },
   {
     "objectID": "about.html#bio",
     "href": "about.html#bio",
-    "title": "Maronga's CodeCraft Blog",
+    "title": "Christopher Maronga",
     "section": "",
     "text": "My name is Christopher Maronga, I hail from the beautiful landscapes of Kenya, East Africa.\nI have a wealth of experience managing and analysing healthcare data for decision-making, as well as teaching introductory and advanced courses in R.\nI’m passionate about reproducible research, automating data products, statistical computing, and data visualization."
   },
   {
     "objectID": "about.html#education",
     "href": "about.html#education",
-    "title": "Maronga's CodeCraft Blog",
+    "title": "Christopher Maronga",
     "section": "Education",
     "text": "Education\n\nMSc. Statistical Sciences |Strathmore University\nBSc. in Mathematics |JKUAT"
   },
   {
     "objectID": "about.html#experience",
     "href": "about.html#experience",
-    "title": "Maronga's CodeCraft Blog",
+    "title": "Christopher Maronga",
     "section": "Experience",
     "text": "Experience\n\nPhase II & IV CTs\nReal World Data/Real World Evidence\nHealth Research\nData Management/Wrangling\nData Analysis/Statistical Analysis\nPredictive Modelling\nHealth Economics"
   },
   {
     "objectID": "about.html#skillslanguages",
     "href": "about.html#skillslanguages",
-    "title": "Maronga's CodeCraft Blog",
+    "title": "Christopher Maronga",
     "section": "Skills/languages",
     "text": "Skills/languages\n\nR Programming/RShiny\nPython\nSQL/MySQL\nREDCap\nGit/GitHub\nLaTeX\nDocker"
   },
@@ -163,14 +163,14 @@
   {
     "objectID": "publications/publications.html#authored-conference-papers",
     "href": "publications/publications.html#authored-conference-papers",
-    "title": "Maronga's CodeCraft Blog",
+    "title": "Christopher Maronga",
     "section": "Authored conference papers",
     "text": "Authored conference papers"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Maronga's CodeCraft Blog",
+    "title": "Christopher Maronga",
     "section": "",
     "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n\n\n\n\n  \n\n\n\n\nWeb scraping using R\n\n\n\n\n\n\n\n\n\n\n\n\n2023-10-31\n\n\n16 min\n\n\n\n\n\n\n  \n\n\n\n\ndplyr::coalesce() in action\n\n\n\n\n\n\n\n\n\n\n\n\n2023-10-27\n\n\n4 min\n\n\n\n\n\n\n  \n\n\n\n\nCelebrating 100 days of Gym dedication\n\n\n\n\n\n\n\n\n\n\n\n\n2023-10-24\n\n\n11 min\n\n\n\n\n\n\n  \n\n\n\n\nWorking with Databases in R\n\n\n\n\n\n\n\n\n\n\n\n\n2021-06-12\n\n\n2 min\n\n\n\n\n\n\n  \n\n\n\n\nAutomating Clinical Data Management\n\n\n\n\n\n\n\n\n\n\n\n\n2018-12-16\n\n\n2 min\n\n\n\n\n\n\nNo matching items"
   }

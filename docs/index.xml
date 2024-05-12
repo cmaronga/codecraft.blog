@@ -5,7 +5,7 @@
       xmlns:dc="http://purl.org/dc/elements/1.1/" 
       version="2.0">
 <channel>
-<title>Maronga&#39;s CodeCraft Blog</title>
+<title>Christopher Maronga</title>
 <link>https://cmaronga.github.io/codecraft.blog/index.html</link>
 <atom:link href="https://cmaronga.github.io/codecraft.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Christopher Maronga blog</description>
