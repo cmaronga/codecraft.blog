@@ -5,6 +5,7 @@ date: "2023-10-31"
 categories: [Data mining, Data wrangling, tidyverse]
 image: "web-scraping.jpeg"
 #draft: true
+date-modified: "2024-09-08"
 ---
 
 Efficient, flexible and powerful!
@@ -75,25 +76,25 @@ currency_rates <- exchange_rate_webpage %>%
   # rename columns appropriately
   rename(
     Country        = Countries,
-    LatestData     = "Reference.date",
-    LatesValue     = "Latest.available.value",
+    DateLatestData     = "Reference",
+    LatesValue     = "Latest.value",
     Change3months  = "Change.three.months",
     Change12months = "Change.twelve.months"
   ) %>%
   mutate(across(LatesValue, as.numeric),                  # convert to numeric column containing exchange rate
          
          # On the date column; remove white space and replace "/" with "-"
-         LatestData = str_squish(
+         DateLatestData = str_squish(
            str_replace_all(
-             string = LatestData,
+             string = DateLatestData,
              pattern = "/",
              replacement = "-"
            )
          )) %>% 
-  # transform `LatestData` into a proper date column
+  # transform `DateLatestData` into a proper date column
   mutate(
-    LatestData = my(LatestData),                       # proper date format
-    LatestData = format(LatestData, "%Y-%m")           # YYYY-mm
+    DateLatestData = my(DateLatestData),                       # proper date format
+    DateLatestData = format(DateLatestData, "%Y-%m")           # YYYY-mm
   )
 
 ```
@@ -431,6 +432,12 @@ exchange_data %>%
 
 **NOTE**: The downside of this manual approach is that it always depends on the website not changing structure, for instance if we had other countries added after Zambia, then our code above would not be able to extract that extra data sadly.
 
+
+# Session info
+
+```{r}
+sessioninfo::session_info()
+```
 
 
 

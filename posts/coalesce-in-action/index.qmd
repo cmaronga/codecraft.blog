@@ -124,6 +124,12 @@ fict_data %>%
 I hope the examples helped you understand this simple, yet powerful function to handle missing data in your data wrangling efforts.
 
 
+# Session info
+
+```{r}
+sessioninfo::session_info()
+```
+
 
 
 
