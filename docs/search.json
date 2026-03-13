@@ -4,14 +4,14 @@
     "href": "about.html",
     "title": "Christopher Maronga",
     "section": "",
-    "text": "My name is Christopher Maronga, I hail from the beautiful landscapes of Kenya, East Africa.\nI have a wealth of experience managing and analysing healthcare data for decision-making, as well as teaching introductory and advanced courses in R.\nI’m passionate about reproducible research, automating data products, statistical computing, and data visualization."
+    "text": "I’m Christopher Maronga, a Clinical Data Manager and Biostatistician originally from Kenya and currently based in Oxford, United Kingdom.\nI specialize in Real-World healthcare Data, observational research, and statistical modelling. My work focuses on designing and managing large-scale clinical and epidemiological databases/datasets, conducting secondary analyses of Electronic Health Records, and generating robust real-world evidence to inform research and decision-making.\nI have extensive experience across Phase II and IV clinical studies, longitudinal studies, and linking healthcare datasets. My analytical work includes survival modelling (Cox regression, Kaplan–Meier), predictive modelling, and moderate health economic evaluations.\nI’m particularly passionate about statistical computing, database design, and transforming complex health data into clear, actionable insights."
   },
   {
     "objectID": "about.html#bio",
     "href": "about.html#bio",
     "title": "Christopher Maronga",
     "section": "",
-    "text": "My name is Christopher Maronga, I hail from the beautiful landscapes of Kenya, East Africa.\nI have a wealth of experience managing and analysing healthcare data for decision-making, as well as teaching introductory and advanced courses in R.\nI’m passionate about reproducible research, automating data products, statistical computing, and data visualization."
+    "text": "I’m Christopher Maronga, a Clinical Data Manager and Biostatistician originally from Kenya and currently based in Oxford, United Kingdom.\nI specialize in Real-World healthcare Data, observational research, and statistical modelling. My work focuses on designing and managing large-scale clinical and epidemiological databases/datasets, conducting secondary analyses of Electronic Health Records, and generating robust real-world evidence to inform research and decision-making.\nI have extensive experience across Phase II and IV clinical studies, longitudinal studies, and linking healthcare datasets. My analytical work includes survival modelling (Cox regression, Kaplan–Meier), predictive modelling, and moderate health economic evaluations.\nI’m particularly passionate about statistical computing, database design, and transforming complex health data into clear, actionable insights."
   },
   {
     "objectID": "about.html#education",
@@ -25,14 +25,14 @@
     "href": "about.html#experience",
     "title": "Christopher Maronga",
     "section": "Experience",
-    "text": "Experience\n\nPhase II & IV CTs\nReal World Data/Real World Evidence\nHealth Research\nData Management/Wrangling\nData Analysis/Statistical Analysis\nPredictive Modelling\nHealth Economics"
+    "text": "Experience\n\nReal-World Data (RWD) & Real-World Evidence (RWE)\nObservational & Longitudinal Studies\nPhase II & IV Clinical Research\nSurvival & Regression Modelling\nHealth Economics & Outcomes Research\nDatabase Design & Predictive Modelling\nReproducible Research & Analytical Automation"
   },
   {
-    "objectID": "about.html#skillslanguages",
-    "href": "about.html#skillslanguages",
+    "objectID": "about.html#technical-skills",
+    "href": "about.html#technical-skills",
     "title": "Christopher Maronga",
-    "section": "Skills/languages",
-    "text": "Skills/languages\n\nR Programming/RShiny\nPython\nSQL/MySQL\nREDCap\nGit/GitHub\nLaTeX\nDocker"
+    "section": "Technical Skills",
+    "text": "Technical Skills\n\nAdvanced R – RShiny, reproducible workflows\nSQL/MySQL – Complex querying & relational databases\nREDCap – Clinical data capture systems\nGit/GitHub – Version control\nLaTeX – Scientific reporting\nDocker – Reproducible environments"
   },
   {
     "objectID": "posts/automating-data-management/index.html",

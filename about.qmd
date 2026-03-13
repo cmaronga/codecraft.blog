@@ -18,11 +18,13 @@ about:
 
 ## [Bio]{.underline}
 
-My name is Christopher Maronga, I hail from the beautiful landscapes of Kenya, East Africa.
+I’m Christopher Maronga, a Clinical Data Manager and Biostatistician originally from Kenya and currently based in Oxford, United Kingdom.
 
-I have a wealth of experience managing and analysing healthcare data for decision-making, as well as teaching introductory and advanced courses in R.
+I specialize in Real-World healthcare Data, observational research, and statistical modelling. My work focuses on designing and managing large-scale clinical and epidemiological databases/datasets, conducting secondary analyses of Electronic Health Records, and generating robust real-world evidence to inform research and decision-making.
 
-I'm passionate about reproducible research, automating data products, statistical computing, and data visualization.
+I have extensive experience across Phase II and IV clinical studies, longitudinal studies, and linking healthcare datasets. My analytical work includes survival modelling (Cox regression, Kaplan–Meier), predictive modelling, and moderate health economic evaluations.
+
+I’m particularly passionate about statistical computing, database design, and transforming complex health data into clear, actionable insights.
 
 ## [Education]{.underline}
 
@@ -31,24 +33,23 @@ I'm passionate about reproducible research, automating data products, statistica
 
 ## [Experience]{.underline}
 
--   Phase II & IV CTs
--   Real World Data/Real World Evidence
--   Health Research
--   Data Management/Wrangling
--   Data Analysis/Statistical Analysis
--   Predictive Modelling
--   Health Economics
+-   Real-World Data (RWD) & Real-World Evidence (RWE)
+-   Observational & Longitudinal Studies
+-   Phase II & IV Clinical Research
+-   Survival & Regression Modelling
+-   Health Economics & Outcomes Research
+-   Database Design & Predictive Modelling
+-   Reproducible Research & Analytical Automation
 
 
-## [Skills/languages]{.underline}
+## [Technical Skills]{.underline}
 
--   R Programming/RShiny
--   Python
--   SQL/MySQL
--   REDCap
--   Git/GitHub
--   LaTeX
--   Docker
+-   Advanced R – RShiny, reproducible workflows
+-   SQL/MySQL – Complex querying & relational databases
+-   REDCap – Clinical data capture systems
+-   Git/GitHub – Version control
+-   LaTeX – Scientific reporting
+-   Docker – Reproducible environments
 
 <!-- ##  [Workshops delivered]{.underline} -->
 
