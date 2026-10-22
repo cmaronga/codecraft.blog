@@ -1,5 +1,6 @@
 ---
 title: "Celebrating 100 days of Gym dedication"
+description: "Tracking a year of gym visits and weekend runs with the tidyverse, and celebrating 100 days of showing up."
 # author: "Christopher Maronga"
 date: "2023-10-24"
 categories: [social, tidyverse, Data wrangling]

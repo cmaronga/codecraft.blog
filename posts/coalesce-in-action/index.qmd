@@ -1,5 +1,6 @@
 ---
 title: "dplyr::coalesce() in action"
+description: "Using dplyr::coalesce() to merge values scattered across several columns into one missing-value-free variable, with worked examples."
 # author: "Christopher Maronga"
 date: "2023-10-27"
 categories: [Data wrangling, tidyverse, code]

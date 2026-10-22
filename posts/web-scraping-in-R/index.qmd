@@ -1,5 +1,6 @@
 ---
 title: "Web scraping using R"
+description: "Harvesting dollar exchange rates and CRAN package data from the web with {rvest}, and what to do when a page isn't a simple HTML table."
 # author: "Christopher Maronga"
 date: "2023-10-31"
 categories: [Data mining, Data wrangling, tidyverse]

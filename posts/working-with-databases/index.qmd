@@ -1,5 +1,6 @@
 ---
 title: "Working with Databases in R"
+description: "Connecting R to MySQL, SQLite and REDCap and querying data directly from RStudio, a follow-up to the NairobiR and RLadies training session."
 # author: "Christopher Maronga"
 date: "2021-06-12"
 categories: [SQL, Data wrangling, tidyverse]
