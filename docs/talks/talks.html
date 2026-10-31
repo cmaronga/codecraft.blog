@@ -37,10 +37,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -90,6 +92,7 @@ ul.task-list li input[type="checkbox"] {
     }
   })
   </script>
+<style>html{ scroll-behavior: smooth; }</style>
 
 <script src="../site_libs/core-js-2.5.3/shim.min.js"></script>
 <script src="../site_libs/react-18.2.0/react.min.js"></script>
@@ -106,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="floating nav-fixed fullcontent">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -122,6 +125,12 @@ ul.task-list li input[type="checkbox"] {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../about.html" rel="" target="">
@@ -156,6 +165,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
 </ul>
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -164,10 +174,6 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     
 <!-- main -->
@@ -180,8 +186,8 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 <div class="cell-output-display">
 
-<div class="reactable html-widget html-fill-item" id="htmlwidget-23c2b0619a499094397d" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-23c2b0619a499094397d">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Year":["2022","2021","2021","2020","2019"],"Title":["Working with Databases in R","Working with Databases in R","Introduction to Data Management in R","Integrating Rshiny and REDCap for Data Management","Introduction to data structures in R"],"Venue":["NHS-R COnference","RLadies Nairobi","satRday Nairobi","Why R Conference","Ai Kenya Code Maktaba"],"url":["https://youtu.be/htQWauSV9J4?si=LXN554RCOnW64L1R","https://youtu.be/txMmjDQoQqE?si=BpvZyIE5W2DnLzaT","https://youtu.be/8URgFFNDGfo?si=qqebF2snXPo8z7qo","https://www.youtube.com/live/PbD_e5sz4P8?si=avioFeCLgc-h9O0N","https://youtu.be/H-Tkg_aWSas?si=gkbFU5dHv7Irjmf2"]},"columns":[{"id":"Year","name":"Year","type":"character"},{"id":"Title","name":"Title","type":"character","cell":[{"name":"a","attribs":{"href":"https://youtu.be/txMmjDQoQqE?si=BpvZyIE5W2DnLzaT"},"children":["Working with Databases in R"]},{"name":"a","attribs":{"href":"https://youtu.be/htQWauSV9J4?si=LXN554RCOnW64L1R"},"children":["Working with Databases in R"]},{"name":"a","attribs":{"href":"https://youtu.be/8URgFFNDGfo?si=qqebF2snXPo8z7qo"},"children":["Introduction to Data Management in R"]},{"name":"a","attribs":{"href":"https://www.youtube.com/live/PbD_e5sz4P8?si=avioFeCLgc-h9O0N"},"children":["Integrating Rshiny and REDCap for Data Management"]},{"name":"a","attribs":{"href":"https://youtu.be/H-Tkg_aWSas?si=gkbFU5dHv7Irjmf2"},"children":["Introduction to data structures in R"]}],"minWidth":450},{"id":"Venue","name":"Venue","type":"character","minWidth":200},{"id":"url","name":"url","type":"character","show":false}],"theme":{"borderColor":"steelblue","stripedColor":"grey","highlightColor":"blue","cellPadding":"8px 12px","style":{"fontFamily":"-apple-system, Lato, sans-serif","fontSize":"16px"}},"language":{"searchPlaceholder":"Filter"},"dataKey":"28d40eb4ac01809ac5c6d0dabdc809d7"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-1c79eb5fd974917c853c" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-1c79eb5fd974917c853c">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Year":["2022","2021","2021","2020","2019"],"Title":["Working with Databases in R","Working with Databases in R","Introduction to Data Management in R","Integrating Rshiny and REDCap for Data Management","Introduction to data structures in R"],"Venue":["NHS-R COnference","RLadies Nairobi","satRday Nairobi","Why R Conference","Ai Kenya Code Maktaba"],"url":["https://youtu.be/htQWauSV9J4?si=LXN554RCOnW64L1R","https://youtu.be/txMmjDQoQqE?si=BpvZyIE5W2DnLzaT","https://youtu.be/8URgFFNDGfo?si=qqebF2snXPo8z7qo","https://www.youtube.com/live/PbD_e5sz4P8?si=avioFeCLgc-h9O0N","https://youtu.be/H-Tkg_aWSas?si=gkbFU5dHv7Irjmf2"]},"columns":[{"id":"Year","name":"Year","type":"character"},{"id":"Title","name":"Title","type":"character","cell":[{"name":"a","attribs":{"href":"https://youtu.be/txMmjDQoQqE?si=BpvZyIE5W2DnLzaT"},"children":["Working with Databases in R"]},{"name":"a","attribs":{"href":"https://youtu.be/htQWauSV9J4?si=LXN554RCOnW64L1R"},"children":["Working with Databases in R"]},{"name":"a","attribs":{"href":"https://youtu.be/8URgFFNDGfo?si=qqebF2snXPo8z7qo"},"children":["Introduction to Data Management in R"]},{"name":"a","attribs":{"href":"https://www.youtube.com/live/PbD_e5sz4P8?si=avioFeCLgc-h9O0N"},"children":["Integrating Rshiny and REDCap for Data Management"]},{"name":"a","attribs":{"href":"https://youtu.be/H-Tkg_aWSas?si=gkbFU5dHv7Irjmf2"},"children":["Introduction to data structures in R"]}],"minWidth":450},{"id":"Venue","name":"Venue","type":"character","minWidth":200},{"id":"url","name":"url","type":"character","show":false}],"theme":{"borderColor":"steelblue","stripedColor":"grey","highlightColor":"blue","cellPadding":"8px 12px","style":{"fontFamily":"-apple-system, Lato, sans-serif","fontSize":"16px"}},"language":{"searchPlaceholder":"Filter"},"dataKey":"28d40eb4ac01809ac5c6d0dabdc809d7"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 
@@ -196,7 +202,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div></main> <!-- /main -->
+</div><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -217,6 +223,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -428,12 +549,54 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp("https:\/\/cmaronga\.github\.io\/codecraft\.blog\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
 });
 </script>
-<script src="https://utteranc.es/client.js" repo="cmaronga/codecraft.blog" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+<script src="https://utteranc.es/client.js" repo="cmaronga/codecraft.blog" issue-term="pathname" theme="preferred-color-scheme" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2026 Christopher Maronga</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://quarto.org">Built with Quarto</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/christopher-maronga-61031b7a/">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/cmaronga">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
 
 
 
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

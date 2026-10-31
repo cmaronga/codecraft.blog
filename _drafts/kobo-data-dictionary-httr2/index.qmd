@@ -1,0 +1,653 @@
+---
+title: "Creating a Data Dictionary for Deployed KoboToolbox Forms in R"
+description: "KoboToolbox has no data dictionary export like REDCap's. Here is how to build one in R straight from your deployed forms with the KoboToolbox API, with value labels, skip logic, repeats and select-multiple columns, for every form in a project at once, so the codebook always matches the data."
+# author: "Christopher Maronga"
+date: "2026-10-25"
+categories: [R, KoboToolbox, API, Data management]
+image: "kobotoolbox_opengraph_image.png"
+resources:
+  - kobo_codebook.xlsx
+---
+
+A codebook that always matches your data
+
+## Introduction
+
+[KoboToolbox](https://www.kobotoolbox.org/) is one of the most widely used tools for collecting survey data in humanitarian and global health work. It is free, works offline on cheap Android phones through KoboCollect, and builds forms from [XLSForm](https://xlsform.org/), a simple spreadsheet format that anyone who knows Excel can learn.
+
+What it doesn't give you is a **data dictionary**. If you have used [REDCap](https://www.project-redcap.org/), you are used to clicking *Download the current Data Dictionary* and getting one tidy file that describes every variable: its name, label, type, allowed values and branching logic. Analysts, data managers and reviewers all work from that file.
+
+KoboToolbox has no equivalent button. The closest thing is the form definition itself. It contains everything a dictionary needs, but not in a shape you can hand to an analyst:
+
+-   **One row per question, not one row per column in the data.** A *select multiple* question becomes one column per option in the exported data, and a GPS question becomes several. Neither shows up as separate rows in the form.
+-   **Values live in a different table.** The codes and labels for each answer (`1 = Yes; 0 = No`) sit in the `choices` table, linked by a list name.
+-   **Structure is implicit.** Which section a question belongs to, and whether it sits inside a repeat (and so ends up in a separate table), is only visible from `begin_group` / `end_group` rows scattered through the form.
+-   **Skip logic is hidden in XPath.** `${consent} = '1'` on a group applies to every question inside it, but the questions themselves don't say so.
+-   **Lots of noise.** Group markers, notes and layout columns that never appear in the data.
+
+## Why build it from the deployed form?
+
+You could build the codebook from the XLSForm files on your computer. Once data collection starts, though, a local file is not a safe source:
+
+-   **Forms change during data collection.** A question is reworded, an option is added, a skip is fixed. If the change was made in the Kobo form builder, your local file doesn't have it.
+-   **Files drift.** It is easy to edit a local XLSForm and forget to redeploy, or to redeploy and forget to save the file.
+-   **Projects have many forms.** Keeping a folder of XLSForms in step with a dozen deployed forms is a job nobody does reliably.
+
+The deployed form is the one that actually collected your data, and the [KoboToolbox API](https://support.kobotoolbox.org/api.html) can give it to you directly. In this post, I pull the deployed forms with R and turn them into a codebook with **one row per variable in the exported data**.
+
+## What the codebook will contain
+
+For each variable in the exported data, the codebook has:
+
+| Column       | What it holds                                                                 |
+|--------------|-------------------------------------------------------------------------------|
+| `order`      | Position of the variable in the form                                          |
+| `variable`   | Column name in the exported data                                              |
+| `label`      | Question text                                                                 |
+| `type`       | XLSForm question type, e.g. `integer`, `select_one`, `select_multiple_dummy`  |
+| `values`     | Value labels, e.g. `1 = Yes; 0 = No`                                          |
+| `required`   | Whether the question had to be answered                                       |
+| `table`      | `main`, or the name of the repeat group the variable is stored in             |
+| `skip_logic` | When the question is asked, including conditions inherited from its groups    |
+
+The `skip_logic` column is the one I find most useful in practice. A missing value for a question that was skipped is expected; a missing value for a question that should have been asked is a data quality problem. You can't tell the two apart without knowing the skip logic.
+
+## The example project
+
+The examples use eight forms deployed in a real KoboToolbox project, covering facility assessments, supervision, quality of care and community health:
+
+| Asset ID                 | Form                                                   |
+|--------------------------|--------------------------------------------------------|
+| `aerkUrMsktixQG4pjGkTc5` | TPM - Quarterly Verification Visit Monitoring Tool     |
+| `akvSWzP8qDSgQMjGeTPcx3` | Health Facility Assessment - HSF and HSS               |
+| `aLAiUQrckQg63wnaaHPtn9` | TPM - ESHS Monitoring Tool                             |
+| `aFdz6cDMi9RdjrtiC9qFHe` | Quality of Care Assessment Tool for HFs in South Sudan |
+| `anXjx78gmRuTu3m46NSNAF` | Boma Health Workers Supervision                        |
+| `aUiNjXz6uznpkEXBsENUth` | HSTP Beneficiary Experience                            |
+| `aQJpRyBrzeZ65NtCFYyTyz` | Blood Transfusion                                      |
+| `aGeWUyNadssANu5aWMhLXY` | Community Health Needs Assessment                      |
+
+Together they have around 2,000 variables, several with repeat groups, plenty of select multiple questions and skip logic on almost every question: exactly the kind of project where a hand-made codebook falls behind.
+
+::: callout-tip
+## Want to follow along?
+
+Swap these asset IDs for your own forms' IDs, as described below. The chunks that call the API only run when a token is set, so this page still renders for anyone without a Kobo account.
+:::
+
+## Setting up API access
+
+You need three things:
+
+1.  **Your API token.** In KoboToolbox, open *Account Settings*, then *Security*, and copy the API key.
+2.  **The server URL.** `https://kf.kobotoolbox.org` for the global server, `https://eu.kobotoolbox.org` for the EU server, or your own organisation's server.
+3.  **The IDs of the forms.** Every Kobo form is an *asset* with a unique ID, such as `aBcDeFgH1234iJkLmN5678oP`. It is the part of the form's URL after `/forms/`, or you can list them with `kobo_list_forms()` below.
+
+Never type the token into a script. Save it, together with the server URL, in your `.Renviron` file instead (`usethis::edit_r_environ()` opens it), restart R, and read them with `Sys.getenv()`:
+
+```
+kobo_rdi=https://kf.kobotoolbox.org
+rdi_kobo_token=your-token-here
+```
+
+The asset IDs are not secret, so they can live in the script, named after their forms.
+
+```{r}
+#| label: load-packages
+#| message: false
+
+# install any missing packages, then load them all
+pacman::p_load(
+  httr2,      # talk to the KoboToolbox API
+  tidyverse,  # data wrangling: dplyr, tidyr, stringr, purrr
+  openxlsx,   # write the codebook to a formatted Excel file
+  robotoolbox, #
+  DT          # interactive tables in this post
+)
+```
+
+```{r}
+#| label: api-settings
+
+# read the API settings from ~/.Renviron (never type the token in the code)
+kobo_url   <- Sys.getenv("kobo_rdi", unset = "https://kf.kobotoolbox.org")
+kobo_token <- Sys.getenv("rdi_kobo_token")
+
+# setting kopo API credentials (if you have more than 1 instance)
+robotoolbox::kobo_setup(
+    url = kobo_url,
+    token = kobo_token
+  )
+
+# the deployed forms to document
+asset_list <- kobo_asset_list() |> 
+  
+  # focus on deployed only
+  filter(deployed == TRUE) |> 
+  pull(uid)
+
+```
+
+
+```{r}
+# loop through the 3 asset ids and produce a data dictionary
+kobo_xlsx_form <- robotoolbox::kobo_form(asset_list[1]) |>
+    tibble::rowid_to_column() 
+
+```
+
+
+
+
+
+
+## Step 1: Talking to the API
+
+The helper below sends one authenticated request to the KoboToolbox API (v2) and returns the JSON as an R list.
+
+```{r}
+#| label: kobo-request
+
+# send one authenticated GET request to the Kobo API and return the parsed JSON
+kobo_get <- function(...) {
+  request(kobo_url) |>
+    req_url_path_append("api", "v2", ..., "") |>     # e.g. /api/v2/assets/<uid>/
+    req_url_query(format = "json") |>
+    req_headers(Authorization = paste("Token", kobo_token)) |>
+    req_retry(max_tries = 3) |>                      # retry brief network hiccups
+    req_perform() |>
+    resp_body_json()
+}
+```
+
+If you don't know your forms' IDs, list everything in your account. I don't run this chunk here, because it would print every project in my account, but it is the quickest way to find the IDs you need:
+
+```{r}
+#| label: list-forms
+#| eval: false
+
+# all forms (assets) the token can see, with their IDs and deployment status
+kobo_list_forms <- function() {
+  assets <- kobo_get("assets")$results
+  tibble(
+    name        = map_chr(assets, "name"),
+    asset_id    = map_chr(assets, "uid"),
+    deployed    = map_lgl(assets, \(a) isTRUE(a$has_deployment)),
+    submissions = map_int(assets, \(a) a$deployment__submission_count %||% 0L)
+  )
+}
+
+kobo_list_forms() |>
+  filter(deployed)
+```
+
+## Step 2: Reading the deployed form
+
+The API returns a form as JSON, not as a spreadsheet. `read_kobo_form()` reshapes it into the two tables of an XLSForm: `survey`, with one row per question, and `choices`, with one row per answer option. Everything is kept as text, because codes such as `01` or `96` must not be turned into numbers. Three differences from an XLSForm need handling:
+
+-   **Labels are lists, one entry per language.** We keep the first.
+-   **The choice list is in its own field.** The XLSForm's `select_one yes_no` arrives as `type = "select_one"` plus `select_from_list_name = "yes_no"`, so we glue them back together.
+-   **The asset holds the latest draft.** If the form was edited after its last deployment, the deployed version has to be fetched separately. That is the version that collected your data.
+
+```{r}
+#| label: read-kobo-form
+
+# one cell of the API JSON as a single string; translated fields arrive as
+# a list with one entry per language, so keep the first
+as_cell <- function(x) {
+  while (is.list(x)) x <- if (length(x) > 0) x[[1]] else NULL
+  if (is.null(x)) NA_character_ else as.character(x[1])
+}
+
+# convert the API's list of rows into an XLSForm-like table
+api_rows_to_table <- function(rows) {
+  map(rows, function(row) {
+    # Kobo fills in names you left blank ($autoname / $autovalue)
+    row$name <- row$name %||% row[["$autoname"]] %||% row[["$autovalue"]]
+    row <- row[!startsWith(names(row), "$")]   # drop Kobo's internal fields ($kuid, $xpath, ...)
+    as_tibble(map(row, as_cell))
+  }) |>
+    list_rbind()
+}
+
+# read one form from the API, as list(title, survey, choices)
+read_kobo_form <- function(asset_id, version = c("deployed", "latest")) {
+  version <- match.arg(version)
+  asset   <- kobo_get("assets", asset_id)
+  content <- asset$content
+
+  # the asset holds the latest draft; fetch the deployed version if they differ
+  if (version == "deployed" && !is.null(asset$deployed_version_id) &&
+      !identical(asset$deployed_version_id, asset$version_id)) {
+    content <- kobo_get("assets", asset_id, "versions", asset$deployed_version_id)$content
+  }
+
+  survey <- api_rows_to_table(content$survey)
+  if (!"select_from_list_name" %in% names(survey)) survey$select_from_list_name <- NA_character_
+  if (!"file" %in% names(survey)) survey$file <- NA_character_
+
+  survey <- survey |>
+    mutate(
+      # rebuild XLSForm-style types: "select_one" + "yes_no" -> "select_one yes_no"
+      type = case_when(
+        !is.na(select_from_list_name) ~ paste(type, select_from_list_name),
+        type %in% c("select_one_from_file", "select_multiple_from_file") & !is.na(file) ~ paste(type, file),
+        .default = type
+      )
+    )
+
+  list(title = asset$name, survey = survey, choices = api_rows_to_table(content$choices))
+}
+```
+
+Now read every form. Because `asset_ids` is a named vector, `map()` keeps the short names, so we can tell the forms apart:
+
+```{r}
+#| label: read-forms
+#| eval: !expr has_kobo
+
+forms <- map(asset_ids, read_kobo_form)
+
+# the project title of each form, as set in KoboToolbox
+map_chr(forms, "title")
+```
+
+Here is the `survey` table of the first form, as Kobo sees it. Notice the `begin_group` / `end_group` rows, the `${...}` references in `relevant`, and the choice list names stuck onto the `type` column (`select_one yes_no`).
+
+```{r}
+#| label: show-survey-table
+#| eval: !expr has_kobo
+
+forms[[1]]$survey |>
+  select(any_of(c("type", "name", "label", "relevant"))) |>
+  datatable(
+    rownames = FALSE,
+    class    = "compact stripe",
+    options  = list(pageLength = 10, scrollX = TRUE)
+  )
+```
+
+## Step 3: The codebook engine
+
+The function `build_codebook()` turns one form's `survey` and `choices` into the codebook. It is built from a few small pieces.
+
+### Small helpers
+
+```{r}
+#| label: helpers
+
+# question types that never become a column in the exported data
+no_data_types <- c("begin_group", "end_group", "begin_repeat", "end_repeat", "note")
+
+# question types whose answer options come from an external CSV file
+from_file_types <- c("select_one_from_file", "select_multiple_from_file")
+
+# strip HTML tags and markdown bold from labels, and tidy the whitespace
+clean_label <- function(x) {
+  x |>
+    str_replace_all("<[^>]+>", " ") |>
+    str_remove_all("\\*\\*") |>
+    str_squish() |>
+    na_if("")
+}
+
+# make XLSForm logic easier to read:
+#   selected(${water}, '96')  ->  water includes '96'
+#   ${consent}='1'            ->  consent = '1'
+readable_logic <- function(x) {
+  x |>
+    str_replace_all("selected\\(\\s*\\$\\{([^}]+)\\}\\s*,\\s*'([^']*)'\\s*\\)", "\\1 includes '\\2'") |>
+    str_replace_all("\\$\\{([^}]+)\\}", "\\1") |>
+    str_replace_all("\\s*(!=|>=|<=|=|>|<)\\s*", " \\1 ") |>   # spaces around operators
+    str_squish()
+}
+
+# forms in several languages have label::English (en), label::French (fr), ...
+# keep the first language and call it plain "label" (same for hints)
+first_language <- function(df, field) {
+  cols <- str_subset(names(df), paste0("^", field, "(::.*)?$"))
+  if (length(cols) == 0) df[[field]] <- NA_character_
+  if (length(cols) > 0 && !field %in% cols) df[[field]] <- df[[cols[1]]]
+  df
+}
+```
+
+### Groups, repeats and inherited skip logic
+
+XLSForm describes structure with paired `begin_group` / `end_group` and `begin_repeat` / `end_repeat` rows. To know which table each question lands in, and which group conditions apply to it, we walk down the form keeping a stack of the groups we are currently inside.
+
+```{r}
+#| label: add-structure
+
+add_structure <- function(survey) {
+  n <- nrow(survey)
+  data_table <- group_relevant <- rep(NA_character_, n)
+  stack <- list()   # the groups and repeats we are currently inside
+
+  for (i in seq_len(n)) {
+    type <- survey$type_base[i]
+
+    # leaving a group or repeat: drop it from the stack
+    if (type %in% c("end_group", "end_repeat")) {
+      stack <- head(stack, -1)
+      next
+    }
+
+    # a question in a repeat is stored in that repeat's table; otherwise in "main"
+    repeats <- keep(stack, \(s) s$type == "begin_repeat")
+    data_table[i] <- if (length(repeats) > 0) last(repeats)$name else "main"
+
+    # every enclosing group's relevance also applies to this question
+    parent_logic <- discard(map_chr(stack, "relevant"), is.na)
+    if (length(parent_logic) > 0) {
+      group_relevant[i] <- paste0("(", parent_logic, ")", collapse = " and ")
+    }
+
+    # entering a group or repeat: remember it until its end row
+    if (type %in% c("begin_group", "begin_repeat")) {
+      stack <- c(stack, list(list(
+        type     = type,
+        name     = survey$name[i],
+        relevant = survey$relevant[i]
+      )))
+    }
+  }
+
+  mutate(survey, data_table, group_relevant)
+}
+```
+
+### Building the codebook
+
+`build_codebook()` does the rest:
+
+-   splits the `type` column (`select_one yes_no`) into the question type and its choice list
+-   writes the value labels for each choice list, but only refers to the `choices` sheet for very long lists (such as 80 counties) to keep the codebook readable
+-   adds one 0/1 column per option for select multiple questions, and the latitude, longitude, altitude, precision and WKT columns for GPS questions, because that is how they appear in the exported data
+-   combines each question's own skip logic with the logic of its groups
+
+```{r}
+#| label: build-codebook
+
+build_codebook <- function(form,
+                           max_inline_choices = 30,  # longer lists point to the choices sheet
+                           sm_sep = "_",             # "_" matches {robotoolbox}; "/" matches Kobo's own exports
+                           external_dir = NULL) {    # folder with CSVs used by select_one_from_file
+
+  # --- prepare the survey table ---------------------------------------------
+  survey <- form$survey |>
+    first_language("label") |>
+    first_language("hint")
+
+  # make sure the optional XLSForm columns exist, even if this form doesn't use them
+  for (col in c("required", "relevant", "file")) {
+    if (!col %in% names(survey)) survey[[col]] <- NA_character_
+  }
+
+  survey <- survey |>
+    filter(!is.na(type)) |>
+    mutate(
+      type = str_squish(type),
+      rowid = row_number(),
+      # "select_one yes_no" -> type_base "select_one", type_arg "yes_no"
+      # (older forms write "begin group" with a space, so standardise that too)
+      type_base = str_replace(word(type, 1), "^(begin|end) ?(group|repeat)$", "\\1_\\2"),
+      type_arg  = word(type, 2),
+      list_name = if_else(type_base %in% c("select_one", "select_multiple"), type_arg, NA_character_),
+      file      = if_else(type_base %in% from_file_types, coalesce(file, type_arg), NA_character_),
+      or_other  = str_detect(type, "or_other$")
+    ) |>
+    add_structure()
+
+  # --- value labels for every choice list -----------------------------------
+  # one row per answer option
+  options <- form$choices |>
+    first_language("label") |>
+    filter(!is.na(list_name)) |>
+    transmute(list_name, opt_value = name, opt_label = clean_label(coalesce(label, name)))
+
+  # one row per list, with its options collected together
+  choice_sets <- options |>
+    summarise(
+      n_choices     = n(),
+      choice_values = list(opt_value),
+      choice_labels = list(opt_label),
+      .by = list_name
+    )
+
+  # --- one row per question that produces data ------------------------------
+  questions <- survey |>
+    filter(!type_base %in% no_data_types, !is.na(name)) |>
+    left_join(choice_sets, by = "list_name") |>
+    mutate(
+      label = clean_label(label),
+      values = case_when(
+        # answer options from an external file, e.g. a facility list
+        type_base %in% from_file_types ~ paste0("Codes from external file '", file, "'"),
+        # long lists (e.g. 80 counties) would swamp the codebook
+        n_choices > max_inline_choices ~ paste0("See choices: list '", list_name, "' (", n_choices, " options)"),
+        # short lists are written out in full: "1 = Yes; 0 = No"
+        !is.na(n_choices) ~ map2_chr(choice_values, choice_labels, \(v, l) paste(v, "=", l, collapse = "; ")),
+        .default = NA_character_
+      ),
+      values = if_else(or_other, paste0(values, "; other = Other (specify)"), values),
+      sub_order = 0L
+    )
+
+  # add how many options the external file has, when we can find the file
+  if (!is.null(external_dir)) {
+    questions <- questions |>
+      mutate(values = map2_chr(values, file, \(v, f) {
+        path <- file.path(external_dir, f)
+        if (is.na(f) || !file.exists(path)) return(v)
+        paste0(v, " (", format(nrow(read.csv(path)), big.mark = ","), " options)")
+      }))
+  }
+
+  # --- select multiple: one 0/1 column per option in the exported data ------
+  sm_dummies <- questions |>
+    filter(type_base == "select_multiple") |>
+    inner_join(options, by = "list_name", relationship = "many-to-many") |>
+    mutate(
+      name      = paste0(name, sm_sep, opt_value),
+      label     = paste0(label, " :: ", opt_label),
+      type_base = "select_multiple_dummy",
+      values    = "1 = Selected; 0 = Not selected",
+      sub_order = row_number(),
+      .by = rowid
+    )
+
+  # --- GPS: exported as separate latitude, longitude, ... columns ----------
+  gps_parts <- questions |>
+    filter(type_base == "geopoint") |>
+    cross_join(tibble(part = c("latitude", "longitude", "altitude", "precision", "wkt"))) |>
+    mutate(
+      name      = paste0(name, "_", part),
+      label     = paste0(label, " :: ", part),
+      type_base = "geopoint_part",
+      sub_order = row_number(),
+      .by = rowid
+    )
+
+  # --- put it all together, in form order ------------------------------------
+  bind_rows(questions, sm_dummies, gps_parts) |>
+    arrange(rowid, sub_order) |>
+    mutate(
+      # the API returns required as "true"; XLSForms use "yes"
+      required = if_else(str_to_lower(coalesce(required, "")) %in% c("yes", "true", "true()"), "Yes", "No"),
+      # a question is only asked if its own condition AND its groups' conditions hold
+      skip_logic = case_when(
+        !is.na(relevant) & !is.na(group_relevant) ~ paste0(group_relevant, " and (", relevant, ")"),
+        !is.na(relevant) ~ relevant,
+        .default = group_relevant
+      ) |>
+        readable_logic()
+    ) |>
+    transmute(
+      order = row_number(),
+      variable = name,
+      label,
+      type = type_base,
+      values,
+      required,
+      table = data_table,
+      skip_logic
+    )
+}
+```
+
+## Step 4: Codebooks for every deployed form
+
+A project rarely has just one form. Because `forms` is a named list, `map()` builds a codebook for every deployed form in one go. If a form loads a CSV with `select_one_from_file`, put a local copy in a folder and pass it as `external_dir`, and the codebook will also count the options in the file.
+
+```{r}
+#| label: all-codebooks
+#| eval: !expr has_kobo
+
+# one codebook per form, keeping the form names
+codebooks <- map(forms, build_codebook)
+
+# a quick overview: variables and skip-dependent variables per form
+imap(codebooks, \(cb, form_name) tibble(
+  form            = form_name,
+  variables       = nrow(cb),
+  with_skip_logic = sum(!is.na(cb$skip_logic)),
+  tables          = paste(unique(cb$table), collapse = ", ")
+)) |>
+  list_rbind()
+```
+
+Here is the codebook for the first form. Note how questions inside a group inherit the group's condition in `skip_logic`, each select multiple question gets one row per option, and questions inside a repeat group are stored in that repeat's `table`.
+
+```{r}
+#| label: show-codebook
+#| eval: !expr has_kobo
+#| column: page
+
+codebooks[[1]] |>
+  datatable(
+    rownames = FALSE,
+    class    = "compact stripe hover",
+    filter   = "top",                                  # a filter box above each column
+    options  = list(pageLength = 15, scrollX = TRUE)
+  )
+```
+
+## Step 5: Export to Excel
+
+Most people who need a codebook want a spreadsheet. `write_codebook()` writes one sheet per form, plus a `choices` sheet with every answer option, including the long lists that the codebook only refers to.
+
+```{r}
+#| label: write-codebook
+
+write_codebook <- function(codebooks, forms, path) {
+  # every answer option of every form, in one long table
+  all_choices <- imap(forms, \(f, form_name) {
+    f$choices |>
+      first_language("label") |>
+      filter(!is.na(list_name)) |>
+      transmute(form = form_name, list_name, value = name, label = clean_label(label))
+  }) |>
+    list_rbind()
+
+  # bold, coloured headers, a filter on every column and a frozen first row
+  wb <- createWorkbook()
+  header <- createStyle(textDecoration = "bold", fgFill = "#1F4E78", fontColour = "#FFFFFF")
+  add_sheet <- function(sheet, df, widths = "auto") {
+    addWorksheet(wb, sheet)
+    writeData(wb, sheet, df, headerStyle = header, withFilter = TRUE)
+    freezePane(wb, sheet, firstRow = TRUE)
+    setColWidths(wb, sheet, seq_along(df), widths)
+  }
+
+  # one sheet per form (Excel sheet names can't be longer than 31 characters),
+  # with wide, wrapped columns for labels, values and skip logic
+  iwalk(codebooks, \(cb, form_name) {
+    sheet <- str_trunc(form_name, 31, ellipsis = "")
+    add_sheet(sheet, cb, widths = c(7, 25, 55, 20, 55, 10, 12, 45))
+    addStyle(wb, sheet, createStyle(wrapText = TRUE, valign = "top"),
+             rows = seq_len(nrow(cb)) + 1, cols = seq_along(cb), gridExpand = TRUE)
+  })
+  add_sheet("choices", all_choices)
+
+  saveWorkbook(wb, path, overwrite = TRUE)
+}
+```
+
+```{r}
+#| label: export
+#| eval: !expr has_kobo
+
+write_codebook(codebooks, forms, path = "kobo_codebook.xlsx")
+```
+
+The result is [`kobo_codebook.xlsx`](kobo_codebook.xlsx). Because everything comes from the API, keeping the codebook current is a matter of rerunning the script. Schedule it, or run it after every redeployment, and the dictionary never falls behind the forms.
+
+## Using the codebook
+
+Because the codebook is a data frame, it is useful in code, not just as a document. For example, listing every variable with skip logic tells you where missing values are expected, which is the first thing to check when cleaning Kobo data:
+
+```{r}
+#| label: skip-dependent
+#| eval: !expr has_kobo
+
+# variables that are only asked under some condition: missing values here may be fine
+codebooks[[1]] |>
+  filter(!is.na(skip_logic)) |>
+  select(variable, skip_logic)
+```
+
+And splitting by `table` shows which variables to expect in each data frame. Kobo stores repeat groups in separate tables, linked to the main table by `_index` and `_parent_index`.
+
+```{r}
+#| label: by-table
+#| eval: !expr has_kobo
+
+# number of variables in each exported table of the quality of care form
+count(codebooks$quality_of_care, table)
+```
+
+## Bonus: changes waiting to be deployed
+
+The API knows about two versions of each form: the **deployed** one and the **latest** draft in the form builder. Comparing their codebooks shows edits that have been saved but not yet deployed, which is a useful check before you redeploy in the middle of data collection.
+
+```{r}
+#| label: undeployed-changes
+#| eval: !expr has_kobo
+
+# variables added or removed in the draft, compared with the deployed form
+compare_versions <- function(asset_id) {
+  deployed <- build_codebook(read_kobo_form(asset_id, version = "deployed"))
+  latest   <- build_codebook(read_kobo_form(asset_id, version = "latest"))
+
+  bind_rows(
+    anti_join(latest, deployed, by = "variable") |> mutate(change = "added in draft"),
+    anti_join(deployed, latest, by = "variable") |> mutate(change = "removed in draft")
+  ) |>
+    select(change, variable, label, type)
+}
+
+# an empty table means the draft and the deployed form have the same variables
+compare_versions(asset_ids[[1]])
+```
+
+## A few caveats
+
+-   **Variable names depend on how you download the data.** [{robotoolbox}](https://dickoa.gitlab.io/robotoolbox/) names select multiple columns `question_option`, which is what `sm_sep = "_"` matches. Kobo's own Excel and CSV exports use `question/option`, so set `sm_sep = "/"` for those.
+-   **Kobo adds system columns** such as `_id`, `_uuid`, `_submission_time` and `_validation_status`. They are not part of the form, so they are not in the codebook.
+-   **Old form versions.** If a form changed during data collection, your data may contain columns from earlier versions that are no longer in the deployed form. Comparing `names(data)` with `codebook$variable` finds them quickly.
+-   **`repeat_count` with a fixed number** (rather than a question, such as `${n_children}`) makes Kobo add a `<repeat>_count` column, which this simple version doesn't list.
+-   **One language.** The functions keep the first label language. For a multi-language form, change `as_cell()` to pick the one you want.
+-   **More than 100 forms.** `kobo_list_forms()` reads the first page of results only. If your account has more forms than that, follow the `next` link in the response.
+
+## Acknowledgements
+
+Much of my day-to-day work with KoboToolbox data in R relies on [{robotoolbox}](https://dickoa.gitlab.io/robotoolbox/), created and maintained by [Ahmadou Dicko](https://gitlab.com/dickoa/robotoolbox). It handles authentication, downloads submissions with repeat groups as linked tables, and applies value labels, and its column naming is what this codebook matches by default. If you work with Kobo data in R, it is well worth a look, and thanks are due to Ahmadou for building and maintaining it for the community.
+
+## Conclusion
+
+KoboToolbox makes it easy to collect data, but leaves you to work out what the columns mean. The form definition already holds that information; it just needs reshaping. With the KoboToolbox API and about 250 lines of R, you can build a codebook from the deployed version of every form in a project, with one row per variable, value labels, the table each variable lives in and the full skip logic, export it to Excel for the whole team, and rebuild it in seconds whenever a form changes.
+
+You *can* build the same codebook from the raw, undeployed XLSForm files: read the `survey` and `choices` sheets with {readxl} and feed them to the same `build_codebook()`. That is handy for reviewing forms before they go live, but it takes you longer to arrive at the same destination. You have to collect and manage the files yourself, keep them in step with what is actually deployed, and there is no easy way to tell when a form has been redeployed with changes. The XLSForm on your computer tells you what you meant to collect; the deployed form tells you what you actually collected.
+
+Because the code relies only on the XLSForm standard, it works for any Kobo form, not just the examples here. I hope it saves you the hours of copying questions and choice lists into a spreadsheet by hand.

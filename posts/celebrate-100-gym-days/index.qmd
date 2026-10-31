@@ -305,3 +305,11 @@ Fitness journey comes with challenges, for instance having to wake up in the mor
 Listen to your body always, know when to push harder and when to rest. Celebrate every milestone you have achieved, even if it meant you lifted 2.5kg extra on top of your regular weight limit. Celebrations makes you more energetic and looking forward to move up next level the following workout day.
 
 I hope my story inspires you to start your fitness journey or continue the one you already archived. It's doable, if you put mind to it. Here is to 100 days of hard-work, dedication and determination 🙌🥳.
+
+## Session info
+
+```{r}
+#| label: session-info
+
+sessioninfo::session_info()
+```

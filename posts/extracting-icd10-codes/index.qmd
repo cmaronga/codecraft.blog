@@ -3,7 +3,7 @@ title: "Extracting ICD-10 Code list using R and the WHO ICD API"
 description: "How to pull over 12,000 WHO ICD-10 (2019) codes, with their blocks and chapters, into a tidy dataset in under a minute using R, httr2 and the free WHO ICD API."
 # author: "Christopher Maronga"
 date: "2026-10-23"
-categories: [R, API, Health data, ICD-10]
+categories: [API, Health data, ICD-10, tidyverse]
 image: "codes_per_chapter.png"
 ---
 
@@ -437,3 +437,11 @@ My first version of this script took about **30 minutes** and, as it turned out,
 Copying ICD-10 codes by hand from a website is slow, error-prone and impossible to reproduce. With the free WHO ICD API and fewer than 200 lines of R, you can build a complete, well-structured ICD-10 lookup table in under a minute, and rebuild it whenever you need to.
 
 For researchers working with routine health data anywhere in the world, that table is a foundation for defining outcomes, grouping diagnoses, computing comorbidity scores and checking data quality. I hope this saves you the days of copy and paste it would otherwise take.
+
+## Session info
+
+```{r}
+#| label: session-info
+
+sessioninfo::session_info()
+```

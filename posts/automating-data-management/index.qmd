@@ -3,7 +3,7 @@ title: "Automating Clinical Data Management"
 description: "How the CHAIN cohort combined REDCap, RStudio Server and Shiny Server to automate data cleaning, query tracking and progress reporting across nine hospitals in Africa and Asia."
 # author: "Christopher Maronga"
 date: "2018-12-16"
-categories: [Data wrangling, REDCap, analysis]
+categories: [Data wrangling, REDCap, API, tidyverse]
 image: "image.jpg"
 ---
 

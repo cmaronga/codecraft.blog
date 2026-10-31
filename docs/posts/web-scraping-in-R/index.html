@@ -381,28 +381,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>r_pkgs_by_date <span class="sc">%&gt;%</span> </span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   date_published          pkg_name
-1      2026-10-21          actibase
-2      2026-10-21         adlaplace
-3      2026-10-21 AMDconfigurations
-4      2026-10-21   anotherSAS7bdat
-5      2026-10-21            aquats
-6      2026-10-21              avlm
-7      2026-10-21             b3gbi
-8      2026-10-21               bbk
-9      2026-10-21       BiasedMatch
-10     2026-10-21       boundedHill
-                                                                     Title
-1  Baseline Functions for Actigraphy and Activity Processing and\nAnalysis
-2                   Laplace Approximations Using Automatic Differentiation
-3          Geometric Analysis of Configurations in High-Dimensional Spaces
-4                       Read 'SAS' Data in Chunks and Convert to 'Parquet'
-5          Robust Ecological and Fisheries Data Analysis and Visualization
-6                           Safe Anytime Valid Inference for Linear Models
-7              General Biodiversity Indicators for Biodiversity Data Cubes
-8                                             Client for Central Bank APIs
-9                            Biased Matching for Two-Urn Sampling Problems
-10            Bayesian Logistic Regression with Lower and Upper Asymptotes</code></pre>
+<pre><code>   date_published      pkg_name
+1      2026-10-30 accessibility
+2      2026-10-30        aniSNA
+3      2026-10-30         blisa
+4      2026-10-30       contoso
+5      2026-10-30    FocusGroup
+6      2026-10-30     frailtyEM
+7      2026-10-30        geoecu
+8      2026-10-30       geozarr
+9      2026-10-30      glyparse
+10     2026-10-30      golfastr
+                                                                                                              Title
+1                                                                                  Transport Accessibility Measures
+2                                                            Statistical Network Analysis of Animal Social Networks
+3                                                        Infer Cell-Cell Communication from Spatial Transcriptomics
+4                                                                                  Dataset of the 'Contoso' Company
+5                                                                           Focus Group Simulation Using LLM Agents
+6                                                                      Fitting Frailty Models with the EM Algorithm
+7  Maps of the Provinces, Cantons and Parishes of Ecuador (Mapas de\nProvincias, Cantones y Parroquias del Ecuador)
+8                                                            GeoZarr Conventions for Geospatial Data in Zarr Stores
+9                                                                     Parsing Glycan Structure Text Representations
+10                                                                                 Efficiently Access Pro Golf Data</code></pre>
 </div>
 </div>
 </section>
@@ -471,16 +471,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Rank  pkg_name downloads
-1     1   ggplot2 198413779
-2     2     rlang 189088148
-3     3  magrittr 164476508
-4     4     dplyr 154568305
-5     5       cli 143639167
-6     6     vctrs 143560784
-7     7    tibble 134938253
-8     8 lifecycle 132163197
-9     9      Rcpp 128495062
-10   10  jsonlite 128290893</code></pre>
+1     1   ggplot2 198772732
+2     2     rlang 189495267
+3     3  magrittr 164759231
+4     4     dplyr 154868639
+5     5       cli 143981513
+6     6     vctrs 143889825
+7     7    tibble 135221302
+8     8 lifecycle 132484885
+9     9      Rcpp 128816038
+10   10  jsonlite 128527693</code></pre>
 </div>
 </div>
 <p>Here is the fun part, we can now join all the three datasets telling different aspects of the packages to have one dataframe we can use for visualization and expropriation, how cool is that🙂</p>
@@ -499,8 +499,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="reactable html-widget html-fill-item" id="htmlwidget-68b45bb50a8685776ffe" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-68b45bb50a8685776ffe">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Rank":[1,2,3,4,5],"pkg_name":["ggplot2","rlang","magrittr","dplyr","cli"],"downloads":[198413779,189088148,164476508,154568305,143639167],"date_published":["2026-04-22","2026-07-05","2026-04-04","2026-04-03","2026-04-09"],"Title":["Create Elegant Data Visualisations Using the Grammar of Graphics","Functions for Base Types and Core R and 'Tidyverse' Features","A Forward-Pipe Operator for R","A Grammar of Data Manipulation","Helpers for Developing Command Line Interfaces"],"Version":["4.0.3","1.3.0","2.0.5","1.2.1","3.6.6"],"Depends":["R (>= 4.1)","R (>= 4.0.0)","R (>= 3.4.0)","R (>= 4.1.0)","R (>= 3.4)"],"Repository":["https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib"],"NeedsCompilation":["no","yes","yes","yes","yes"],"License":["MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE"]},"columns":[{"id":"Rank","name":"Rank","type":"numeric"},{"id":"pkg_name","name":"pkg_name","type":"character"},{"id":"downloads","name":"downloads","type":"numeric"},{"id":"date_published","name":"date_published","type":"Date"},{"id":"Title","name":"Title","type":"character"},{"id":"Version","name":"Version","type":"character"},{"id":"Depends","name":"Depends","type":"character"},{"id":"Repository","name":"Repository","type":"character"},{"id":"NeedsCompilation","name":"NeedsCompilation","type":"character"},{"id":"License","name":"License","type":"character"}],"dataKey":"3cf76604876eff69550f9678bb6255c9"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-ba7e6ab9e07130331fa7" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ba7e6ab9e07130331fa7">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Rank":[1,2,3,4,5],"pkg_name":["ggplot2","rlang","magrittr","dplyr","cli"],"downloads":[198772732,189495267,164759231,154868639,143981513],"date_published":["2026-04-22","2026-07-05","2026-04-04","2026-04-03","2026-04-09"],"Title":["Create Elegant Data Visualisations Using the Grammar of Graphics","Functions for Base Types and Core R and 'Tidyverse' Features","A Forward-Pipe Operator for R","A Grammar of Data Manipulation","Helpers for Developing Command Line Interfaces"],"Version":["4.0.3","1.3.0","2.0.5","1.2.1","3.6.6"],"Depends":["R (>= 4.1)","R (>= 4.0.0)","R (>= 3.4.0)","R (>= 4.1.0)","R (>= 3.4)"],"Repository":["https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib"],"NeedsCompilation":["no","yes","yes","yes","yes"],"License":["MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE"]},"columns":[{"id":"Rank","name":"Rank","type":"numeric"},{"id":"pkg_name","name":"pkg_name","type":"character"},{"id":"downloads","name":"downloads","type":"numeric"},{"id":"date_published","name":"date_published","type":"Date"},{"id":"Title","name":"Title","type":"character"},{"id":"Version","name":"Version","type":"character"},{"id":"Depends","name":"Depends","type":"character"},{"id":"Repository","name":"Repository","type":"character"},{"id":"NeedsCompilation","name":"NeedsCompilation","type":"character"},{"id":"License","name":"License","type":"character"}],"dataKey":"aa1a86a50eaf230f84e4f4be4f056150"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>For instance, as of the harvesting of this data, what are the top 20 most downloaded packages from CRAN. We can be able to summarize and visualize that information</p>
@@ -510,8 +510,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="reactable html-widget html-fill-item" id="htmlwidget-8d2bc7dc525d1017b04a" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-8d2bc7dc525d1017b04a">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Rank":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"pkg_name":["ggplot2","rlang","magrittr","dplyr","cli","vctrs","tibble","lifecycle","Rcpp","jsonlite","glue","pillar","ragg","stringr","textshaping","R6","stringi","withr","tidyverse","devtools"],"downloads":[198413779,189088148,164476508,154568305,143639167,143560784,134938253,132163197,128495062,128290893,126725262,125442044,111832902,109038699,106748731,105010282,102981100,102533930,102335304,100889685],"date_published":["2026-04-22","2026-07-05","2026-04-04","2026-04-03","2026-04-09","2026-04-11","2026-01-11","2026-01-08","2026-07-05","2025-03-27","2026-04-17","2025-09-17","2026-03-23","2025-11-04","2026-03-06","2025-02-15","2026-08-04","2026-06-19","2023-02-22","2026-04-30"],"Title":["Create Elegant Data Visualisations Using the Grammar of Graphics","Functions for Base Types and Core R and 'Tidyverse' Features","A Forward-Pipe Operator for R","A Grammar of Data Manipulation","Helpers for Developing Command Line Interfaces","Vector Helpers","Simple Data Frames","Manage the Life Cycle of your Package Functions","Seamless R and C++ Integration","A Simple and Robust JSON Parser and Generator for R","Interpreted String Literals","Coloured Formatting for Columns","Graphic Devices Based on AGG","Simple, Consistent Wrappers for Common String Operations","Bindings to the 'HarfBuzz' and 'Fribidi' Libraries for Text\nShaping","Encapsulated Classes with Reference Semantics","Fast and Portable Character String Processing Facilities","Run Code 'With' Temporarily Modified Global State","Easily Install and Load the 'Tidyverse'","Tools to Make Developing R Packages Easier"],"Version":["4.0.3","1.3.0","2.0.5","1.2.1","3.6.6","0.7.3","3.3.1","1.0.5","1.1.2","2.0.0","1.8.1","1.11.1","1.5.2","1.6.0","1.0.5","2.6.1","1.8.9","3.0.3","2.0.0","2.5.2"],"Depends":["R (>= 4.1)","R (>= 4.0.0)","R (>= 3.4.0)","R (>= 4.1.0)","R (>= 3.4)","R (>= 4.0.0)","R (>= 3.4.0)","R (>= 3.6)","R (>= 3.5.0)","methods","R (>= 4.1)",null,null,"R (>= 4.1.0)","R (>= 3.2.0)","R (>= 3.6)","R (>= 3.4)","R (>= 3.6.0)","R (>= 3.3)","R (>= 4.1), usethis (>= 3.2.1)"],"Repository":["https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib"],"NeedsCompilation":["no","yes","yes","yes","yes","yes","yes","no","yes","yes","yes","no","yes","no","yes","no","yes","no","no","no"],"License":["MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","GPL (>= 2)","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE"]},"columns":[{"id":"Rank","name":"Rank","type":"numeric"},{"id":"pkg_name","name":"pkg_name","type":"character"},{"id":"downloads","name":"downloads","type":"numeric"},{"id":"date_published","name":"date_published","type":"Date"},{"id":"Title","name":"Title","type":"character"},{"id":"Version","name":"Version","type":"character"},{"id":"Depends","name":"Depends","type":"character"},{"id":"Repository","name":"Repository","type":"character"},{"id":"NeedsCompilation","name":"NeedsCompilation","type":"character"},{"id":"License","name":"License","type":"character"}],"dataKey":"8191ca2a1a4d12f237b72413eb22b06f"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-1192c75e1c793b0c5ce1" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-1192c75e1c793b0c5ce1">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Rank":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"pkg_name":["ggplot2","rlang","magrittr","dplyr","cli","vctrs","tibble","lifecycle","Rcpp","jsonlite","glue","pillar","ragg","stringr","textshaping","R6","stringi","withr","tidyverse","scales"],"downloads":[198772732,189495267,164759231,154868639,143981513,143889825,135221302,132484885,128816038,128527693,127020564,125693942,111942981,109219213,106853066,105371221,103164624,102821919,102488632,101054394],"date_published":["2026-04-22","2026-07-05","2026-04-04","2026-04-03","2026-04-09","2026-04-11","2026-01-11","2026-01-08","2026-07-05","2025-03-27","2026-04-17","2025-09-17","2026-03-23","2025-11-04","2026-03-06","2025-02-15","2026-08-04","2026-06-19","2023-02-22","2025-04-24"],"Title":["Create Elegant Data Visualisations Using the Grammar of Graphics","Functions for Base Types and Core R and 'Tidyverse' Features","A Forward-Pipe Operator for R","A Grammar of Data Manipulation","Helpers for Developing Command Line Interfaces","Vector Helpers","Simple Data Frames","Manage the Life Cycle of your Package Functions","Seamless R and C++ Integration","A Simple and Robust JSON Parser and Generator for R","Interpreted String Literals","Coloured Formatting for Columns","Graphic Devices Based on AGG","Simple, Consistent Wrappers for Common String Operations","Bindings to the 'HarfBuzz' and 'Fribidi' Libraries for Text\nShaping","Encapsulated Classes with Reference Semantics","Fast and Portable Character String Processing Facilities","Run Code 'With' Temporarily Modified Global State","Easily Install and Load the 'Tidyverse'","Scale Functions for Visualization"],"Version":["4.0.3","1.3.0","2.0.5","1.2.1","3.6.6","0.7.3","3.3.1","1.0.5","1.1.2","2.0.0","1.8.1","1.11.1","1.5.2","1.6.0","1.0.5","2.6.1","1.8.9","3.0.3","2.0.0","1.4.0"],"Depends":["R (>= 4.1)","R (>= 4.0.0)","R (>= 3.4.0)","R (>= 4.1.0)","R (>= 3.4)","R (>= 4.0.0)","R (>= 3.4.0)","R (>= 3.6)","R (>= 3.5.0)","methods","R (>= 4.1)",null,null,"R (>= 4.1.0)","R (>= 3.2.0)","R (>= 3.6)","R (>= 3.4)","R (>= 3.6.0)","R (>= 3.3)","R (>= 4.1)"],"Repository":["https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib","https://cran.r-project.org/src/contrib"],"NeedsCompilation":["no","yes","yes","yes","yes","yes","yes","no","yes","yes","yes","no","yes","no","yes","no","yes","no","no","no"],"License":["MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","GPL (>= 2)","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE","file LICENSE","MIT + file LICENSE","MIT + file LICENSE","MIT + file LICENSE"]},"columns":[{"id":"Rank","name":"Rank","type":"numeric"},{"id":"pkg_name","name":"pkg_name","type":"character"},{"id":"downloads","name":"downloads","type":"numeric"},{"id":"date_published","name":"date_published","type":"Date"},{"id":"Title","name":"Title","type":"character"},{"id":"Version","name":"Version","type":"character"},{"id":"Depends","name":"Depends","type":"character"},{"id":"Repository","name":"Repository","type":"character"},{"id":"NeedsCompilation","name":"NeedsCompilation","type":"character"},{"id":"License","name":"License","type":"character"}],"dataKey":"5cc6ca589be911ccfc1fa2a921556712"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>More fun exploration and data wrangling can be performed on the harvested data, feel free to play with the data further.</p>
@@ -892,23 +892,18 @@ Caused by warning:
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       Europe/London
- date     2026-10-21
+ date     2026-10-30
  pandoc   3.10 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/aarch64/ (via rmarkdown)
  quarto   1.3.450 @ /usr/local/bin/quarto
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package           * version  date (UTC) lib source
  askpass             1.2.1    2024-10-04 [1] CRAN (R 4.6.0)
- backports           1.5.1    2026-04-03 [1] CRAN (R 4.6.0)
- cachem              1.1.0    2024-05-16 [1] CRAN (R 4.6.0)
  cli                 3.6.6    2026-04-09 [1] CRAN (R 4.6.0)
  crosstalk           1.2.2    2025-08-26 [1] CRAN (R 4.6.0)
- crul                1.6.0    2025-07-23 [1] CRAN (R 4.6.0)
  curl                8.1.0    2026-10-14 [1] CRAN (R 4.6.1)
  data.table          1.18.6.1 2026-08-24 [1] CRAN (R 4.6.1)
- dbplyr              2.6.0    2026-06-17 [1] CRAN (R 4.6.0)
  digest              0.6.39   2025-11-19 [1] CRAN (R 4.6.0)
- dm                  1.1.2    2026-05-17 [1] CRAN (R 4.6.0)
  dplyr             * 1.2.1    2026-04-03 [1] CRAN (R 4.6.0)
  evaluate            1.0.5    2025-08-27 [1] CRAN (R 4.6.0)
  farver              2.1.2    2024-05-13 [1] CRAN (R 4.6.0)
@@ -924,31 +919,22 @@ Caused by warning:
  ggthemes          * 7.0.0    2026-10-03 [1] CRAN (R 4.6.1)
  glue                1.8.1    2026-04-17 [1] CRAN (R 4.6.0)
  gtable              0.3.6    2024-10-25 [1] CRAN (R 4.6.0)
- haven               2.5.5    2025-05-30 [1] CRAN (R 4.6.0)
  here              * 1.0.2    2025-09-15 [1] CRAN (R 4.6.0)
  hms                 1.1.4    2025-10-17 [1] CRAN (R 4.6.0)
  htmltools           0.5.9    2025-12-04 [1] CRAN (R 4.6.0)
  htmlwidgets         1.6.4    2023-12-06 [1] CRAN (R 4.6.0)
- httpcode            0.3.0    2020-04-10 [1] CRAN (R 4.6.0)
- httpuv              1.6.17   2026-03-18 [1] CRAN (R 4.6.0)
  httr                1.4.9    2026-09-01 [1] CRAN (R 4.6.1)
- igraph              2.3.4    2026-09-30 [1] CRAN (R 4.6.1)
  jsonlite            2.0.0    2025-03-27 [1] CRAN (R 4.6.0)
  knitr               1.52     2026-09-06 [1] CRAN (R 4.6.1)
- labelled            2.16.1   2026-08-20 [1] CRAN (R 4.6.1)
- later               1.4.8    2026-03-05 [1] CRAN (R 4.6.0)
  lifecycle           1.0.5    2026-01-08 [1] CRAN (R 4.6.0)
  lubridate         * 1.9.5    2026-02-04 [1] CRAN (R 4.6.0)
  magrittr            2.0.5    2026-04-04 [1] CRAN (R 4.6.0)
- memoise             2.0.1    2021-11-26 [1] CRAN (R 4.6.0)
- mime                0.13     2025-03-17 [1] CRAN (R 4.6.0)
  officer             0.7.7    2026-10-14 [1] CRAN (R 4.6.1)
  openssl             2.4.2    2026-06-09 [1] CRAN (R 4.6.0)
  otel                0.2.0    2025-08-29 [1] CRAN (R 4.6.0)
  pacman              0.5.1    2019-03-11 [1] CRAN (R 4.6.0)
  pillar              1.11.1   2025-09-17 [1] CRAN (R 4.6.0)
  pkgconfig           2.0.3    2019-09-22 [1] CRAN (R 4.6.0)
- promises            1.5.0    2025-11-01 [1] CRAN (R 4.6.0)
  purrr             * 1.2.2    2026-04-10 [1] CRAN (R 4.6.0)
  R.methodsS3         1.8.2    2022-06-13 [1] CRAN (R 4.6.0)
  R.oo                1.27.1   2025-05-02 [1] CRAN (R 4.6.0)
@@ -957,21 +943,18 @@ Caused by warning:
  ragg                1.5.2    2026-03-23 [1] CRAN (R 4.6.0)
  RColorBrewer        1.1-3    2022-04-03 [1] CRAN (R 4.6.0)
  Rcpp                1.1.2    2026-07-05 [1] CRAN (R 4.6.1)
- RcppSimdJson        0.1.17   2026-10-16 [1] CRAN (R 4.6.1)
  reactable           0.4.5    2025-12-01 [1] CRAN (R 4.6.0)
  reactR              0.6.1    2024-09-14 [1] CRAN (R 4.6.0)
  readr             * 2.2.0    2026-02-19 [1] CRAN (R 4.6.0)
  rio                 1.3.0    2026-04-02 [1] CRAN (R 4.6.0)
  rlang               1.3.0    2026-07-05 [1] CRAN (R 4.6.1)
  rmarkdown           2.32     2026-09-01 [1] CRAN (R 4.6.1)
- robotoolbox         1.6.2    2026-04-05 [1] CRAN (R 4.6.0)
  rprojroot           2.1.1    2025-08-26 [1] CRAN (R 4.6.0)
  rstudioapi          0.19.0   2026-06-11 [1] CRAN (R 4.6.0)
  rvest             * 1.0.5    2025-08-29 [1] CRAN (R 4.6.0)
  S7                  0.2.2    2026-04-22 [1] CRAN (R 4.6.0)
  scales              1.4.0    2025-04-24 [1] CRAN (R 4.6.0)
  sessioninfo         1.2.4    2026-06-04 [1] CRAN (R 4.6.0)
- shiny               1.14.0   2026-06-21 [1] CRAN (R 4.6.0)
  stringi             1.8.9    2026-08-04 [1] CRAN (R 4.6.1)
  stringr           * 1.6.0    2025-11-04 [1] CRAN (R 4.6.0)
  systemfonts         1.3.2    2026-03-05 [1] CRAN (R 4.6.0)
@@ -988,7 +971,6 @@ Caused by warning:
  withr               3.0.3    2026-06-19 [1] CRAN (R 4.6.0)
  xfun                0.62     2026-10-16 [1] CRAN (R 4.6.1)
  xml2                1.6.0    2026-06-22 [1] CRAN (R 4.6.1)
- xtable              1.8-8    2026-02-22 [1] CRAN (R 4.6.0)
  yaml                2.3.12   2025-12-10 [1] CRAN (R 4.6.0)
  zip                 3.0.2    2026-08-04 [1] CRAN (R 4.6.1)
 

@@ -10,6 +10,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/kobo-data-dictionary/index.html",
       "/posts/extracting-icd10-codes/index.html",
       "/posts/web-scraping-in-R/index.html",
       "/posts/coalesce-in-action/index.html",

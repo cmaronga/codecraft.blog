@@ -46,3 +46,9 @@ po/*~
 *.rds
 
 /.quarto/
+
+# specific folders
+forms/*
+_manuscripts/*
+
+
