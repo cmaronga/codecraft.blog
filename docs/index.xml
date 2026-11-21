@@ -10,7 +10,367 @@
 <atom:link href="https://cmaronga.github.io/codecraft.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Christopher Maronga blog</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Sat, 31 Oct 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 21 Nov 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Welcome to CRAN City: A Guided Tour with CRAN Explorer</title>
+  <link>https://cmaronga.github.io/codecraft.blog/posts/cran-explorer/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Every R user has typed this line hundreds of times:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ggplot2"</span>)</span></code></pre></div>
+<p>You press Enter, a few lines scroll by, and a package arrives. We do it so often that we never stop to ask where it came from, or what else lives there.</p>
+<p>It comes from <strong>CRAN</strong>, the Comprehensive R Archive Network. I wanted to see CRAN as a whole, not one package at a time, so I built <strong>CRAN Explorer</strong>, a Shiny dashboard that maps all of it.</p>
+<p>The easiest way to explain the app is to pretend CRAN is a city. Put on comfortable shoes. The tour starts now.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Try it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The app is live at <strong><a href="https://chris-maronga.shinyapps.io/CRANPackagesExplorer/">https://chris-maronga.shinyapps.io/CRANPackagesExplorer/</a></strong>. The numbers and screenshots in this post come from the 20 November 2026 snapshot. The live app refreshes its data every day, so you’ll see slightly different figures.</p>
+</div>
+</div>
+<section id="stop-1-the-view-from-the-hill-overview-tab" class="level2">
+<h2 class="anchored" data-anchor-id="stop-1-the-view-from-the-hill-overview-tab">Stop 1: The view from the hill (Overview tab)</h2>
+<p>Every good city tour starts on a hill, where you can see the whole skyline. That is the <strong>Overview</strong> tab.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/cran-explorer/overview.png" class="img-fluid figure-img" alt="Screenshot of the CRAN Explorer Overview tab with five coloured value boxes, a growth chart, a freshness bar chart and a table of the latest releases."></p>
+<figcaption class="figure-caption">The Overview tab: headline numbers, the growth of CRAN, how recently packages were updated, and the newest releases.</figcaption>
+</figure>
+</div>
+<p>From up here, CRAN City has:</p>
+<table class="table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 10%">
+<col style="width: 61%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What you see</th>
+<th>How many</th>
+<th>In city terms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Packages on CRAN</td>
+<td>25,821</td>
+<td>Houses in the city</td>
+</tr>
+<tr class="even">
+<td>New packages in 2026</td>
+<td>3,764</td>
+<td>Houses built this year</td>
+</tr>
+<tr class="odd">
+<td>Updated in the last 30 days</td>
+<td>1,962</td>
+<td>Houses that had work done this month (7.6%)</td>
+</tr>
+<tr class="even">
+<td>Unique maintainers</td>
+<td>13,065</td>
+<td>Homeowners, about 2 houses each on average</td>
+</tr>
+<tr class="odd">
+<td>Contain compiled code</td>
+<td>22%</td>
+<td>Houses with an engine room: C, C++ or Fortran under the floor</td>
+</tr>
+</tbody>
+</table>
+<p>That last one deserves a word. Most packages are written in R alone. About one in five also carry code in C, C++ or Fortran, usually for speed. That code must be <em>compiled</em> (translated into machine instructions) before it runs. It is the engine room of the house: invisible from the street, but the reason some houses move so fast.</p>
+<section id="how-fast-has-the-city-grown" class="level3">
+<h3 class="anchored" data-anchor-id="how-fast-has-the-city-grown">How fast has the city grown?</h3>
+<p>The <strong>Growth of CRAN</strong> chart shows how many of today’s houses were first built each year (the bars) and the running total (the orange line). In 2015, 988 of today’s packages were first released. In 2025 it was 2,162.</p>
+<p>There is a catch, and it is a ghost story. CRAN City only shows houses still standing. A package released in 2012 and removed in 2018 has vanished from the map. So older years look smaller than they really were, because their ghosts aren’t counted.</p>
+</section>
+<section id="when-was-the-paint-last-fresh" class="level3">
+<h3 class="anchored" data-anchor-id="when-was-the-paint-last-fresh">When was the paint last fresh?</h3>
+<p>Walk down any street and you’ll see houses with fresh paint and houses with peeling paint. The <strong>How actively maintained?</strong> chart sorts every package by the time since its latest release:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Last updated</th>
+<th style="text-align: right;">Packages</th>
+<th style="text-align: right;">Share</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Under a month</td>
+<td style="text-align: right;">1,962</td>
+<td style="text-align: right;">8%</td>
+</tr>
+<tr class="even">
+<td>1–6 months</td>
+<td style="text-align: right;">5,321</td>
+<td style="text-align: right;">21%</td>
+</tr>
+<tr class="odd">
+<td>6–12 months</td>
+<td style="text-align: right;">3,803</td>
+<td style="text-align: right;">15%</td>
+</tr>
+<tr class="even">
+<td>1–2 years</td>
+<td style="text-align: right;">4,463</td>
+<td style="text-align: right;">17%</td>
+</tr>
+<tr class="odd">
+<td>2–5 years</td>
+<td style="text-align: right;">6,318</td>
+<td style="text-align: right;">24%</td>
+</tr>
+<tr class="even">
+<td>More than 5 years</td>
+<td style="text-align: right;">3,954</td>
+<td style="text-align: right;">15%</td>
+</tr>
+</tbody>
+</table>
+<p>So 57% of houses haven’t had a new coat of paint in over a year. That sounds alarming, but it often isn’t. Some houses are small, solid and finished. A package that does one job well may simply need no changes.</p>
+<p>Next to it, the <strong>Latest releases</strong> table is the city’s notice board: the 50 most recent arrivals. “New” means a brand-new house; “Update” means renovation work on an existing one.</p>
+</section>
+</section>
+<section id="stop-2-the-address-book-package-explorer-tab" class="level2">
+<h2 class="anchored" data-anchor-id="stop-2-the-address-book-package-explorer-tab">Stop 2: The address book (Package Explorer tab)</h2>
+<p>Every city needs a directory. The <strong>Package Explorer</strong> is a searchable table of all 25,821 houses, with filters down the side:</p>
+<ul>
+<li><strong>Search</strong> looks through names, titles and descriptions. Type <code>bayesian</code> and you get every house with Bayesian in its story.</li>
+<li><strong>Year of latest release</strong> keeps only houses last renovated in the years you choose.</li>
+<li><strong>Contains compiled code</strong> shows only houses with (or without) an engine room.</li>
+<li><strong>Licence family</strong> filters by the house rules (more on those at Stop 4).</li>
+<li><strong>Development hosted on</strong> filters by where the builders work: GitHub, GitLab and so on.</li>
+<li><strong>Minimum reverse dependencies</strong> is my favourite. Set it to 100 and the city shrinks to the buildings everyone else relies on.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/cran-explorer/explorer.png" class="img-fluid figure-img" alt="Screenshot of the Package Explorer tab with the filter sidebar on the left and a table of packages matching the search ggplot2."></p>
+<figcaption class="figure-caption">Searching the address book for “ggplot2”: 595 packages mention it in their name, title or description.</figcaption>
+</figure>
+</div>
+<p>Click any row and a <strong>detail card</strong> opens: the house’s full profile. It shows the owner (maintainer), when it was first built and last renovated, how many versions it has had, which packages it needs, and a year of daily downloads. A package with 40 releases over 10 years is a house someone clearly loves. One with a single release from 2015 may be standing empty.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/cran-explorer/explorer-detail.png" class="img-fluid figure-img" alt="Screenshot of the ggplot2 detail card showing maintainer, release dates, licence, reverse dependencies, dependency badges and a chart of daily downloads over the last year."></p>
+<figcaption class="figure-caption">The detail card for ggplot2: first built in 2007, 56 releases since, and 5,921 packages plugged into it.</figcaption>
+</figure>
+</div>
+<p>When you’ve found what you need, <strong>Download filtered list (CSV)</strong> takes the results home with you.</p>
+</section>
+<section id="stop-3-the-power-grid-dependencies-tab" class="level2">
+<h2 class="anchored" data-anchor-id="stop-3-the-power-grid-dependencies-tab">Stop 3: The power grid (Dependencies tab)</h2>
+<p>Here the tour gets interesting. Houses in CRAN City aren’t independent. They plug into each other.</p>
+<p>When a package needs another package to work, that’s a <strong>dependency</strong>. They are listed in a package’s <code>DESCRIPTION</code> file under four headings:</p>
+<table class="table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 65%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>City version</th>
+<th>Installed automatically?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Depends</td>
+<td>The power line, switched on when you move in (<code>library()</code>)</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Imports</td>
+<td>Cables inside the walls: needed, but you never see them</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>LinkingTo</td>
+<td>The engine room’s wiring, needed only to compile C/C++ code</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Suggests</td>
+<td>A spare room for guests: nice for examples and tests, but optional</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>The first three are <strong>hard dependencies</strong>: the cables you can’t cut. The median package has <strong>5</strong> of them. Only <strong>10%</strong> of houses run entirely off-grid, needing nothing beyond base R.</p>
+<p>Now flip the view around. If your house draws power from a station, your house is a <strong>reverse dependency</strong> of that station. Count how many houses plug into each package and you find the city’s power stations:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Rank</th>
+<th>Package</th>
+<th style="text-align: right;">Packages that depend on it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>Rcpp</td>
+<td style="text-align: right;">7,377</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>ggplot2</td>
+<td style="text-align: right;">5,921</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>dplyr</td>
+<td style="text-align: right;">5,730</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>rlang</td>
+<td style="text-align: right;">4,428</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>tidyr</td>
+<td style="text-align: right;">2,860</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rcpp</strong> is the city’s biggest power station. It lets R packages call fast C++ code, and more than 7,000 packages are wired into it. If Rcpp went dark, a big part of CRAN City would flicker. Only <strong>24%</strong> of packages power anything else; the other 76% are houses at the end of the line.</p>
+<p>Two more charts on this stop:</p>
+<ul>
+<li><strong>Minimum R version required</strong> is like the building code. 7,362 packages set no minimum. Among those that do, the most common are R 3.5 (4,499 packages) and R 4.1 (3,565). Those aren’t random: R 3.5 changed how R saves data files, and R 4.1 introduced the native pipe <code>|&gt;</code>. Use either and you must require that version.</li>
+<li><strong>Dependency weight vs.&nbsp;reach</strong> puts every power station on one map. Left to right is how much a package needs (its <em>weight</em>). Bottom to top is how many packages need it (its <em>reach</em>). The top-left corner holds the city’s treasures: packages that many others rely on but that need very little themselves. The vertical axis is on a log scale, where each gridline is ten times the one below, so tiny cottages and giant stations fit on the same chart.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/cran-explorer/dependencies.png" class="img-fluid figure-img" alt="Screenshot of the Dependencies tab with four value boxes, a bar chart of the most depended-upon packages led by Rcpp, a histogram of dependency counts, a bar chart of minimum R versions and a scatter plot of hard dependencies against reverse dependencies."></p>
+<figcaption class="figure-caption">The Dependencies tab: the city’s power stations, how many cables each house needs, the building code, and weight vs.&nbsp;reach.</figcaption>
+</figure>
+</div>
+</section>
+<section id="stop-4-meet-the-residents-community-tab" class="level2">
+<h2 class="anchored" data-anchor-id="stop-4-meet-the-residents-community-tab">Stop 4: Meet the residents (Community tab)</h2>
+<p>A city is its people. The <strong>Community</strong> tab introduces the homeowners.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/cran-explorer/community.png" class="img-fluid figure-img" alt="Screenshot of the Community tab with a bar chart of the top 20 maintainers, a bar chart of packages per maintainer, a donut chart of licence families, a bar chart of code hosts and a line chart of trends over time."></p>
+<figcaption class="figure-caption">The Community tab: the busiest homeowners, the house rules, where the builders work and how new neighbourhoods have changed.</figcaption>
+</figure>
+</div>
+<p>The busiest maintainers look after an astonishing number of packages: Dirk Eddelbuettel (82), Michail Tsagris (71), Gábor Csárdi (63), Shikhar Tyagi (59) and Hadley Wickham (58). But they are the exception. <strong>Two in three maintainers (66%) look after exactly one package.</strong> CRAN City wasn’t built by a few big developers. It was built by thousands of people who each put up one house.</p>
+<section id="the-house-rules" class="level3">
+<h3 class="anchored" data-anchor-id="the-house-rules">The house rules</h3>
+<p>Every house has rules about what visitors may do with it: its <strong>licence</strong>. Three families cover 89% of the city:</p>
+<ul>
+<li><strong>GPL-3</strong> (32.9%) and <strong>GPL-2</strong> (27.1%): <em>copyleft</em> rules. You can borrow anything, but whatever you build with it must follow the same rules. R itself is GPL, so this is the city’s oldest tradition.</li>
+<li><strong>MIT</strong> (29.2%): a <em>permissive</em> rule. Borrow it, change it, use it almost any way you like; just keep the original name plate on the door.</li>
+</ul>
+</section>
+<section id="where-the-builders-work" class="level3">
+<h3 class="anchored" data-anchor-id="where-the-builders-work">Where the builders work</h3>
+<p>The <strong>Where development happens</strong> chart checks each package’s links to see where its code lives. GitHub wins easily at 58.7%. Another 35.4% list no website at all. Their builders work behind closed doors.</p>
+</section>
+<section id="how-the-neighbourhoods-have-changed" class="level3">
+<h3 class="anchored" data-anchor-id="how-the-neighbourhoods-have-changed">How the neighbourhoods have changed</h3>
+<p>My favourite chart in the app tracks how <em>new</em> houses have changed over the years. Compare packages first released in 2012 with those from 2025:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>New packages that …</th>
+<th style="text-align: right;">2012</th>
+<th style="text-align: right;">2025</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>are developed on GitHub</td>
+<td style="text-align: right;">39%</td>
+<td style="text-align: right;">64%</td>
+</tr>
+<tr class="even">
+<td>contain compiled code</td>
+<td style="text-align: right;">31%</td>
+<td style="text-align: right;">18%</td>
+</tr>
+<tr class="odd">
+<td>use a permissive licence</td>
+<td style="text-align: right;">10%</td>
+<td style="text-align: right;">48%</td>
+</tr>
+</tbody>
+</table>
+<p>The new neighbourhoods look different. More builders work in the open on GitHub, fewer houses need an engine room, and permissive rules have gone from rare to nearly half.</p>
+</section>
+</section>
+<section id="stop-5-rush-hour-downloads-tab" class="level2">
+<h2 class="anchored" data-anchor-id="stop-5-rush-hour-downloads-tab">Stop 5: Rush hour (Downloads tab)</h2>
+<p>The last stop is the busiest: the city’s traffic counters.</p>
+<p>The <strong>Downloads</strong> tab uses the <a href="https://cranlogs.r-pkg.org">cranlogs</a> service, which counts daily downloads from Posit’s CRAN mirror. One warning before we look: that is one road into the city, not all of them, and some of the traffic is robots (build servers and Docker images installing packages automatically). Read the numbers as <em>which streets are busier</em>, not as a census of people.</p>
+<ul>
+<li><strong>Compare packages</strong> puts up to six packages side by side. Turn on the <strong>7-day average</strong> to smooth out the weekly rhythm: traffic drops every weekend, because R users rest too.</li>
+<li><strong>Most downloaded packages</strong> shows the 25 busiest streets of the last month, with the full top 100 in a table. Click any row to add that package to the comparison chart.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cmaronga.github.io/codecraft.blog/posts/cran-explorer/downloads.png" class="img-fluid figure-img" alt="Screenshot of the Downloads tab with a line chart comparing daily downloads of ggplot2, dplyr and data.table over the last year, a bar chart of the 25 most downloaded packages and a table of the top 100."></p>
+<figcaption class="figure-caption">The Downloads tab: ggplot2, dplyr and data.table racing over the last year, and the 25 busiest streets of the last month.</figcaption>
+</figure>
+</div>
+<p>You’ll notice packages like rlang, cli and vctrs near the top. Few people install them on purpose. They are the pavements under the busy streets: every visit to ggplot2 or dplyr brings them along.</p>
+</section>
+<section id="the-fine-print" class="level2">
+<h2 class="anchored" data-anchor-id="the-fine-print">The fine print</h2>
+<p>Every tour guide should be honest about what the map leaves out:</p>
+<ul>
+<li>Only houses standing today are counted; removed packages are the city’s ghosts.</li>
+<li>First-release dates come from CRAN’s archive timestamps and are approximate for very old packages. The oldest house on the map dates from December 1997.</li>
+<li>When a package offers a choice of licences, only the first is counted.</li>
+<li>A maintainer who writes their name two ways is counted as two people.</li>
+<li>The data is refreshed every 24 hours, so the map is never more than a day old.</li>
+</ul>
+</section>
+<section id="how-the-city-map-is-drawn" class="level2">
+<h2 class="anchored" data-anchor-id="how-the-city-map-is-drawn">How the city map is drawn</h2>
+<p>For the curious, CRAN Explorer is plain R across the classic Shiny files: <code>global.R</code> downloads and prepares the data, <code>ui.R</code> lays out the pages with {bslib}, and <code>server.R</code> draws the charts with {plotly} and the tables with {DT}.</p>
+<p>The data comes from three public sources, with no web scraping:</p>
+<ol type="1">
+<li><code>tools::CRAN_package_db()</code>: the <code>DESCRIPTION</code> file of every package, plus CRAN’s own reverse-dependency counts.</li>
+<li>CRAN’s archive index (<code>src/contrib/Meta/archive.rds</code>): every old version of every package, used for first-release dates and release counts.</li>
+<li>The <a href="https://cranlogs.r-pkg.org">cranlogs API</a>: daily download counts.</li>
+</ol>
+<p>The first start downloads everything (about a minute) and caches it, so later visits are instant.</p>
+</section>
+<section id="end-of-the-tour" class="level2">
+<h2 class="anchored" data-anchor-id="end-of-the-tour">End of the tour</h2>
+<p>CRAN City is 25,821 houses built by more than 13,000 people, most of whom built just one. It runs on a handful of power stations like Rcpp, ggplot2 and dplyr, and it gets busier every year. The next time you type <code>install.packages()</code>, remember you’re borrowing a house from one of those builders.</p>
+<p><a href="https://chris-maronga.shinyapps.io/CRANPackagesExplorer/">Go and explore</a>: look up a package you use every day, see how many others plug into it, and race it against its rivals on the Downloads tab. If you find something interesting, or a bug, leave a comment below. I’d love to hear what you discover.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Shiny</category>
+  <category>R packages</category>
+  <category>Data visualization</category>
+  <guid>https://cmaronga.github.io/codecraft.blog/posts/cran-explorer/index.html</guid>
+  <pubDate>Sat, 21 Nov 2026 00:00:00 GMT</pubDate>
+  <media:content url="https://cmaronga.github.io/codecraft.blog/posts/cran-explorer/cran_explorer.png" medium="image" type="image/png" height="82" width="144"/>
+</item>
 <item>
   <title>Creating a Data Dictionary for Deployed KoboToolbox Forms</title>
   <link>https://cmaronga.github.io/codecraft.blog/posts/kobo-data-dictionary/index.html</link>

@@ -2,46 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/about.html</loc>
-    <lastmod>2026-10-30T17:14:41.086Z</lastmod>
+    <lastmod>2026-11-13T16:48:01.714Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/talks/talks.html</loc>
-    <lastmod>2026-10-30T16:38:56.643Z</lastmod>
+    <lastmod>2026-11-13T16:48:00.936Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/posts/automating-data-management/index.html</loc>
-    <lastmod>2026-10-30T15:38:08.338Z</lastmod>
+    <lastmod>2026-11-13T16:47:59.319Z</lastmod>
   </url>
   <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/posts/working-with-databases/index.html</loc>
-    <lastmod>2026-10-30T15:38:07.180Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/posts/coalesce-in-action/index.html</loc>
-    <lastmod>2026-10-30T15:38:05.997Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/posts/web-scraping-in-R/index.html</loc>
-    <lastmod>2026-10-30T15:38:04.541Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cmaronga.github.io/codecraft.blog/posts/kobo-data-dictionary/index.html</loc>
-    <lastmod>2026-10-30T19:00:11.386Z</lastmod>
+    <loc>https://cmaronga.github.io/codecraft.blog/posts/cran-explorer/index.html</loc>
+    <lastmod>2026-11-21T00:48:52.467Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/posts/extracting-icd10-codes/index.html</loc>
-    <lastmod>2026-10-30T16:42:37.731Z</lastmod>
+    <lastmod>2026-11-13T16:47:57.059Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/posts/kobo-data-dictionary/index.html</loc>
+    <lastmod>2026-11-13T16:47:55.658Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/posts/web-scraping-in-R/index.html</loc>
+    <lastmod>2026-11-13T16:47:54.717Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/posts/coalesce-in-action/index.html</loc>
+    <lastmod>2026-11-13T16:47:56.229Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cmaronga.github.io/codecraft.blog/posts/working-with-databases/index.html</loc>
+    <lastmod>2026-11-13T16:47:57.347Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/posts/celebrate-100-gym-days/index.html</loc>
-    <lastmod>2026-10-30T15:38:07.827Z</lastmod>
+    <lastmod>2026-11-13T16:47:58.856Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/publications/publications.html</loc>
-    <lastmod>2026-10-30T16:39:04.617Z</lastmod>
+    <lastmod>2026-11-13T16:48:00.144Z</lastmod>
   </url>
   <url>
     <loc>https://cmaronga.github.io/codecraft.blog/index.html</loc>
-    <lastmod>2026-10-30T19:00:01.960Z</lastmod>
+    <lastmod>2026-11-21T00:48:58.098Z</lastmod>
   </url>
 </urlset>
